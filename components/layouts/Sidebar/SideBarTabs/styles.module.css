@@ -1,0 +1,14 @@
+.list {
+  list-style: none;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  padding-top: 0.5rem;
+  cursor: pointer;
+  color: #fff;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+}
