@@ -64,7 +64,7 @@ export default function Table({ columns, rows }) {
   }, [sortableFields]);
 
   return (
-    <div className="card">
+    <div className="card" style={{ overflow: "scroll" }}>
       <table className={styles.table}>
         <thead>
           <TableHeader

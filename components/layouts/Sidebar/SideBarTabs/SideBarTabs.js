@@ -4,13 +4,14 @@ import { useTheme } from '@mui/material/styles';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import { useRouter } from "next/router";
+
 
 import SearchBox from "@components/layouts/Sidebar/SideBarSearch/SideBarSearch";
-import styles from "./styles.module.css";
+import styles from "@components/layouts/Sidebar/SideBarTabs/sidebartabs.module.css";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -44,7 +45,7 @@ function a11yProps(index) {
 export default function FullWidthTabs() {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
-
+  const router = useRouter();
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -71,18 +72,18 @@ export default function FullWidthTabs() {
         }}
       >
         <Tab
-          label="test1"
-          sx={{ fontSize: "12px", color: "#FFF", py: "0px", minHeight: "40px", height: "40px" }}
+          label="Practice"
+          sx={{ fontSize: "12px", color: "#FFF", py: "0px", minHeight: "40px", height: "40px", textTransform: "none" }}
           {...a11yProps(0)}
         />
         <Tab
-          label="test2"
-          sx={{ fontSize: "12px", color: "#FFF", py: "0px", minHeight: "40px", height: "40px" }}
+          label="Site"
+          sx={{ fontSize: "12px", color: "#FFF", py: "0px", minHeight: "40px", height: "40px", textTransform: "none" }}
           {...a11yProps(1)}
         />
         <Tab
-          label="test3"
-          sx={{ fontSize: "12px", color: "#FFF", py: "0px", minHeight: "40px", height: "40px" }}
+          label="Technologist"
+          sx={{ fontSize: "12px", color: "#FFF", py: "0px", minHeight: "40px", height: "40px", textTransform: "none" }}
           {...a11yProps(2)}
         />
       </Tabs>
@@ -92,7 +93,7 @@ export default function FullWidthTabs() {
           <SearchBox />
 
           <ul className={styles.list}>
-            <li className={styles.listItem}>Item One</li>
+            <li onClick={()=> router.push('/manager/techlist/practice')} className={styles.listItem}>Item One</li>
             <li className={styles.listItem}>Item Two</li>
             <li className={styles.listItem}>Item Three</li>
           </ul>
@@ -104,9 +105,10 @@ export default function FullWidthTabs() {
           <SearchBox />
 
           <ul className={styles.list}>
-            <li className={styles.listItem}>Item Four</li>
-            <li className={styles.listItem}>Item Five</li>
-            <li className={styles.listItem}>Item Six</li>
+            <li className={styles.listItem}>Princeton Plainsborough</li>
+            <li className={styles.listItem}>Detroit Radiology</li>
+            <li className={styles.listItem}>NYC Clinics of women health</li>
+            <li className={styles.listItem}>California University Hospital</li>
           </ul>
 
         </Box>
@@ -116,9 +118,12 @@ export default function FullWidthTabs() {
           <SearchBox />
 
           <ul className={styles.list}>
-            <li className={styles.listItem}>Item Seven</li>
-            <li className={styles.listItem}>Item Eight</li>
-            <li className={styles.listItem}>Item Nine</li>
+            <li className={styles.listItem}>Eddie Guerrero</li>
+            <li className={styles.listItem}>Ronald Trueman</li>
+            <li className={styles.listItem}>Jason Derulo</li>
+            <li className={styles.listItem}>Peggie Briggs</li>
+            <li className={styles.listItem}>Joannah Bronson</li>
+            <li className={styles.listItem}>Carolina McKenzie</li>
           </ul>
 
         </Box>

@@ -5,8 +5,9 @@ ProgressLineSingle.defaultProps = {
   label: "",
   width: "0%",
   size: "small",
-  type: "vertical",
+  type: "horizontal",
   reverse: false,
+  bgColor: "",
 };
 
 export default function ProgressLineSingle(props) {
@@ -20,7 +21,7 @@ export default function ProgressLineSingle(props) {
     }
   }, [props]);
 
-  const progressTypeVertical = (
+  const progressTypeHorizontal = (
     <div style={containerStyleTypeOne}>
       <div style={labelStyleTypeOne}>
         <span className="text-primary-400">{props.label}</span>
@@ -30,7 +31,7 @@ export default function ProgressLineSingle(props) {
       </div>
       <div
         style={{
-          backgroundColor: "#EFEFEF",
+          background: "#F5F6F8",
           height: heightOfElement,
           margin: "10px 0",
           borderRadius: "0 8px 8px 0",
@@ -39,7 +40,7 @@ export default function ProgressLineSingle(props) {
         <div
           style={{
             width: widthOfElement,
-            backgroundColor: "#3A3A3A",
+            background: "linear-gradient(180deg, #6993FC 0%, #86A8FF 100.01%)",
             opacity: 1,
             height: heightOfElement,
             borderRadius: "0 8px 8px 0 ",
@@ -49,7 +50,7 @@ export default function ProgressLineSingle(props) {
       </div>
     </div>
   );
-  const progressTypeHorizontal = (
+  const progressTypeVertical = (
     <div style={{ ...containerStyleTypeTwo, flexDirection: props.reverse ? "row-reverse" : "row" }}>
       {props.label ? <div>{props.label}</div> : null}
       <div

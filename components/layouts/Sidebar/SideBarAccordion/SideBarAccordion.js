@@ -16,6 +16,8 @@ export default function SimpleAccordion() {
         <Accordion
           sx={{
             bgcolor: "#52586B",
+            boxShadow: "none",
+            borderRadius: "12px",
           }}
         >
           <AccordionSummary
@@ -24,11 +26,15 @@ export default function SimpleAccordion() {
             id="panel1a-header"
             sx={{
               "&.Mui-expanded": {
-                minHeight: 0
+                minHeight: 0,
               },
               "& .MuiAccordionSummary-content.Mui-expanded": {
-                margin: "12px 0 12px 0"
-              }
+                margin: "0",
+                borderRadius: "12px"
+              },
+              "& .MuiAccordionSummary-content": {
+                margin: "0"
+              },
             }}
           >
 

@@ -133,6 +133,21 @@ select {
   /* color: red; */
 }
 
+.main__sidebar__normal {
+  margin-left: 75px;
+}
+
+.main__sidebar__expanded {
+  margin-left: 310px;
+}
+
+
+
+
+
+/* NEED TO REMOVE */
+
+
 /* card */
 .card {
   background: #ffffff;
@@ -143,13 +158,8 @@ select {
   /* border: 1px solid red; */
 }
 
-.main__sidebar__normal {
-  margin-left: 75px;
-}
 
-.main__sidebar__expanded {
-  margin-left: 310px;
-}
+
 
 .d__none {
   display: none;

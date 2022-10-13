@@ -1,0 +1,7 @@
+const LoginLeft = () => {
+  return (
+   
+  )
+}
+
+export default LoginLeft

@@ -1,0 +1,7 @@
+const LoginRight = () => {
+  return (
+   
+  )
+}
+
+export default LoginRight

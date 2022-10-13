@@ -1,9 +1,23 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-export default function Home() {
+import Login from '@components/pages/login/Login'
+
+
+const Home = () => {
+
   const router = useRouter();
   useEffect(()=>{
-    // router.push('/dashboard/site');
+    router.push('/manager/site-overview');
   },[])
-  return <p>Login Here </p>;
+
+  return (
+    <div style={{ position: "relative", minHeight: "calc(100vh - var(--size-nav))" }}>
+      <div className="container">
+      <Login/>
+
+      </div>
+    </div>
+  )
 }
+
+export default Home
