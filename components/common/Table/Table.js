@@ -3,7 +3,7 @@ import styles from "./styles/table.module.css";
 import TableHeader from "./TableHeader";
 import TableBody from "./TableBody";
 
-export default function Table({ columns, rows }) {
+export default function Table({ columns, rows, settings }) {
   const [selected, setSelected] = useState([]);
   const [sortableFields, setSortableFields] = useState([]);
   const [tableData, setTableData] = useState(rows);
@@ -59,13 +59,14 @@ export default function Table({ columns, rows }) {
     sortableFields.forEach((item) => {
       handleSorting(item.name, item.order);
     });
-    console.log(sortableFields);
+    // console.log(sortableFields);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortableFields]);
 
   return (
     <div className="card">
-      <table className={styles.table}>
+      <table
+        className={styles.table}>
         <thead>
           <TableHeader
             columns={columns}
@@ -74,10 +75,11 @@ export default function Table({ columns, rows }) {
             setSortableFields={setSortableFields}
             selectAll={selectAll}
             selected={selected}
+            settings={settings}
           />
         </thead>
         <tbody>
-          <TableBody columns={columns} rows={tableData} />
+          <TableBody columns={columns} rows={tableData} settings={settings} />
         </tbody>
       </table>
     </div>

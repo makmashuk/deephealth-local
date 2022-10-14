@@ -1,8 +1,14 @@
-import React from 'react'
-import MainLayout from '@components/layouts/MainLayout'
+import MainLayout from '@components/layouts/MainLayout';
+import TLContainer from '@components/pages/manager/techlist/TLContainer';
 
-const Practice = () => {
-  return <MainLayout>TechList</MainLayout>
+function practice() {
+  return (
+    <div>
+      <MainLayout>
+        <TLContainer />
+      </MainLayout>
+    </div>
+  )
 }
 
-export default Practice
+export default practice

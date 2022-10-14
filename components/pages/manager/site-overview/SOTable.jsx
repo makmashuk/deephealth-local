@@ -1,5 +1,6 @@
 import Table from '@components/common/Table/Table'
 import SeeImagesIcon from '@components/common/Table/SeeImagesIcon'
+import { useRouter } from 'next/router'
 
 const progressData = [
   {
@@ -82,44 +83,55 @@ const rawTableData = [
     actions: <SeeImagesIcon />,
   },
 ]
+const columns = [
+  {
+    field: 'technologist',
+    title: 'Technologist',
+    align: 'left',
+    sortable: true,
+  },
+  {
+    field: 'study_volume',
+    title: 'Study Volume',
+    align: 'right',
+    sortable: true,
+  },
+  {
+    field: 'avg_img_per_study',
+    title: 'Avg. img/study',
+    align: 'right',
+    sortable: true,
+  },
+  {
+    field: 'avg_issues_per_image',
+    title: 'Avg. issues per image',
+    align: 'right',
+    sortable: true,
+  },
+  { field: 'actions', title: 'Actions', align: 'left', sortable: false },
+]
 
-const POTable = () => {
-  const columns = [
-    {
-      field: 'technologist',
-      title: 'Technologist',
-      align: 'left',
-      sortable: true,
-    },
-    {
-      field: 'study_volume',
-      title: 'Study Volume',
-      align: 'right',
-      sortable: true,
-    },
-    {
-      field: 'avg_img_per_study',
-      title: 'Avg. img/study',
-      align: 'right',
-      sortable: true,
-    },
-    {
-      field: 'avg_issues_per_image',
-      title: 'Avg. issues per image',
-      align: 'right',
-      sortable: true,
-    },
-    { field: 'actions', title: 'Actions', align: 'right', sortable: false },
-  ]
+const settings = {
+  last_child_no_border: false,
+  header_border_bottom_color: '#e1e1e1',
+  header_bg_color: '#EDEFF5',
+}
 
+const SOTable = () => {
+  const router = useRouter()
   return (
     <div className="flow">
-      <Table columns={columns} rows={rawTableData} />
+      <Table columns={columns} rows={rawTableData} settings={settings} />
       <div className="mt-3 mb-3" style={{ textAlign: 'center' }}>
-        <p className="cursor-pointer text-accent-400">View more {'>'}</p>
+        <p
+          onClick={() => router.push('/manager/techlist/practice')}
+          className="cursor-pointer text-accent-400"
+        >
+          View more {'>'}
+        </p>
       </div>
     </div>
   )
 }
 
-export default POTable
+export default SOTable

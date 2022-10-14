@@ -606,3 +606,24 @@ export const Site = ({ width = '94' }) => {
     </svg>
   )
 }
+
+export const TLBackButton = () => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect width="24" height="24" rx="8" fill="#6992FC" />
+      <path
+        d="M15.5 12H8.5M8.5 12L12 15.5M8.5 12L12 8.5"
+        stroke="white"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}

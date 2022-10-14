@@ -59,7 +59,9 @@ export default function SideBar({ setExpSidebar }) {
   return (
     <Box
       className={
-        !expandSidebar ? styles['sidebar__normal'] : styles['sidebar__expand']
+        !expandSidebar
+          ? styles['sidebar__normal']
+          : styles['sidebar__expand'] + ' ' + styles.sidebar
       }
       onMouseEnter={() => setExpandSidebar(true)}
       onMouseLeave={() => setExpandSidebar(false)}

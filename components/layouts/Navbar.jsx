@@ -43,11 +43,7 @@ export default function Navbar() {
             },
           }}
         >
-          <Avatar
-            alt="Remy Sharp"
-            src="/static/images/avatar/2.jpg"
-            sx={{ marginRight: '12px' }}
-          />
+          <Avatar alt="Remy Sharp" src="/2.jpg" sx={{ marginRight: '12px' }} />
           <Typography
             sx={{
               fontWeight: 700,

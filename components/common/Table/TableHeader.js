@@ -34,7 +34,7 @@ const arrowUp = (
     />
   </svg>
 );
-export default function TableHeaderRow({ columns, rows, selected, sortableFields, setSortableFields, selectAll }) {
+export default function TableHeaderRow({ columns, rows, selected, sortableFields, setSortableFields, selectAll, settings }) {
   const handleIconForSortable = (item) => {
     const indexOflement = sortableFields.findIndex((el) => el.name === item.field);
 
@@ -80,7 +80,16 @@ export default function TableHeaderRow({ columns, rows, selected, sortableFields
       <tr>
         {columns.map((item, i) => {
           return (
-            <th key={i} onClick={() => handleSorting(item)} style={{ width: item.width }}>
+            <th
+              key={i}
+              onClick={() => handleSorting(item)}
+              style={{
+                width: item.width,
+                background: settings.header_bg_color ?? "#FFF",
+                borderBottom: settings.header_border_bottom_color ?? "none",
+                padding: settings.header_padding ?? "1rem",
+              }}
+            >
               <div
                 style={{
                   display: "flex",

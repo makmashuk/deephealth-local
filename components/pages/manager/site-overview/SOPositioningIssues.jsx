@@ -3,7 +3,7 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import * as Icon from 'react-feather'
 
-import ProgressLineSingle from '@components/common/ProgressLineSingle'
+import ProgressLineSingle from '@components/common/Charts/ProgressLineSingle'
 
 export default function SOPositioningIssues() {
   return (
