@@ -1,21 +1,19 @@
-.breadcrumb li a {
-  text-decoration: none;
+.breadcrumb_item {
+	font-size: 12px;
+	font-weight: 600;
+	color: #44495b;
+	text-decoration: none;
+  transition: all 200ms ease-out;
 }
 
-.breadcrumb li a.active {
-  color: rgba(57, 57, 57, 1);
+.breadcrumb_item:hover a {
+  transition: all 200ms ease-out;
 }
 
-.breadcrumb li {
-  display: inline-block;
-  margin: 0 0.4rem;
+.breadcrumb_item:hover a {
+	color: #6A6E83;
 }
 
-.breadcrumb li:first-of-type {
-  margin: 0;
-}
-
-.breadcrumb li:last-of-type .next {
-  /* hide separator after the last item */
-  display: none;
+.breadcrumb_item_active {
+	color: #a8b1ce;
 }

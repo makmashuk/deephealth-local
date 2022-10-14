@@ -1,15 +1,11 @@
 import MainLayout from '@components/layouts/MainLayout'
-import Container from '@mui/material/Container'
-import { Grid } from '@mui/material/Grid'
-import React from 'react'
-import POViews from '@components/pages/manager/site-overview/POViews'
+import SOContainer from '@components/pages/manager/site-overview/SOContainer'
 
-import ContainerSite from '@components/pages/manager/site-overview/ContainerSite'
 function site() {
   return (
     <div>
       <MainLayout>
-        <ContainerSite />
+        <SOContainer />
       </MainLayout>
     </div>
   )

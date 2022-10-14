@@ -1,38 +1,65 @@
-import useBreadcrumb from "../../../hooks/useBreadcrumb";
-import styles from "./breadcrumb.module.css";
-import { BiHomeAlt } from "react-icons/bi";
-import { FiChevronRight } from "react-icons/fi";
+import { useRouter } from 'next/router'
+import { useMemo } from 'react'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
+import Link from '@mui/material/Link'
+import Typography from '@mui/material/Typography'
+import { ChevronRight } from '@icons/index'
+import styles from './BreadCrumb.module.css'
 
-const Logo = {
-  Dashboard: <BiHomeAlt />,
-  default: <BiHomeAlt />,
-};
+const generatePathParts = (pathStr) => {
+  const pathWithoutQuery = pathStr.split('?')[0]
+  return pathWithoutQuery.split('/').filter((v) => v.length > 0)
+}
 
-const Breadcrumb = () => {
-  const { state: breadcrumbs } = useBreadcrumb();
+const BreadCrumb = () => {
+  const router = useRouter()
+
+  const breadcrumbs = useMemo(() => {
+    const asPathWithoutQuery = router.asPath.split('?')[0]
+    const asPathNestedRoutes = asPathWithoutQuery
+      .split('/')
+      .filter((v) => v.length > 0)
+    const crumblist = asPathNestedRoutes.map((subpath, idx) => {
+      const href = '/' + asPathNestedRoutes.slice(0, idx + 1).join('/')
+      return {
+        href,
+        text: subpath.charAt(0).toUpperCase() + subpath.slice(1),
+      }
+    })
+    return [{ href: '/', text: 'Home' }, ...crumblist]
+  }, [router.asPath])
+
   return (
-    <nav>
-      <ol className={[styles["breadcrumb"]].join(" ")}>
-        {breadcrumbs?.map((el) => {
-          return (
-            <li key={el.title}>
-              <a
-                href={el.link}
-                className={["fs-300 text-primary-100 fw-semi-bold d--if ai--c", el.current ? styles.active : ""].join(
-                  " "
-                )}
-                style={{ gap: "0.4rem" }}
-              >
-                {Logo[el.title] ?? Logo.default}
-                {el.title}
-                <FiChevronRight className={styles.next} />
-              </a>
-            </li>
-          );
-        })}
-      </ol>
-    </nav>
-  );
-};
+    <Breadcrumbs
+      className="breadcrumbs"
+      aria-label="breadcrumb"
+      separator={<ChevronRight size={16} stroke="#A8B1CE" strokeWidth={1.5} />}
+    >
+      {breadcrumbs.map((crumb, idx) => (
+        <Crumb {...crumb} key={idx} last={idx === breadcrumbs.length - 1} />
+      ))}
+    </Breadcrumbs>
+  )
+}
 
-export default Breadcrumb;
+const Crumb = ({ text, href, last = false }) => {
+  if (last) {
+    return (
+      <Typography
+        className={`${styles.breadcrumb_item} ${styles.breadcrumb_item_active}`}
+      >
+        {text}
+      </Typography>
+    )
+  }
+
+  return (
+    <Typography className={styles.breadcrumb_item}>
+      <Link underline="none" href={href} color="#44495B">
+        {text}
+      </Link>
+    </Typography>
+  )
+}
+
+export default BreadCrumb

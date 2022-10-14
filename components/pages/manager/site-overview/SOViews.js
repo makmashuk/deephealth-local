@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 
 import { PieChart } from "@components/common/PieChart";
 
-export default function POViews() {
+export default function SOViews() {
   return (
     <Card
       sx={{ minWidth: 316, borderRadius: "12px"}}

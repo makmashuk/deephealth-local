@@ -1,28 +1,25 @@
 import React from 'react'
-import POViews from './POViews';
-import POTable from './POTable'
-import POAppbar from './POAppbar'
-import POSummary from './POSummary'
-import POTrending from './POTrending'
-
-import POPositioningIssues from './POPositioningIssues'
+import SOViews from './SOViews';
+import SOTable from './SOTable'
+import SOTrending from './SOTrending'
+import SOPositioningIssues from './SOPositioningIssues'
 import { Grid } from '@mui/material';
+
 function ContainerSite() {
   return (
     <div>
-      {/* <POSummary/> */}
       <Grid container padding={2} rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         <Grid item xs={3}>
-        <POViews/>
+        <SOViews/>
         </Grid>
         <Grid item xs={6}>
-        <POTrending/>
+        <SOTrending/>
         </Grid>
         <Grid item xs={3}>
-          <POPositioningIssues/>
+          <SOPositioningIssues/>
         </Grid>
         <Grid item xs={12}>
-        <POTable/>
+        <SOTable/>
         </Grid>
       </Grid>
     </div>

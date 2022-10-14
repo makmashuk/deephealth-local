@@ -9,11 +9,11 @@ export const data = {
   maintainAspectRatio: false,
   datasets: [
     {
-      data: [30, 60, 50],
-      backgroundColor: ["#27C052", "#DF6666", "#ABD84B"],
-      borderColor: ["#27C052", "#DF6666", "#ABD84B"],
-      // hoverOffset: 2
-    },
+      data: [30,70],
+      backgroundColor: ["#FF5B51","#EDEFF5"],
+      borderColor: ["#FF5B51", "#EDEFF5"],
+      hoverOffset: 5
+    }
   ],
 };
 
