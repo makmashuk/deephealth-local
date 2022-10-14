@@ -34,9 +34,9 @@ export const Star = ({ size = '24', stroke = '#000', strokeWidth = '2' }) => {
       <path
         d="M12.7542 4.23685L12.7542 4.23688L12.7586 4.24543L14.3478 7.32099C14.6818 8.10997 15.44 8.51288 16.0847 8.64168C16.0973 8.64419 16.1099 8.64638 16.1226 8.64825L19.5258 9.14814C19.5265 9.14825 19.5273 9.14836 19.528 9.14847C20.2151 9.2557 20.477 10.1003 20.0211 10.5703L17.5284 12.8609C17.5208 12.868 17.5133 12.8752 17.5059 12.8826C16.979 13.4088 16.6394 14.1489 16.7979 14.9551L17.3962 18.2421C17.5011 18.9636 16.7996 19.4636 16.1694 19.1521L13.0669 17.5526C13.0456 17.5417 13.0237 17.5317 13.0015 17.5228C12.3216 17.2512 11.6212 17.2512 10.9413 17.5228C10.9191 17.5317 10.8972 17.5417 10.8759 17.5526L7.77338 19.1521C7.14318 19.4636 6.44169 18.9636 6.54658 18.2421L7.14491 14.955C7.2884 14.224 7.02615 13.3486 6.40417 12.8499L4.03114 10.4795C4.02184 10.4702 4.0123 10.4612 4.00252 10.4524C3.74884 10.2243 3.69699 9.92549 3.79569 9.64288C3.89827 9.34912 4.15714 9.10416 4.51507 9.04835L7.92043 8.54812C7.93313 8.54626 7.94578 8.54407 7.95836 8.54155C8.59443 8.41448 9.34514 8.01969 9.68498 7.34078L9.68504 7.34081L9.68929 7.33204L11.1789 4.25703C11.6183 3.53524 12.4525 3.63413 12.7542 4.23685Z"
         stroke={stroke}
-        stroke-width={strokeWidth}
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   )
@@ -58,10 +58,10 @@ export const ChevronDown = ({
       <path
         d="M11.3332 6.66669L7.99984 10L4.6665 6.66669"
         stroke={stroke}
-        stroke-width={strokeWidth}
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth={strokeWidth}
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   )
@@ -113,9 +113,9 @@ export const Search = ({ size = '24', stroke = '#000', strokeWidth = '2' }) => {
       <path
         d="M20 20L16.1333 16.1333M18.2222 11.1111C18.2222 15.0385 15.0385 18.2222 11.1111 18.2222C7.18375 18.2222 4 15.0385 4 11.1111C4 7.18375 7.18375 4 11.1111 4C15.0385 4 18.2222 7.18375 18.2222 11.1111Z"
         stroke={stroke}
-        stroke-width={strokeWidth}
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   )
@@ -137,9 +137,9 @@ export const ArrowNarrowDown = ({
       <path
         d="M12 4V20M12 20L18 14M12 20L6 14"
         stroke={stroke}
-        stroke-width={strokeWidth}
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   )
@@ -161,9 +161,9 @@ export const ArrowNarrowUp = ({
       <path
         d="M12 20V4M12 4L6 10M12 4L18 10"
         stroke={stroke}
-        stroke-width={strokeWidth}
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   )

@@ -1,6 +1,4 @@
 import Table from '@components/common/Table/Table'
-import ProgressLineMultiple from '@components/common/ProgressLineMultiple'
-import TableHeaderBox from '@components/common/TableHeaderBox'
 import SeeImagesIcon from '@components/common/Table/SeeImagesIcon'
 
 const progressData = [

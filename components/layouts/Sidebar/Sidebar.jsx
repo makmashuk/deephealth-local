@@ -14,6 +14,7 @@ const SIDEBAR_LINKS = [
     title: 'Dashboard',
     slug: 'dashboard',
     icon: '',
+    expanded_text: '',
   },
   {
     id: '46f7dc9b-e75d-40e0-8d14-1e7334d16d5ee',
@@ -44,7 +45,6 @@ export default function SideBar({ setExpSidebar }) {
     '46f7dc9b-e75d-40e0-8d14-1e7334d16d5e'
   )
   const handleActiveRoute = (link) => {
-    console.log(link)
     setActiveLink(link.id)
     router.push(link.link)
   }
@@ -61,6 +61,8 @@ export default function SideBar({ setExpSidebar }) {
       className={
         !expandSidebar ? styles['sidebar__normal'] : styles['sidebar__expand']
       }
+      onMouseEnter={() => setExpandSidebar(true)}
+      onMouseLeave={() => setExpandSidebar(false)}
     >
       <Box
         className={
@@ -129,7 +131,7 @@ export default function SideBar({ setExpSidebar }) {
                 <Icon.Home
                   size={25}
                   color={activeLink === link.id ? 'black' : 'white'}
-                  style={{ minWidth: '25px' }}
+                  // style={{ minWidth: '25px' }}
                 />
                 <span
                   className={
@@ -148,7 +150,7 @@ export default function SideBar({ setExpSidebar }) {
                 <Icon.Image
                   size={25}
                   color={activeLink === link.id ? 'black' : 'white'}
-                  style={{ minWidth: '25px' }}
+                  // style={{ minWidth: '25px' }}
                 />
                 <span
                   className={
@@ -167,7 +169,7 @@ export default function SideBar({ setExpSidebar }) {
                 <Icon.Users
                   size={25}
                   color={activeLink === link.id ? 'black' : 'white'}
-                  style={{ minWidth: '25px' }}
+                  // style={{ minWidth: '25px' }}
                 />
                 <span
                   className={

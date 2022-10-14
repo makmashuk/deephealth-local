@@ -13,13 +13,13 @@ function ContainerSite() {
         <SOViews/>
         </Grid>
         <Grid item xs={6}>
-        <SOTrending/>
+        {/* <SOTrending/> */}
         </Grid>
         <Grid item xs={3}>
           <SOPositioningIssues/>
         </Grid>
         <Grid item xs={12}>
-        <SOTable/>
+          <SOTable/>
         </Grid>
       </Grid>
     </div>
