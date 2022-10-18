@@ -98,6 +98,7 @@ export const muiCustomTheme = createTheme({
           flexDirection: 'row',
           alignItems: 'center',
           padding: '0 20px',
+          zIndex: 1,
         },
       },
     },

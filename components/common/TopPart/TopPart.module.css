@@ -5,6 +5,7 @@
   position: sticky;
   top: 65px;
   background-color: #fff;
+  z-index: 10;
 }
 
 .summary {
