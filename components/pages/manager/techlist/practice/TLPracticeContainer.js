@@ -7,9 +7,9 @@ import * as Icon from 'react-feather'
 
 import { TLBackButton } from '@icons/index'
 
-import TLList from './TLList'
+import TLPracticeList from './TLPracticeList'
 
-function TLContainer() {
+function TLPracticeContainer() {
   return (
     <div>
       <Grid
@@ -17,7 +17,10 @@ function TLContainer() {
         padding={2}
         rowSpacing={2}
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-      >
+      ><Grid item xs={12}>
+        DROPDOWN
+      </Grid>
+
         <Grid item xs={12}>
           <Grid container>
             <Grid
@@ -104,11 +107,11 @@ function TLContainer() {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <TLList />
+          <TLPracticeList />
         </Grid>
       </Grid>
     </div>
   )
 }
 
-export default TLContainer
+export default TLPracticeContainer

@@ -25,7 +25,7 @@ const SIDEBAR_LINKS = [
   },
   {
     id: '46f7dc9b-e75d-40e0-8d14-1e7334d16d5eee',
-    link: '/manager/techlist/practice',
+    link: '/manager/tech-card',
     title: 'Technologists List',
     slug: 'technologists-list',
     icon: '',

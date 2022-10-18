@@ -122,7 +122,7 @@ const rawTableData = [
   },
 ]
 
-const TLlist = () => {
+const TLPracticeList = () => {
   const columns = [
     {
       field: 'technologist',
@@ -190,4 +190,4 @@ const TLlist = () => {
   )
 }
 
-export default TLlist
+export default TLPracticeList

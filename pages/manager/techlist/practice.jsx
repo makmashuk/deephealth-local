@@ -1,11 +1,11 @@
-import MainLayout from '@components/layouts/MainLayout';
-import TLContainer from '@components/pages/manager/techlist/TLContainer';
+import MainLayout from '@components/layouts/MainLayout'
+import TLPracticeContainer from '@components/pages/manager/techlist/practice/TLPracticeContainer'
 
 function practice() {
   return (
     <div>
       <MainLayout>
-        <TLContainer />
+        <TLPracticeContainer />
       </MainLayout>
     </div>
   )

@@ -93,9 +93,9 @@ export default function FullWidthTabs() {
           <SearchBox />
 
           <ul className={styles.list}>
-            <li onClick={()=> router.push('/manager/techlist/practice')} className={styles.listItem}>Item One</li>
-            <li className={styles.listItem}>Item Two</li>
-            <li className={styles.listItem}>Item Three</li>
+            <li onClick={()=> router.push('/manager/techlist/practice')} className={styles.listItem}>NYC CLinic Practice</li>
+            <li onClick={()=> router.push('/manager/techlist/practice')} className={styles.listItem}>Detroit Practice</li>
+            <li onClick={()=> router.push('/manager/techlist/practice')} className={styles.listItem}>Item Three</li>
           </ul>
 
         </Box>
@@ -105,8 +105,8 @@ export default function FullWidthTabs() {
           <SearchBox />
 
           <ul className={styles.list}>
-            <li className={styles.listItem}>Princeton Plainsborough</li>
-            <li className={styles.listItem}>Detroit Radiology</li>
+            <li onClick={()=> router.push('/manager/techlist/site')} className={styles.listItem}>Princeton Plainsborough</li>
+            <li onClick={()=> router.push('/manager/techlist/site')} className={styles.listItem}>Detroit Radiology</li>
             <li className={styles.listItem}>NYC Clinics of women health</li>
             <li className={styles.listItem}>California University Hospital</li>
           </ul>
