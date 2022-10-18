@@ -11,35 +11,69 @@ import { TLBackButton, Trash } from '@icons/index'
 import SOTable from '@components/pages/manager/site-overview/SOTable'
 import FilterExpanded from './FilterExpanded'
 
+import Chips from '@components/common/Chips/Chips'
+
 const tech_list = [
   {
     id: '1',
-    name: 'Nipple not in profile',
+    key: '1',
+    title: 'Nipple not in profile',
     is_checked: true,
   },
   {
     id: '2',
-    name: 'Nipple not in midline',
+    key: '2',
+    title: 'Nipple not in midline',
     is_checked: false,
   },
   {
     id: '3',
-    name: 'Droopy breast',
+    key: '3',
+    title: 'Droopy breast',
     is_checked: false,
   },
   {
     id: '4',
-    name: 'Not enough muscle',
+    key: '4',
+    title: 'Not enough muscle',
     is_checked: false,
   },
   {
     id: '5',
-    name: 'IMF not open',
+    key: '5',
+    title: 'IMF not open',
     is_checked: false,
   },
 ]
 
 function TLSiteContainer() {
+  const [filterData, setFilterData] = React.useState(tech_list)
+  const [displayFilter, setDisplayFilter] = React.useState(false)
+
+  const handleDisplayFilters = (e) => {
+    e.preventDefault()
+    setDisplayFilter(true)
+    console.log(displayFilter)
+    console.log('handleDisplayFilters')
+  }
+
+  const handleModalClose = () => {
+    console.log('modal close triggered')
+    setDisplayFilter(false)
+  }
+
+  const handleFilterData = (data) => {
+    console.log('filter data received on parent')
+    console.log(data)
+    setFilterData(data)
+  }
+
+  const handleChips = (data) => {
+    console.log('chips data received on parent')
+    console.log(data)
+    setFilterData(data)
+  }
+
   const handleOnClickClose = (e) => {
     e.preventDefault()
     console.log('close clicked')
@@ -47,7 +81,11 @@ function TLSiteContainer() {
   }
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+      }}
+    >
       <Grid
         container
         padding={2}
@@ -115,7 +153,16 @@ function TLSiteContainer() {
                 }}
               />
             </Grid>
-            <Grid item xs={1}>
+
+            {/* filterButton */}
+            <Grid
+              style={{
+                cursor: 'pointer',
+              }}
+              onClick={handleDisplayFilters}
+              item
+              xs={1}
+            >
               <div
                 style={{
                   display: 'flex',
@@ -161,63 +208,26 @@ function TLSiteContainer() {
         </Grid>
 
         <Grid item xs={12}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-            }}
-          >
-            {tech_list.map((tech, index) => (
-              <Button
-                key={index}
-                style={{
-                  background: '#EDEFF5',
-                  borderRadius: '8px',
-                  padding: '6px 12px',
-                  color: '#6A6E83',
-                  textTransform: 'none',
-                  fontWeight: 600,
-                  fontSize: '12px',
-                  border: 'none',
-                  '&:hover': {
-                    backgroundColor: '#EDEFF5',
-                    color: '#6A6E83',
-                  },
-                  margin: '0 12px 0 0',
-                }}
-              >
-                {tech.name}&nbsp;&nbsp;
-                <span onClick={handleOnClickClose}>
-                  <Close size={10} />
-                </span>
-              </Button>
-            ))}
-
-            <span
-              style={{
-                display: 'flex',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                fontStyle: 'normal',
-                fontWeight: 700,
-                fontSize: '14px',
-                color: '#FF5B51',
-              }}
-            >
-              Clear All&nbsp;&nbsp;
-              <Trash size={14} color={'#FF5B51'} />
-            </span>
-          </div>
+          <Chips chips={filterData} setChips={handleChips} />
         </Grid>
 
         <Grid item xs={12}>
           <SOTable />
         </Grid>
+      </Grid>
 
-        <Grid item xs={12}>
-          {/* <FilterExpanded data={tech_list} /> */}
-        </Grid>
+      <Grid
+        style={{
+          display: displayFilter ? 'block' : 'none',
+        }}
+        item
+        xs={12}
+      >
+        <FilterExpanded
+          data={filterData}
+          setDisplayFilter={handleModalClose}
+          setData={handleFilterData}
+        />
       </Grid>
     </div>
   )

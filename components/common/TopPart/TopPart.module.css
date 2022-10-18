@@ -1,0 +1,42 @@
+.container {
+  border-radius: 0px 0px 0px 44px;
+  overflow: hidden;
+  box-shadow: 6px 4px 14px rgba(243, 245, 250, 0.92);
+  position: sticky;
+  top: 65px;
+  background-color: #fff;
+}
+
+.summary {
+  padding: 20px;
+}
+
+.single_strip {
+  padding: 12px 20px 12px 30px;
+}
+
+.small_card {
+  padding: 12px 8px 8px;
+  border: 1px solid #edeff5;
+  border-radius: 12px;
+  margin-right: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.small_card__item {
+  position: relative;
+  padding-left: 8px;
+}
+
+.small_card__item::before {
+  position: absolute;
+  content: '';
+  top: 25%;
+  left: 0;
+  /* transform: translateY(-50%); */
+  width: 2px;
+  height: 70%;
+  background-color: #6992fc;
+  border-radius: 4px;
+}

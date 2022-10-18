@@ -6,11 +6,6 @@ import Typography from '@mui/material/Typography'
 import { ChevronRight } from '@icons/index'
 import styles from './BreadCrumb.module.css'
 
-const generatePathParts = (pathStr) => {
-  const pathWithoutQuery = pathStr.split('?')[0]
-  return pathWithoutQuery.split('/').filter((v) => v.length > 0)
-}
-
 const BreadCrumb = () => {
   const router = useRouter()
 

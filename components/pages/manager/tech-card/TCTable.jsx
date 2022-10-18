@@ -1,6 +1,6 @@
 import Table from '@components/common/Table/Table'
-import SeeImagesIcon from '@components/common/Table/SeeImagesIcon'
 import { useRouter } from 'next/router'
+import { StarOutline, StarFilled } from '../../../icons'
 
 const rawTableData = [
   {
@@ -9,7 +9,7 @@ const rawTableData = [
     date: '03.05.22',
     view: 'RMLO',
     issues: 2.0,
-    flagged: 'icon',
+    action: <StarOutline size={10} />,
   },
   {
     images: 'Image_1',
@@ -17,7 +17,7 @@ const rawTableData = [
     date: '03.05.22',
     view: 'RMLO',
     issues: 2.0,
-    flagged: 'icon',
+    action: <StarOutline size={10} />,
   },
   {
     images: 'Image_1',
@@ -25,7 +25,7 @@ const rawTableData = [
     date: '03.05.22',
     view: 'RMLO',
     issues: 2.0,
-    flagged: 'icon',
+    action: <StarOutline size={10} />,
   },
   {
     images: 'Image_1',
@@ -33,7 +33,7 @@ const rawTableData = [
     date: '03.05.22',
     view: 'RMLO',
     issues: 2.0,
-    flagged: 'icon',
+    action: <StarOutline size={10} />,
   },
   {
     images: 'Image_1',
@@ -41,7 +41,7 @@ const rawTableData = [
     date: '03.05.22',
     view: 'RMLO',
     issues: 2.0,
-    flagged: 'icon',
+    action: <StarOutline size={10} />,
   },
   {
     images: 'Image_1',
@@ -49,7 +49,7 @@ const rawTableData = [
     date: '03.05.22',
     view: 'RMLO',
     issues: 2.0,
-    flagged: 'icon',
+    action: <StarFilled size={10} />,
   },
   {
     images: 'Image_1',
@@ -57,7 +57,7 @@ const rawTableData = [
     date: '03.05.22',
     view: 'RMLO',
     issues: 2.0,
-    flagged: 'icon',
+    action: <StarOutline size={10} />,
   },
 ]
 const columns = [
@@ -91,7 +91,7 @@ const columns = [
     align: 'right',
     sortable: true,
   },
-  { field: 'flagged', title: 'Flagged', align: 'center', sortable: false },
+  { field: 'action', title: 'Flagged', align: 'center', sortable: false },
 ]
 
 const settings = {

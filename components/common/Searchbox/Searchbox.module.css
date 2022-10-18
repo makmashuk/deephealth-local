@@ -1,0 +1,40 @@
+.search {
+  width: calc(272 / 1440 * 100vw);
+  height: 32px;
+  border: 1px solid #edeff5;
+  border-radius: 8px;
+  padding: 8px 8px 8px 32px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  color: #44495b;
+  outline: none;
+  background: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.3334 13.3333L10.7556 10.7555M12.1482 7.40737C12.1482 10.0256 10.0257 12.1481 7.40749 12.1481C4.78925 12.1481 2.66675 10.0256 2.66675 7.40737C2.66675 4.78913 4.78925 2.66663 7.40749 2.66663C10.0257 2.66663 12.1482 4.78913 12.1482 7.40737Z' stroke='%23A8B1CE' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat 8px center;
+  transition: all 0.3s ease-out;
+}
+
+.big {
+  height: 36px;
+  border-radius: 12px;
+  padding: 10px 8px 10px 32px;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.search::placeholder {
+  color: #a8b1ce;
+}
+
+.search:focus {
+  border-color: #6992fc;
+  background: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.3334 13.3333L10.7556 10.7555M12.1482 7.40737C12.1482 10.0256 10.0257 12.1481 7.40749 12.1481C4.78925 12.1481 2.66675 10.0256 2.66675 7.40737C2.66675 4.78913 4.78925 2.66663 7.40749 2.66663C10.0257 2.66663 12.1482 4.78913 12.1482 7.40737Z' stroke='%2344495B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat 8px center;
+}
+
+.search:not(:placeholder-shown) {
+  background: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.3334 13.3333L10.7556 10.7555M12.1482 7.40737C12.1482 10.0256 10.0257 12.1481 7.40749 12.1481C4.78925 12.1481 2.66675 10.0256 2.66675 7.40737C2.66675 4.78913 4.78925 2.66663 7.40749 2.66663C10.0257 2.66663 12.1482 4.78913 12.1482 7.40737Z' stroke='%2344495B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat 8px center;
+}

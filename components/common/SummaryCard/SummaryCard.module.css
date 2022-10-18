@@ -1,0 +1,45 @@
+.card {
+  box-shadow: none;
+  margin-left: 1rem;
+  background: #fff;
+  border: 1px solid #edeff5;
+  border-radius: 12px;
+  padding: 16px;
+  height: 100%;
+}
+
+.card_content {
+  margin-top: 4px;
+}
+
+.card_footer {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.card_footer_chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 44px;
+  padding: 2px 7px 2px 4px;
+  margin-right: 8px;
+  column-gap: 2px;
+}
+
+.card_footer_label {
+  color: #a8b1ce;
+}
+
+.warning {
+  color: #ff5b51;
+  background-color: #ffeae9;
+}
+.success {
+  color: #00ad5a;
+  background-color: #c8f5e0;
+}
+
+.card_footer_label {
+  color: '#A8B1CE';
+}

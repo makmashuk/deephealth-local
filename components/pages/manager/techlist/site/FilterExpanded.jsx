@@ -8,11 +8,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import { useFormik } from 'formik';
-
-// import * as Icon from 'react-feather';
-
 import { CloseWindow, Trash } from '@icons/index';
-// import Checkboxes from '@components/common/Checkboxes/Checkboxes';
 
 const tech_list = [
   {
@@ -42,7 +38,10 @@ const tech_list = [
   },
 ]
 
-const FilterExpanded = ( { data } ) => {
+const FilterExpanded = ( { data, setDisplayFilter, setData } ) => {
+
+  // to toggle modal
+  const [showModal, setShowModal] = useState(false);
 
   const formik = useFormik({
     initialValues:{
@@ -50,17 +49,19 @@ const FilterExpanded = ( { data } ) => {
     },
     // add validation later
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
       console.log(values)
+      setData(values)
     },
   });
 
   const [timeRange, setTimeRange] = useState("year");
-  const [formData, setFormData] = useState(tech_list);
+  const [formData, setFormData] = useState(data);
 
   const handleClose = (e) => {
     e.preventDefault();
-    console.log('Close button was clicked.');
+    console.log('filter close clicked.');
+    setShowModal(!showModal);
+    setDisplayFilter(!showModal)
   }
 
   const handleClearAll = (e) => {
@@ -73,15 +74,10 @@ const FilterExpanded = ( { data } ) => {
     console.log(timeRange)
   };
 
-  // const handleApplyFilters = (e) => {
-  //   e.preventDefault();
-  //   console.log('Apply filters was clicked.');
-  //   console.log(e);
-  // }
-
-
   return (
-    <Card sx={{ width: "330px", height: "100%", borderRadius: "0px", boxShadow: "none" }}>
+    <Card
+      sx={{ width: "330px", height: "100%", borderRadius: "0px", boxShadow: "none" }}
+    >
       <CardContent>
         <Grid container spacing={0}>
           <Grid
@@ -192,7 +188,6 @@ const FilterExpanded = ( { data } ) => {
                 alignItems: "flex-start",
               }}
             >
-              {/* <Checkboxes data={data} checkboxOnChangeHandler={handleCheckboxes} /> */}
               <FormControl component="fieldset">
                 <FormGroup aria-label="position" row={false}>
                   {formData.map((data, index) => (
@@ -207,7 +202,7 @@ const FilterExpanded = ( { data } ) => {
                           sx={{ color: '#44495B', p: '8px' }}
                         />
                       }
-                      label={data.name}
+                      label={data.title}
                       labelPlacement="end"
                       sx={{
                         fontStyle: 'normal',
@@ -223,6 +218,7 @@ const FilterExpanded = ( { data } ) => {
               </FormControl>
             </Grid>
 
+            <div>
             <Grid
               item xs={12} sm={12} md={12}
               mt={2}
@@ -291,6 +287,8 @@ const FilterExpanded = ( { data } ) => {
                 </span>
               </Button>
             </Grid>
+            </div>
+
           </form>
 
         </Grid>
