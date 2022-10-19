@@ -1,43 +1,25 @@
 import { useState } from 'react';
-import { Grid } from '@mui/material';
-import { Card, CardContent } from '@mui/material';
 import GroupButton from "@components/common/GroupButton/GroupButton";
-import Button from '@mui/material/Button';
-import FormGroup from '@mui/material/FormGroup';
-import FormControl from '@mui/material/FormControl';
 
-import { CheckboxWithLabel } from 'formik-mui';
-import { useFormik, Formik, Form, Field, FormikProvider } from "formik";
+import { Grid, Card, CardContent, Radio, Button, FormGroup, FormControl, FormControlLabel } from '@mui/material';
+
+import { CheckboxWithLabel, RadioGroup, Select } from 'formik-mui';
+import { useFormik, Formik, Form, Field } from "formik";
 import { CloseWindow, Trash } from '@icons/index';
 
-const FilterExpanded = ( { data, checkedData, setDisplayFilter, setData, setClearAll } ) => {
+const FilterExpanded = ( { data, selectedData, setDisplayFilter, setData, setClearAll } ) => {
 
   const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState(data);
-  const [checked, setChecked] = useState(checkedData);
+
+  const [qualityData, setQualityData] = useState(data.quality);
+  const [viewsData, setViewsData] = useState(data.views);
+  const [flagData, setFlagData] = useState(data.flag);
+  const [densityData, setDensityData] = useState(data.density);
+  const [positionData, setPositionData] = useState(data.positioning_issues);
+
   const [timeRange, setTimeRange] = useState("year");
 
-  let checkedKeys = checked.map((item) => item.key);
-  const [checkedKeysX, setCheckedKeysX] = useState(checkedKeys);
-
-
-  const formik = useFormik({
-    initialValues: {
-      keys: checkedKeysX
-    },
-    onSubmit: (values) => {
-      let checkedItems = values.keys.map((key) => {
-        return data.find((item) => item.key === key);
-      });
-      console.log("checkedItems", checkedItems)
-      setChecked(checkedItems);
-      setData(checkedItems);
-      setCheckedKeysX(checkedItems.map((item) => item.key));
-      console.log(checkedKeysX)
-      handleClose();
-    },
-    enableReinitialize: true,
-  });
+  const [selected, setSelected] = useState(selectedData);
 
   const handleClose = () => {
     setShowModal(!showModal);
@@ -62,7 +44,7 @@ const FilterExpanded = ( { data, checkedData, setDisplayFilter, setData, setClea
 
   return (
     <Card
-      sx={{ width: "330px", height: "100%", borderRadius: "0px", boxShadow: "none", position: "absolute", right: "0px", top: "68px", zIndex: "1000", backgroundColor: "#fff" }}
+      sx={{ width: "330px", height: "92.75vh", borderRadius: "0px", boxShadow: "none", position: "absolute", right: "0px", top: "68px", zIndex: "1000", backgroundColor: "#fff" }}
     >
       <CardContent>
         <Grid container spacing={0}>
@@ -138,136 +120,322 @@ const FilterExpanded = ( { data, checkedData, setDisplayFilter, setData, setClea
             <GroupButton buttons={["Year", "Quarter", "Month", "Week"]} buttonOnClickHandler={handleTimeRange} />
           </Grid>
 
-
-          <Grid
-            item xs={12} sm={12} md={12}
-            mt={3}
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
+          <Formik
+            // initialValues={{
+            //   quality: ['Perfect'],
+            //   views: [],
+            //   flag: [],
+            //   density: [],
+            //   positioning_issues: [],
+            // }}
+            initialValues={selected}
+            onSubmit={(values, { setSubmitting, resetForm }) => {
+              const filteredFieldsCounts = {
+                quality: values?.quality?.length ?? undefined,
+                views: values?.views?.length ?? undefined,
+                flag: values?.flag?.length ?? undefined,
+                density: values?.density?.length ?? undefined,
+                positioning_issues: values?.positioning_issues?.length ?? undefined,
+              };
+              console.log('filteredFieldsCounts')
+              console.log(filteredFieldsCounts)
+              setSubmitting(false);
+              setSelected(values)
+              setData(values)
+              handleClose()
+              // resetForm();
             }}
+            enableReinitialize
           >
-            <span
-              style={{
-                fontStyle: 'normal',
-                fontWeight: 700,
-                fontSize: '16px',
-                color: '#44495B',
-              }}
-            >
-              Positioning issues
-            </span>
-          </Grid>
-
-          <FormikProvider value={formik}>
-            <Form
-              onSubmit={formik.handleSubmit}
-              style={{ width: "100%" }}
-            >
-              <Grid
-                item xs={12} sm={12} md={12}
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "flex-start",
-                }}
-              >
-                <FormControl
-                  component="fieldset"
-                  style={{ display: "flex" }}>
-                  <FormGroup
-                    // do not disable after submit
-                    // disabled={formik.isSubmitting}
-                  >
-                    {formData.map(opt => (
-                      <Field
-                        type="checkbox"
-                        component={CheckboxWithLabel}
-                        name="keys"
-                        key={opt.key}
-                        value={opt.key}
-                        Label={{ label: opt.title }}
-                        onChange={formik.handleChange}
-                      />
-                    ))}
-                  </FormGroup>
-                </FormControl>
-                {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
-              </Grid>
-
-              <Grid
-                item xs={12} sm={12} md={12}
-                mt={2}
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "flex-end",
-                  alignItems: "center",
-                }}
-              >
+            {({ values }) => (
+              <Form style={{ height: "100%" }}>
                 <div
                   style={{
-                    cursor: 'pointer',
                     display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-end",
-                    alignItems: "center"
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    height: "100%",
                   }}
-                  onClick={handleClearAll}
                 >
-                  <span
-                    style={{
-                      fontStyle: 'normal',
-                      fontWeight: 700,
-                      fontSize: '14px',
-                      color: '#6992FC',
+                <div>
+                  {/* Quality */}
+                  <Grid
+                    item xs={12} sm={12} md={12}
+                    mt={1}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "flex-start",
                     }}
                   >
-                    Clear All
-                  </span>
-                  &nbsp;<Trash size={14} color={"#6992FC"} />
-                </div>
-              </Grid>
+                    <span
+                      style={{
+                        fontStyle: 'normal',
+                        fontWeight: 700,
+                        fontSize: '16px',
+                        color: '#44495B',
+                      }}
+                    >
+                      Quality
+                    </span>
+                  </Grid>
+                  <Grid
+                    item xs={12} sm={12} md={12}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "flex-start",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    {qualityData.map((quality, index) => (
+                      <Field
+                        key={index}
+                        type="checkbox"
+                        component={CheckboxWithLabel}
+                        name="quality"
+                        value={quality}
+                        Label={{ label: quality }}
+                      />
+                    ))}
+                  </Grid>
 
-              <Grid
-                item xs={12} sm={12} md={12}
-                mt={2}
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Button
-                  style={{
-                    padding: '4px 8px',
-                    background: '#6992FC',
-                    borderRadius: '12px',
-                    color: 'white',
-                    textTransform: 'none',
-                    width: '100%',
-                  }}
-                  type="submit"
-                >
-                  <span
-                    style={{
-                      fontStyle: 'normal',
-                      fontWeight: 700,
-                      fontSize: '14px',
-                      color: 'white',
-                      lineHeight: "24px"
+                  {/* views */}
+                  <Grid
+                    item xs={12} sm={12} md={12}
+                    mt={1}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "flex-start",
                     }}
                   >
-                    Apply filters
-                  </span>
-                </Button>
-              </Grid>
-            </Form>
-          </FormikProvider>
+                    <span
+                      style={{
+                        fontStyle: 'normal',
+                        fontWeight: 700,
+                        fontSize: '16px',
+                        color: '#44495B',
+                      }}
+                    >
+                      Views
+                    </span>
+                  </Grid>
+                  <Grid
+                    item xs={12} sm={12} md={12}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    {viewsData.map((view, index) => (
+                      <Field
+                        key={index}
+                        type="checkbox"
+                        component={CheckboxWithLabel}
+                        name="views"
+                        value={view}
+                        Label={{ label: view }}
+                      />
+                    ))}
+                  </Grid>
+
+                  {/* Flag */}
+                  <Grid
+                    item xs={12} sm={12} md={12}
+                    mt={1}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontStyle: 'normal',
+                        fontWeight: 700,
+                        fontSize: '16px',
+                        color: '#44495B',
+                      }}
+                    >
+                      Flag
+                    </span>
+                  </Grid>
+                  <Grid
+                    item xs={12} sm={12} md={12}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <Field row component={RadioGroup} name="flag">
+                      {
+                        flagData.map((flag, index) => (
+                          <FormControlLabel
+                            key={index}
+                            value={flag}
+                            control={<Radio />}
+                            label={flag}
+                          />
+                        ))
+                      }
+                    </Field>
+                  </Grid>
+
+                  {/* Density */}
+                  <Grid
+                    item xs={12} sm={12} md={12}
+                    mt={1}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontStyle: 'normal',
+                        fontWeight: 700,
+                        fontSize: '16px',
+                        color: '#44495B',
+                      }}
+                    >
+                      Density
+                    </span>
+                  </Grid>
+                  <Grid
+                    item xs={12} sm={12} md={12}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    {densityData.map((density, index) => (
+                      <Field
+                        key={index}
+                        type="checkbox"
+                        component={CheckboxWithLabel}
+                        name="density"
+                        value={density}
+                        Label={{ label: density }}
+                      />
+                    ))}
+                  </Grid>
+
+                  {/* Positioning Issues */}
+                  <Grid
+                    item xs={12} sm={12} md={12}
+                    mt={1}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontStyle: 'normal',
+                        fontWeight: 700,
+                        fontSize: '16px',
+                        color: '#44495B',
+                      }}
+                    >
+                      Positioning Issues
+                    </span>
+                  </Grid>
+                  <Grid
+                    item xs={12} sm={12} md={12}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "flex-start",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    {positionData.map((positioning_issues, index) => (
+                      <Field
+                        key={index}
+                        type="checkbox"
+                        component={CheckboxWithLabel}
+                        name="positioning_issues"
+                        value={positioning_issues}
+                        Label={{ label: positioning_issues }}
+                      />
+                    ))}
+                  </Grid>
+                </div>
+
+
+                {/* clear all */}
+                <div>
+                  <div
+                    style={{
+                      cursor: 'pointer',
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                      alignItems: "center"
+                    }}
+                    onClick={handleClearAll}
+                  >
+                    <span
+                      style={{
+                        fontStyle: 'normal',
+                        fontWeight: 700,
+                        fontSize: '14px',
+                        color: '#6992FC',
+                      }}
+                    >
+                      Clear All
+                    </span>
+                    &nbsp;<Trash size={14} color={"#6992FC"} />
+                  </div>
+                </div>
+
+
+
+                {/* submit button  */}
+                <div>
+                  <Button
+                    style={{
+                      padding: '4px 8px',
+                      background: '#6992FC',
+                      borderRadius: '12px',
+                      color: 'white',
+                      textTransform: 'none',
+                      width: '100%',
+                    }}
+                    type="submit"
+                  >
+                    <span
+                      style={{
+                        fontStyle: 'normal',
+                        fontWeight: 700,
+                        fontSize: '14px',
+                        color: 'white',
+                        lineHeight: "24px"
+                      }}
+                    >
+                      Apply filters
+                    </span>
+                  </Button>
+                </div>
+
+            </div>
+          </Form>
+        )}
+      </Formik>
         </Grid>
 
       </CardContent>

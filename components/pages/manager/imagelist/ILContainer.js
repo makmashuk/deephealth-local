@@ -6,50 +6,43 @@ import * as Icon from 'react-feather'
 import ILSiteHeader from './ILSiteHeader'
 import { TLBackButton } from '@icons/index'
 
-import IList from './IList'
-import IListExpanded from './IListExpanded'
+import IList from './IList' // by images table
+import IListExpanded from './IListExpanded' // by studies table
 
 import FilterExpanded from './FilterExpanded'
-import Chips from '@components/common/Chips/Chips'
+import Chips from './Chips'
 import GroupButton from '@components/common/GroupButton/GroupButton'
 
-const image_list = [
-  {
-    key: '1',
-    title: 'Nipple not in profile',
-  },
-  {
-    key: '2',
-    title: 'Nipple not in midline',
-  },
-  {
-    key: '3',
-    title: 'Droopy breast',
-  },
-  {
-    key: '4',
-    title: 'Not enough muscle',
-  },
-  {
-    key: '5',
-    title: 'IMF not open',
-  },
-]
+const filter = {
+  quality: ['Perfect', 'Good', 'Bad'],
+  views: ['RMLO', 'LMLO', 'RCC', 'LCC'],
+  flag: ['Unflagged', 'Flagged'],
+  density: ['Dense', 'Non Dense'],
+  positioning_issues: [
+    'Nipple not in profile',
+    'Nipple not in midline',
+    'Droopy breast',
+    'Not enough muscle',
+    'IMF not open',
+  ],
+}
+
+const selected = {
+  quality: ['Perfect'],
+  views: ['RMLO', 'LCC'],
+  flag: ['Flagged'],
+  density: ['Dense'],
+  positioning_issues: ['Not enough muscle', 'IMF not open'],
+}
 
 function ILDefaultContainer() {
   const [expandedTable, setExpandedTable] = React.useState(false)
+  const [filterData, setFilterData] = React.useState(filter)
 
-  const [filterData, setFilterData] = React.useState(image_list)
-  const [checkedData, setCheckedData] = React.useState([
-    {
-      key: '4',
-      title: 'Not enough muscle',
-    },
-    {
-      key: '5',
-      title: 'IMF not open',
-    },
-  ]) // pass checkedData to the table
+  const [checkedData, setCheckedData] = React.useState(
+    selected.positioning_issues
+  ) // checkedData is only positioning_issues which is related to chips
+  const [selectedData, setSelectedData] = React.useState(selected) // pass checkedData to the table
   const [displayFilter, setDisplayFilter] = React.useState(false)
 
   const handleDisplayFilters = (e) => {
@@ -64,22 +57,26 @@ function ILDefaultContainer() {
     setDisplayFilter(false)
   }
 
-  const handleCheckedData = (data) => {
-    console.log('checked data received on parent')
+  const handleSelectedData = (data) => {
+    console.log('selected data received on parent')
     console.log(data)
-    setCheckedData(data)
+    setCheckedData(data.positioning_issues)
+    console.log('chips data updated')
+    // pass data to tables
+    setSelectedData(data)
   }
 
   const handleChips = (data) => {
     console.log('chips data received on parent')
     console.log(data)
-    setCheckedData(data)
-    console.log(checkedData)
+    // only set the positioning_issues to setSelectedData
+    setSelectedData({ ...selectedData, positioning_issues: data })
+    console.log(selectedData)
   }
 
   const handleClearAll = () => {
     console.log('handleClearAll')
-    setCheckedData([])
+    setSelectedData([])
   }
 
   const handleOptions = (e) => {
@@ -261,7 +258,6 @@ function ILDefaultContainer() {
           </Grid>
 
           <Grid item xs={12}>
-            {/* <IList /> */}
             {!expandedTable ? <IList /> : <IListExpanded />}
           </Grid>
         </Grid>
@@ -273,9 +269,9 @@ function ILDefaultContainer() {
         >
           <FilterExpanded
             data={filterData}
-            checkedData={checkedData}
+            selectedData={selectedData}
+            setData={handleSelectedData}
             setDisplayFilter={handleModalClose}
-            setData={handleCheckedData}
             setClearAll={handleClearAll}
           />
         </div>
