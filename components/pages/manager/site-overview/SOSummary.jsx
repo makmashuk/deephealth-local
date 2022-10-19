@@ -24,6 +24,7 @@ const SOSummary = () => {
   const [selected, setSelected] = useState(0)
   const handleSelection = (e) => {
     setSelected(Number(e.target.getAttribute('rowid')))
+    console.log('data')
     handleClose()
   }
   const open = Boolean(anchorEl)
