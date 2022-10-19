@@ -62,7 +62,7 @@ const FilterExpanded = ( { data, checkedData, setDisplayFilter, setData, setClea
 
   return (
     <Card
-      sx={{ width: "330px", height: "100%", borderRadius: "0px", boxShadow: "none", position: "absolute", right: "0px", top: "68px", zIndex: "1000", backgroundColor: "#fff" }}
+      sx={{ width: "330px", height: "92.75vh", borderRadius: "0px", boxShadow: "none", position: "absolute", right: "0px", top: "68px", zIndex: "1000", backgroundColor: "#fff" }}
     >
       <CardContent>
         <Grid container spacing={0}>
