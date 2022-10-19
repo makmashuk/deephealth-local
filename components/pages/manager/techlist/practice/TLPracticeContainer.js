@@ -4,9 +4,8 @@ import Button from '@mui/material/Button'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import * as Icon from 'react-feather'
-import TopPart from '@components/common/TopPart/TopPart'
 import { TLBackButton } from '@icons/index'
-
+import TLPracticeHeader from './TLPracticeHeader'
 import TLPracticeList from './TLPracticeList'
 import { useRouter } from 'next/router'
 
@@ -15,14 +14,14 @@ function TLPracticeContainer() {
   const router = useRouter();
   return (
     <>
-      <TopPart practice withSearch />
+      <TLPracticeHeader />
       <Grid
         container
         padding={2}
         rowSpacing={2}
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-        
-      >
+      ><Grid item xs={12}>
+        </Grid>
 
         <Grid item xs={12}>
           <Grid container>

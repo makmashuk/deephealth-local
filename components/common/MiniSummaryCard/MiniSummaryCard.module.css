@@ -1,0 +1,20 @@
+.card_item {
+  position: relative;
+  padding-left: 8px;
+}
+
+.card_item__title {
+  color: #a8b1ce;
+}
+
+.card_item::before {
+  position: absolute;
+  content: '';
+  top: 55%;
+  left: 0;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 65%;
+  background-color: #6992fc;
+  border-radius: 4px;
+}

@@ -5,8 +5,7 @@ import TextField from '@mui/material/TextField'
 import * as Icon from 'react-feather'
 import { Close } from '@icons/index'
 import Button from '@mui/material/Button'
-
-import TopPart from '@components/common/TopPart/TopPart'
+import TLSiteHeader from './TLSiteHeader'
 import { TLBackButton, Trash } from '@icons/index'
 
 import SOTable from '@components/pages/manager/site-overview/SOTable'
@@ -82,155 +81,158 @@ function TLSiteContainer() {
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-      }}
-    >
-      <Grid
-        container
-        padding={2}
-        rowSpacing={2}
-        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+    <>
+      <TLSiteHeader />
+      <div
+        style={{
+          display: 'flex',
+        }}
       >
-        <Grid item xs={12}>
-          <Grid container>
-            <Grid
-              item
-              md={6}
-              xs={6}
-              sx={{
-                display: 'flex',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-              }}
-            >
-              <TLBackButton />
-              &nbsp;&nbsp;&nbsp;
-              <span
-                style={{
-                  fontStyle: 'normal',
-                  fontWeight: 800,
-                  fontSize: '24px',
-                  lineHeight: '24px',
-                  color: '#44495B',
-                }}
-              >
-                Technologists list
-              </span>
-            </Grid>
-
-            <Grid
-              item
-              xs={5}
-              sx={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-              }}
-            >
-              <TextField
-                id="input-with-icon-textfield"
-                label=""
-                variant="outlined"
-                fullWidth
-                style={{
-                  background: 'white',
-                  width: '340px',
-                  marginRight: '16px',
-                }}
-                placeholder="Type to search..."
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Icon.Search size={20} color={'#A8B1CE'} />
-                    </InputAdornment>
-                  ),
-                  sx: {
-                    height: 32,
-                    fontSize: 12,
-                    color: '#000',
-                    borderRadius: '8px',
-                  },
-                }}
-              />
-            </Grid>
-
-            {/* filterButton */}
-            <Grid
-              style={{
-                cursor: 'pointer',
-              }}
-              onClick={handleDisplayFilters}
-              item
-              xs={1}
-            >
-              <div
-                style={{
+        <Grid
+          container
+          padding={2}
+          rowSpacing={2}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        >
+          <Grid item xs={12}>
+            <Grid container>
+              <Grid
+                item
+                md={6}
+                xs={6}
+                sx={{
                   display: 'flex',
-                  justifyContent: 'space-evenly',
+                  justifyContent: 'flex-start',
                   alignItems: 'center',
-                  padding: '4px 8px',
-                  background: '#6992FC',
-                  borderRadius: '12px',
-                  color: '#ffffff',
-                  textTransform: 'none',
-                  width: '100%',
                 }}
               >
-                <Icon.Filter size={16} />
-                &nbsp;&nbsp;
+                <TLBackButton />
+                &nbsp;&nbsp;&nbsp;
                 <span
                   style={{
-                    color: '#ffffff',
+                    fontStyle: 'normal',
+                    fontWeight: 800,
+                    fontSize: '24px',
+                    lineHeight: '24px',
+                    color: '#44495B',
                   }}
                 >
-                  Filters
+                  Technologists list
                 </span>
-                &nbsp;&nbsp;
-                <span
+              </Grid>
+
+              <Grid
+                item
+                xs={5}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                }}
+              >
+                <TextField
+                  id="input-with-icon-textfield"
+                  label=""
+                  variant="outlined"
+                  fullWidth
+                  style={{
+                    background: 'white',
+                    width: '340px',
+                    marginRight: '16px',
+                  }}
+                  placeholder="Type to search..."
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Icon.Search size={20} color={'#A8B1CE'} />
+                      </InputAdornment>
+                    ),
+                    sx: {
+                      height: 32,
+                      fontSize: 12,
+                      color: '#000',
+                      borderRadius: '8px',
+                    },
+                  }}
+                />
+              </Grid>
+
+              {/* filterButton */}
+              <Grid
+                style={{
+                  cursor: 'pointer',
+                }}
+                onClick={handleDisplayFilters}
+                item
+                xs={1}
+              >
+                <div
                   style={{
                     display: 'flex',
-                    justifyContent: 'center',
+                    justifyContent: 'space-evenly',
                     alignItems: 'center',
-                    background: '#FFFFFF',
-                    borderRadius: '4px',
-                    color: '#6992FC',
-                    fontSize: '10px',
-                    height: '20px',
-                    width: '20px',
-                    textAlign: 'center',
+                    padding: '4px 8px',
+                    background: '#6992FC',
+                    borderRadius: '12px',
+                    color: '#ffffff',
+                    textTransform: 'none',
+                    width: '100%',
                   }}
                 >
-                  5
-                </span>
-              </div>
+                  <Icon.Filter size={16} />
+                  &nbsp;&nbsp;
+                  <span
+                    style={{
+                      color: '#ffffff',
+                    }}
+                  >
+                    Filters
+                  </span>
+                  &nbsp;&nbsp;
+                  <span
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      background: '#FFFFFF',
+                      borderRadius: '4px',
+                      color: '#6992FC',
+                      fontSize: '10px',
+                      height: '20px',
+                      width: '20px',
+                      textAlign: 'center',
+                    }}
+                  >
+                    5
+                  </span>
+                </div>
+              </Grid>
             </Grid>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Chips chips={filterData} setChips={handleChips} />
+          </Grid>
+
+          <Grid item xs={12}>
+            <SOTable />
           </Grid>
         </Grid>
 
-        <Grid item xs={12}>
-          <Chips chips={filterData} setChips={handleChips} />
+        <Grid
+          style={{
+            display: displayFilter ? 'block' : 'none',
+          }}
+          item
+          xs={12}
+        >
+          <FilterExpanded
+            data={filterData}
+            setDisplayFilter={handleModalClose}
+            setData={handleFilterData}
+          />
         </Grid>
-
-        <Grid item xs={12}>
-          <SOTable />
-        </Grid>
-      </Grid>
-
-      <Grid
-        style={{
-          display: displayFilter ? 'block' : 'none',
-        }}
-        item
-        xs={12}
-      >
-        <FilterExpanded
-          data={filterData}
-          setDisplayFilter={handleModalClose}
-          setData={handleFilterData}
-        />
-      </Grid>
-    </div>
+      </div>
+    </>
   )
 }
 
