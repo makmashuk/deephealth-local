@@ -34,13 +34,12 @@ const FilterExpanded = ( { data, checkedData, setDisplayFilter, setData, setClea
       setData(checkedItems);
       setCheckedKeysX(checkedItems.map((item) => item.key));
       console.log(checkedKeysX)
+      handleClose();
     },
     enableReinitialize: true,
   });
 
-  const handleClose = (e) => {
-    e.preventDefault();
-    console.log('filter close clicked.');
+  const handleClose = () => {
     setShowModal(!showModal);
     setDisplayFilter(!showModal)
   }
