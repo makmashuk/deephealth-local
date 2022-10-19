@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -8,18 +8,22 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import BreadCrumb from '@components/common/BreadCrumb/BreadCrumb'
 import Badge from '@mui/material/Badge'
-import { Star, ChevronDown, Home, Logout } from '@icons/index'
+import { Star, ChevronDownMedium, Home, Logout } from '@icons/index'
 
-const settings = ['My summary', 'Logout']
-
-export default function Navbar() {
+const Navbar = () => {
   const [anchorElUser, setAnchorElUser] = useState(null)
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget)
+    iconRef.current.style.transform = 'scaleY(-1)'
+    iconRef.current.querySelector('svg path').setAttribute('stroke', '#5475CA')
   }
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
+    iconRef.current.style.transform = 'scaleY(1)'
+    iconRef.current.querySelector('svg path').setAttribute('stroke', '#44495B')
   }
+
+  const iconRef = useRef(null)
 
   return (
     <AppBar position="sticky">
@@ -55,7 +59,9 @@ export default function Navbar() {
           >
             Donovan Mitchell
           </Typography>
-          <ChevronDown size="16" stroke="#44495B" />
+          <div ref={iconRef}>
+            <ChevronDownMedium sx={{ fontSize: '16px' }} />
+          </div>
         </IconButton>
         <Menu
           sx={{
@@ -133,3 +139,5 @@ export default function Navbar() {
     </AppBar>
   )
 }
+
+export default Navbar

@@ -1,153 +1,209 @@
-import { ArrowNarrowDown, ArrowNarrowUp, Site, Search } from '../../../icons'
+import { useRef, useState } from 'react'
+import Button from '@mui/material/Button'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
-import Grid from '@mui/material/Unstable_Grid2'
-import OutlinedInput from '@mui/material/OutlinedInput'
-import InputAdornment from '@mui/material/InputAdornment'
-import FormControl from '@mui/material/FormControl'
+import Searchbox from '@components/common/Searchbox/Searchbox'
+import Dropdown from '@components/common/Dropdown/Dropdown'
+import DropdownTable from '@components/common/Table/DropdownTable/DropdownTable'
+import SummaryCard from '@components/common/SummaryCard/SummaryCard'
+import MiniSummaryCard from '@components/common/MiniSummaryCard/MiniSummaryCard'
+import { TechnologistSummary, ChevronDown } from '@icons/index'
 
-const Summary = () => {
+// mock data imports, to be received from API endpoint
+import { techData, siteColumns } from '@components/mockData/dropdownTableData'
+import { summaryCardsData } from '@components/mockData/summaryCardsData'
+import { miniCardData } from '@components/mockData/miniCardData'
+
+const DropdownIcon = (props) => {
+  return <ChevronDown sx={{ fontSize: '20px' }} {...props} />
+}
+
+const TCSummary = () => {
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [selected, setSelected] = useState(0)
+  const handleSelection = (e) => {
+    setSelected(Number(e.target.getAttribute('rowid')))
+    handleClose()
+  }
+  const open = Boolean(anchorEl)
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+    iconRef.current.style.transform = 'scaleY(-1)'
+    iconRef.current.querySelector('svg path').setAttribute('stroke', '#5475CA')
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+    iconRef.current.style.transform = 'scaleY(1)'
+    iconRef.current.querySelector('svg path').setAttribute('stroke', '#44495B')
+  }
+
+  const iconRef = useRef(null)
+
   return (
-    <>
-      <Box sx={{ flexGrow: 1 }}>
-        <div
-          style={{ display: 'flex', flexWrap: 'wrap', backgroundColor: '#FFF' }}
+    <Box
+      sx={{
+        borderRadius: '0px 0px 0px 44px',
+        overflow: 'hidden',
+        boxShadow: '6px 4px 14px rgba(243, 245, 250, 0.92)',
+        position: 'sticky',
+        top: '65px',
+        backgroundColor: '#fff',
+        zIndex: 10,
+        padding: '20px',
+        marginBottom: '24px',
+      }}
+    >
+      <Grid container>
+        <Grid
+          xs={12}
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            flexWrap: 'wrap',
+            backgroundColor: '#FFF',
+          }}
         >
           <div
             style={{
               display: 'flex',
               alignItems: 'baseline',
-              padding: '25px 25px 12px 25px',
+              columnGap: '20px',
             }}
           >
-            <h1 style={{ fontSize: '1.25rem' }}>Summary statistics</h1>
-
-            {/* get options from api?? */}
-            <select
-              style={{
-                border: 'unset',
-                outline: 'none',
-                background: 'transparent',
-                cursor: 'pointer',
-                fontSize: '1rem',
-                lineHeight: '20px',
-                fontWeight: '700',
-                color: '#44495B',
-                marginLeft: '16px',
-              }}
-            >
-              <option value="1mo">1 Month</option>
-              <option value="2mo">2 Months</option>
-            </select>
-            {/* get options from api?? */}
+            <>
+              <Typography variant="h2" color="textPrimary">
+                Summary statistics
+              </Typography>
+              <Dropdown />
+            </>
           </div>
-
-          <Box
-            component="form"
-            sx={{
+          <div
+            style={{
               flexGrow: 1,
               display: 'flex',
-              justifyContent: 'flex-end',
+              justifyContent: 'end',
               alignItems: 'center',
-              paddingRight: '25px',
-              '& > :not(style)': { width: '272px' },
-              '& .MuiInputBase-root': {
-                border: '1px solid #EDEFF5',
-                borderRadius: '8px',
-              },
-              '& .MuiInputBase-input': {
-                fontWeight: '500',
-                fontSize: '12px',
-                lineHeight: '16px',
-                color: '#A8B1CE',
-                padding: '8px 8px 8px 0',
-              },
             }}
-            noValidate
-            autoComplete="off"
           >
-            <FormControl sx={{ width: '25ch' }} variant="outlined">
-              <OutlinedInput
-                id="outlined-adornment-password"
-                type="text"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <Search edge="end" stroke="#A8B1CE"></Search>
-                  </InputAdornment>
-                }
-                placeholder="Type to search..."
-                sx={{ paddingLeft: '8px' }}
-              />
-            </FormControl>
-          </Box>
-        </div>
-      </Box>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid
-          container
-          style={{
-            backgroundColor: '#fff',
-            boxShadow: '0px 4px 14px rgba(243, 245, 250, 0.92)',
-            borderRadius: '0px 0px 0px 44px',
-            padding: '0 25px 20px 0',
-          }}
-        >
-          <Grid md={2} style={{ height: '100%', padding: '16px' }}>
+            <Searchbox />
+          </div>
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={2} sx={{ paddingTop: '15px' }}>
+        <Grid item container xs={12} md={6} columnSpacing={2}>
+          <Grid
+            item
+            xs={3}
+            md={4}
+            sx={{
+              // padding: '0 20px',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-around',
+            }}
+          >
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <Site width="89" />
+              <TechnologistSummary />
             </div>
             <div
               style={{
                 display: 'flex',
                 justifyContent: 'center',
-                marginTop: '18px',
               }}
             >
-              <select
-                style={{
-                  border: 'unset',
-                  outline: 'none',
-                  backgroundColor: 'transparent',
-                  cursor: 'pointer',
-                  fontWeight: '700',
-                  fontSize: '0.875rem' /* 14px */,
+              <Button
+                id="select-button"
+                onClick={handleClick}
+                sx={{ padding: '0', '&:hover': { background: 'transparent' } }}
+              >
+                <Typography
+                  color="textPrimary"
+                  variant="h3"
+                  noWrap
+                  sx={{ marginRight: '4px' }}
+                >
+                  {techData.map((row) => row.id === selected && row.tech)}
+                </Typography>{' '}
+                <div style={{ width: '30px', height: '20px' }} ref={iconRef}>
+                  <DropdownIcon sx={{ fontSize: '20px' }} />
+                </div>
+              </Button>
+              <Menu
+                id="select-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                sx={{
+                  '& .MuiPaper-root': {
+                    maxWidth: '510px',
+                    background: '#fff',
+                    border: '1px solid #EDEFF5',
+                    borderRadius: '12px',
+                    boxShadow: '0px 4px 11px rgba(0, 0, 0, 0.05);',
+                    overflowY: 'auto',
+                    '& ul': {
+                      padding: 0,
+                      '& li': {
+                        padding: 0,
+                      },
+                    },
+                  },
                 }}
               >
-                <option value="0">John Doe</option>
-              </select>
+                <MenuItem>
+                  <DropdownTable
+                    selected={selected}
+                    tableData={techData}
+                    columns={siteColumns}
+                    handleSelection={handleSelection}
+                  />
+                </MenuItem>
+              </Menu>
             </div>
           </Grid>
 
-          <Grid md={4}>
+          <Grid
+            item
+            xs={3}
+            md={3}
+            sx={{
+              padding: '12px 8px 8px',
+              border: '1px solid #edeff5',
+              borderRadius: '12px',
+              // marginRight: '0.5rem',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            {miniCardData.map((miniCard) => (
+              <MiniSummaryCard {...miniCard} key={miniCard.id} />
+            ))}
+          </Grid>
+
+          <Grid item xs={6} md={5}>
             <div
               style={{
                 backgroundColor: '#F5F6F8',
                 borderRadius: '12px',
                 padding: '20px 20px 14px 20px',
+                height: '100%',
               }}
             >
-              <div
-                style={{
-                  color: '#44495B',
-                  fontSize: '1rem' /* 16px */,
-                  fontWeight: '700',
-                  lineHeight: '20px',
-                  marginBottom: '6px',
-                }}
+              <Typography
+                variant="h3"
+                color="text.primary"
+                sx={{ marginBottom: '6px' }}
               >
                 Top 3 positioning issues
-              </div>
-              <div
-                className="fw-semi-bold fs-400 text-primary-250"
-                style={{
-                  fontWeight: '500',
-                  fontSize: '0.875rem' /* 14px */,
-                  color: '#6A6E83',
-                  lineHeight: '20px',
-                }}
-              >
+              </Typography>
+              <Typography variant="body1" color="text.secondary">
                 Here you can see top 3 most frequent positioning issues present
                 in the images.
-              </div>
+              </Typography>
               <div
                 style={{
                   paddingTop: '8px',
@@ -155,201 +211,39 @@ const Summary = () => {
                   alignItems: 'center',
                 }}
               >
-                <span style={{ fontSize: '0.875rem', color: '#A8B1CE' }}>
+                <span
+                  style={{
+                    fontSize: '0.875rem',
+                    color: '#A8B1CE',
+                    lineHeight: '20px',
+                  }}
+                >
                   Calculated on:
                 </span>
                 &nbsp;
-                <span style={{ fontSize: '0.875rem', color: '#6992FC' }}>
+                <span
+                  style={{
+                    fontSize: '0.875rem',
+                    color: '#6992FC',
+                    fontWeight: '700',
+                  }}
+                >
                   10251 images
                 </span>
               </div>
             </div>
           </Grid>
-
-          <Grid md={2}>
-            <div
-              style={{
-                marginLeft: '1rem',
-                background: '#fff',
-                border: '1px solid #EDEFF5',
-                borderRadius: '12px',
-                padding: '16px 16px 12px 16px',
-              }}
-            >
-              <div
-                sx={{
-                  fontWeight: '700',
-                  fontSize: '0.875rem',
-                  color: '#6A6E83',
-                  lineHeight: '16px',
-                }}
-              >
-                PNL diff {'>'} 1cm
-              </div>
-              <div
-                style={{
-                  fontWeight: '800',
-                  fontSize: '3rem',
-                  color: '#6992FC',
-                  lineHeight: '48px',
-                  marginTop: '4px',
-                }}
-              >
-                42%
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginTop: '8px',
-                }}
-              >
-                <span
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    borderRadius: '0.57rem',
-                    fontSize: '0.75rem' /* 12px */,
-                    lineHeight: '16px',
-                    color: '#FF5B51',
-                    backgroundColor: '#FFEAE9',
-                    padding: '2px 7.5px',
-                    marginRight: '8px',
-                    columnGap: '2px',
-                  }}
-                >
-                  <ArrowNarrowUp size="12" stroke="#FF5B51" /> +5%
-                </span>
-                <span style={{ fontSize: '0.75rem', color: '#A8B1CE' }}>
-                  since last month
-                </span>
-              </div>
-            </div>
-          </Grid>
-          <Grid md={2}>
-            <div
-              style={{
-                marginLeft: '1rem',
-                background: '#fff',
-                border: '1px solid #EDEFF5',
-                borderRadius: '12px',
-                padding: '16px 16px 12px 16px',
-              }}
-            >
-              <div
-                sx={{
-                  fontWeight: '700',
-                  fontSize: '0.875rem',
-                  color: '#6A6E83',
-                  lineHeight: '16px',
-                }}
-              >
-                Pec does not reach PNL
-              </div>
-              <div
-                style={{
-                  fontWeight: '800',
-                  fontSize: '3rem',
-                  color: '#6992FC',
-                  lineHeight: '48px',
-                  marginTop: '4px',
-                }}
-              >
-                27%
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginTop: '8px',
-                }}
-              >
-                <span
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    borderRadius: '0.57rem',
-                    fontSize: '0.75rem' /* 12px */,
-                    lineHeight: '16px',
-                    color: '#00AD5A',
-                    backgroundColor: '#C8F5E0',
-                    padding: '2px 7.5px',
-                    marginRight: '8px',
-                    columnGap: '2px',
-                  }}
-                >
-                  <ArrowNarrowDown size="12" stroke="#00AD5A" /> -8%
-                </span>
-                <span style={{ fontSize: '0.75rem', color: '#A8B1CE' }}>
-                  since last month
-                </span>
-              </div>
-            </div>
-          </Grid>
-          <Grid md={2}>
-            <div
-              style={{
-                marginLeft: '1rem',
-                background: '#fff',
-                border: '1px solid #EDEFF5',
-                borderRadius: '12px',
-                padding: '16px 16px 12px 16px',
-              }}
-            >
-              <div
-                sx={{
-                  fontWeight: '700',
-                  fontSize: '0.875rem',
-                  color: '#6A6E83',
-                  lineHeight: '16px',
-                }}
-              >
-                Nipple not in profile
-              </div>
-              <div
-                style={{
-                  fontWeight: '800',
-                  fontSize: '3rem',
-                  color: '#6992FC',
-                  lineHeight: '48px',
-                  marginTop: '4px',
-                }}
-              >
-                12%
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginTop: '8px',
-                }}
-              >
-                <span
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    borderRadius: '0.57rem',
-                    fontSize: '0.75rem' /* 12px */,
-                    lineHeight: '16px',
-                    color: '#FF5B51',
-                    backgroundColor: '#FFEAE9',
-                    padding: '2px 7.5px',
-                    marginRight: '8px',
-                    columnGap: '2px',
-                  }}
-                >
-                  <ArrowNarrowUp size="12" stroke="#FF5B51" /> +3%
-                </span>
-                <span style={{ fontSize: '0.75rem', color: '#A8B1CE' }}>
-                  since last month
-                </span>
-              </div>
-            </div>
-          </Grid>
         </Grid>
-      </Box>
-    </>
+        <Grid item container xs={12} md={6} columnSpacing={2}>
+          {summaryCardsData.map((card) => (
+            <Grid item xs={4} key={card.id}>
+              <SummaryCard {...card} />
+            </Grid>
+          ))}
+        </Grid>
+      </Grid>
+    </Box>
   )
 }
 
-export default Summary
+export default TCSummary
