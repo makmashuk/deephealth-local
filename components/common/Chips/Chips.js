@@ -1,27 +1,49 @@
-import styles from "./Chips.module.css";
+import styles from './Chips.module.css'
+import { Trash } from '@icons/index'
 
 const ChipsContainer = ({ chips, setChips }) => {
   const deleteOne = (key) => {
-    const newChipsArr = chips.filter((chip) => chip.key !== key);
-    setChips(newChipsArr);
-  };
+    const newChipsArr = chips.filter((chip) => chip.key !== key)
+    setChips(newChipsArr)
+  }
 
   const deleteAll = () => {
-    setChips([]);
-  };
+    setChips([])
+  }
 
   return (
     <>
       {chips.length > 0 ? (
-        <div style={{ gap: "1rem" }} className="d--f fw--w ai--c">
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            gap: '1rem',
+          }}
+        >
           {chips.map((chip) => (
             <div
               key={chip.key}
-              style={{ background: "#e7e7e7", padding: "0.5rem 0.75rem", gap: "1.25rem" }}
+              style={{
+                background: '#EDEFF5',
+                borderRadius: '8px',
+                padding: '6px 12px',
+                color: '#6A6E83',
+                textTransform: 'none',
+                fontWeight: 600,
+                fontSize: '12px',
+                border: 'none',
+                padding: '0.5rem 0.75rem',
+                gap: '1rem',
+              }}
               className="d--f jc--c ai--c br--1 fw-semi-bold fs-300 text-primary-300"
             >
               <span>{chip.title}</span>
-              <button className={styles.btn__close} onClick={() => deleteOne(chip.key)}>
+              <button
+                className={styles.btn__close}
+                onClick={() => deleteOne(chip.key)}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="14"
@@ -39,13 +61,26 @@ const ChipsContainer = ({ chips, setChips }) => {
               </button>
             </div>
           ))}
-          <p className="cursor-pointer" style={{ color: "#FF2828" }} onClick={deleteAll}>
-            Clear all
+          <p
+            style={{
+              display: 'flex',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              fontStyle: 'normal',
+              fontWeight: 700,
+              fontSize: '14px',
+              color: '#FF5B51',
+              cursor: 'pointer',
+            }}
+            onClick={deleteAll}
+          >
+            Clear all&nbsp;
+            <Trash size={14} color={'#FF5B51'} />
           </p>
         </div>
       ) : null}
     </>
-  );
-};
+  )
+}
 
-export default ChipsContainer;
+export default ChipsContainer

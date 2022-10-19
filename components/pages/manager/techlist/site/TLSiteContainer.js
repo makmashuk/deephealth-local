@@ -3,8 +3,7 @@ import { Grid } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import * as Icon from 'react-feather'
-import { Close } from '@icons/index'
-import Button from '@mui/material/Button'
+
 import TLSiteHeader from './TLSiteHeader'
 import { TLBackButton, Trash } from '@icons/index'
 
@@ -15,39 +14,39 @@ import Chips from '@components/common/Chips/Chips'
 
 const tech_list = [
   {
-    id: '1',
     key: '1',
     title: 'Nipple not in profile',
-    is_checked: true,
   },
   {
-    id: '2',
     key: '2',
     title: 'Nipple not in midline',
-    is_checked: false,
   },
   {
-    id: '3',
     key: '3',
     title: 'Droopy breast',
-    is_checked: false,
   },
   {
-    id: '4',
     key: '4',
     title: 'Not enough muscle',
-    is_checked: false,
   },
   {
-    id: '5',
     key: '5',
     title: 'IMF not open',
-    is_checked: false,
   },
 ]
 
 function TLSiteContainer() {
   const [filterData, setFilterData] = React.useState(tech_list)
+  const [checkedData, setCheckedData] = React.useState([
+    {
+      key: '4',
+      title: 'Not enough muscle',
+    },
+    {
+      key: '5',
+      title: 'IMF not open',
+    },
+  ]) // pass checkedData to the table
   const [displayFilter, setDisplayFilter] = React.useState(false)
 
   const handleDisplayFilters = (e) => {
@@ -62,22 +61,27 @@ function TLSiteContainer() {
     setDisplayFilter(false)
   }
 
-  const handleFilterData = (data) => {
-    console.log('filter data received on parent')
+  const handleCheckedData = (data) => {
+    console.log('checked data received on parent')
     console.log(data)
-    setFilterData(data)
+    setCheckedData(data)
   }
 
   const handleChips = (data) => {
     console.log('chips data received on parent')
     console.log(data)
-    setFilterData(data)
+    setCheckedData(data)
+    console.log(checkedData)
+  }
+
+  const handleClearAll = () => {
+    console.log('handleClearAll')
+    setCheckedData([])
   }
 
   const handleOnClickClose = (e) => {
     e.preventDefault()
     console.log('close clicked')
-    // console.log(e)
   }
 
   return (
@@ -98,8 +102,8 @@ function TLSiteContainer() {
             <Grid container>
               <Grid
                 item
-                md={6}
-                xs={6}
+                md={5}
+                xs={5}
                 sx={{
                   display: 'flex',
                   justifyContent: 'flex-start',
@@ -121,13 +125,17 @@ function TLSiteContainer() {
                 </span>
               </Grid>
 
+              <Grid item md={3} xs={3}></Grid>
+
               <Grid
                 item
-                xs={5}
+                xs={3}
                 sx={{
                   display: 'flex',
-                  justifyContent: 'flex-end',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
+                px={2}
               >
                 <TextField
                   id="input-with-icon-textfield"
@@ -136,8 +144,9 @@ function TLSiteContainer() {
                   fullWidth
                   style={{
                     background: 'white',
-                    width: '340px',
-                    marginRight: '16px',
+                    width: '100%',
+                    height: '36px',
+                    borderRadius: '8px',
                   }}
                   placeholder="Type to search..."
                   InputProps={{
@@ -147,10 +156,11 @@ function TLSiteContainer() {
                       </InputAdornment>
                     ),
                     sx: {
-                      height: 32,
+                      height: 36,
                       fontSize: 12,
                       color: '#000',
                       borderRadius: '8px',
+                      border: '1px solid #EDEFF5',
                     },
                   }}
                 />
@@ -159,6 +169,9 @@ function TLSiteContainer() {
               {/* filterButton */}
               <Grid
                 style={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
                   cursor: 'pointer',
                 }}
                 onClick={handleDisplayFilters}
@@ -176,6 +189,7 @@ function TLSiteContainer() {
                     color: '#ffffff',
                     textTransform: 'none',
                     width: '100%',
+                    height: '36px',
                   }}
                 >
                   <Icon.Filter size={16} />
@@ -202,7 +216,7 @@ function TLSiteContainer() {
                       textAlign: 'center',
                     }}
                   >
-                    5
+                    {checkedData.length ?? 0}
                   </span>
                 </div>
               </Grid>
@@ -210,7 +224,7 @@ function TLSiteContainer() {
           </Grid>
 
           <Grid item xs={12}>
-            <Chips chips={filterData} setChips={handleChips} />
+            <Chips chips={checkedData} setChips={handleChips} />
           </Grid>
 
           <Grid item xs={12}>
@@ -218,19 +232,19 @@ function TLSiteContainer() {
           </Grid>
         </Grid>
 
-        <Grid
+        <div
           style={{
             display: displayFilter ? 'block' : 'none',
           }}
-          item
-          xs={12}
         >
           <FilterExpanded
             data={filterData}
+            checkedData={checkedData}
             setDisplayFilter={handleModalClose}
-            setData={handleFilterData}
+            setData={handleCheckedData}
+            setClearAll={handleClearAll}
           />
-        </Grid>
+        </div>
       </div>
     </>
   )

@@ -338,7 +338,7 @@ export const Site = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_1623_65085)">
+      <g clipPath="url(#clip0_1623_65085)">
         <rect width="48" height="48" rx="24" fill="#F7F7F7" />
         <path
           d="M13.8634 12.9454H6.87598V35.3784H13.8634V12.9454Z"
