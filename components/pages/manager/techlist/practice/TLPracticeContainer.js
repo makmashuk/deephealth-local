@@ -7,10 +7,13 @@ import * as Icon from 'react-feather'
 import { TLBackButton } from '@icons/index'
 import TLPracticeHeader from './TLPracticeHeader'
 import TLPracticeList from './TLPracticeList'
+import { useRouter } from 'next/router'
 
 function TLPracticeContainer() {
+
+  const router = useRouter();
   return (
-    <div>
+    <>
       <TLPracticeHeader />
       <Grid
         container
@@ -32,7 +35,7 @@ function TLPracticeContainer() {
                 alignItems: 'center',
               }}
             >
-              <TLBackButton />
+              <TLBackButton onClick={()=> router.push('/')} />
               &nbsp;&nbsp;&nbsp;
               <span
                 style={{
@@ -109,7 +112,7 @@ function TLPracticeContainer() {
           <TLPracticeList />
         </Grid>
       </Grid>
-    </div>
+    </>
   )
 }
 

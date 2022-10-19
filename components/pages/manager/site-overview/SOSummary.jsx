@@ -93,6 +93,7 @@ const SOSummary = () => {
 
       <Grid container sx={{ rowGap: '1rem', paddingTop: '15px' }}>
         <Grid
+          item
           xs={12}
           sm={5}
           md={2}
