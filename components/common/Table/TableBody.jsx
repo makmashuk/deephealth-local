@@ -11,7 +11,7 @@ export default function TableBody({ columns, rows, settings }) {
                   : '1px solid #EDEFF5',
             }}
             key={i}
-            onClick={() => item.onClick && item.onClick()}
+            onClick={() => console.log(item[i])}
           >
             {columns?.map((header, i) => {
               if (header.format) {

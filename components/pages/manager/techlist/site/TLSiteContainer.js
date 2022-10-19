@@ -6,6 +6,7 @@ import * as Icon from 'react-feather'
 import { Close } from '@icons/index'
 import Button from '@mui/material/Button'
 
+import TopPart from '@components/common/TopPart/TopPart'
 import { TLBackButton, Trash } from '@icons/index'
 
 import SOTable from '@components/pages/manager/site-overview/SOTable'

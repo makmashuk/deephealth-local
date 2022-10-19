@@ -8,18 +8,21 @@ import TopPart from '@components/common/TopPart/TopPart'
 import { TLBackButton } from '@icons/index'
 
 import TLPracticeList from './TLPracticeList'
+import { useRouter } from 'next/router'
 
 function TLPracticeContainer() {
+
+  const router = useRouter();
   return (
-    <div>
+    <>
+      <TopPart practice withSearch />
       <Grid
         container
         padding={2}
         rowSpacing={2}
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-      ><Grid item xs={12}>
-        <TopPart tech withSearch />
-      </Grid>
+        
+      >
 
         <Grid item xs={12}>
           <Grid container>
@@ -33,7 +36,7 @@ function TLPracticeContainer() {
                 alignItems: 'center',
               }}
             >
-              <TLBackButton />
+              <TLBackButton onClick={()=> router.push('/')} />
               &nbsp;&nbsp;&nbsp;
               <span
                 style={{
@@ -110,7 +113,7 @@ function TLPracticeContainer() {
           <TLPracticeList />
         </Grid>
       </Grid>
-    </div>
+    </>
   )
 }
 

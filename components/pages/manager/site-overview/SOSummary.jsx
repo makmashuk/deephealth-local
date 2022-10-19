@@ -29,7 +29,6 @@ const cards = [
 ]
 
 const Summary = () => {
-  // return <TopPart tech />
   return <TopPart summarySite cards={cards} />
 }
 
