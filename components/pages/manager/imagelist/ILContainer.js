@@ -6,8 +6,8 @@ import * as Icon from 'react-feather'
 import ILSiteHeader from './ILSiteHeader'
 import { TLBackButton } from '@icons/index'
 
-import IList from './IList' // by images table
-import IListExpanded from './IListExpanded' // by studies table
+import IList from './IList' // for -> by images table
+import IListExpanded from './IListExpanded' // for -> by studies table
 
 import FilterExpanded from './FilterExpanded'
 import Chips from './Chips'
@@ -62,7 +62,7 @@ function ILDefaultContainer() {
     console.log(data)
     setCheckedData(data.positioning_issues)
     console.log('chips data updated')
-    // pass data to tables
+    // pass selectedData to tables
     setSelectedData(data)
   }
 
@@ -71,6 +71,7 @@ function ILDefaultContainer() {
     console.log(data)
     // only set the positioning_issues to setSelectedData
     setSelectedData({ ...selectedData, positioning_issues: data })
+    setCheckedData(data)
     console.log(selectedData)
   }
 

@@ -24,6 +24,12 @@ const DownSvg = () => (
   </svg>
 );
 
+const settings = {
+  last_child_no_border: false,
+  header_border_bottom_color: '#e1e1e1',
+  header_bg_color: '#EDEFF5',
+}
+
 const IListExpanded = () => {
 
   const columns = {
@@ -321,7 +327,7 @@ const IListExpanded = () => {
 
   return (
     <div className="flow">
-      <ExpandingTable columns={memoColumns} rows={memoRows} />
+      <ExpandingTable columns={memoColumns} rows={memoRows} settings={settings} />
     </div>
   )
 }

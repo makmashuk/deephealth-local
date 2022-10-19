@@ -20,6 +20,7 @@
 
 .table thead {
   border-bottom: 1px solid #e1e1e1;
+  background: #edeff5;
 }
 
 .table thead th {
