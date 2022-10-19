@@ -1,4 +1,6 @@
 import Table from '@components/common/Table/Table'
+import { useRouter } from 'next/router'
+import { StarOutline, StarFilled } from '@icons/index'
 
 const rawTableData = [
   {
@@ -8,7 +10,7 @@ const rawTableData = [
     date: '03.05.2022',
     view: 'RMLO',
     issues: '0',
-    starred: '<component/>',
+    starred: <StarOutline size={10} />,
   },
   {
     id: 2,
@@ -17,7 +19,7 @@ const rawTableData = [
     date: '02.05.2022',
     view: 'RMLO',
     issues: '0',
-    starred: '<component/>',
+    starred: <StarFilled size={10} />,
   },
   {
     id: 3,
@@ -26,7 +28,7 @@ const rawTableData = [
     date: '01.05.2022',
     view: 'LMLO',
     issues: '1',
-    starred: '<component/>',
+    starred: <StarOutline size={10} />,
   },
   {
     id: 4,
@@ -35,16 +37,25 @@ const rawTableData = [
     date: '28.04.2022',
     view: 'LMLO',
     issues: '2',
-    starred: '<component/>',
+    starred: <StarOutline size={10} />,
   },
   {
-    id: 1,
+    id: 5,
     images: 'Image_5',
     accession_number: 'DQO098271492753',
     date: '27.05.2022',
     view: 'LCC',
     issues: '2',
-    starred: '<component/>',
+    starred: <StarFilled size={10} />,
+  },
+  {
+    id: 6,
+    images: 'Image_6',
+    accession_number: 'MT2QS8219312912010',
+    date: '27.05.2022',
+    view: 'LMLO',
+    issues: '2',
+    starred: <StarFilled size={10} />,
   },
 ]
 

@@ -5,7 +5,10 @@ import TextField from '@mui/material/TextField'
 import * as Icon from 'react-feather'
 import ILSiteHeader from './ILSiteHeader'
 import { TLBackButton } from '@icons/index'
+
 import IList from './IList'
+import IListExpanded from './IListExpanded'
+
 import FilterExpanded from './FilterExpanded'
 import Chips from '@components/common/Chips/Chips'
 import GroupButton from '@components/common/GroupButton/GroupButton'
@@ -34,6 +37,8 @@ const image_list = [
 ]
 
 function ILDefaultContainer() {
+  const [expandedTable, setExpandedTable] = React.useState(false)
+
   const [filterData, setFilterData] = React.useState(image_list)
   const [checkedData, setCheckedData] = React.useState([
     {
@@ -77,8 +82,12 @@ function ILDefaultContainer() {
     setCheckedData([])
   }
 
-  const handleOptions = (event) => {
-    console.log(event)
+  const handleOptions = (e) => {
+    e.preventDefault()
+    console.log('handleOptions')
+    e.target.value === 'by images'
+      ? setExpandedTable(false)
+      : setExpandedTable(true)
   }
 
   const handleOnClickClose = (e) => {
@@ -252,7 +261,8 @@ function ILDefaultContainer() {
           </Grid>
 
           <Grid item xs={12}>
-            <IList />
+            {/* <IList /> */}
+            {!expandedTable ? <IList /> : <IListExpanded />}
           </Grid>
         </Grid>
 
