@@ -9,6 +9,7 @@ import SummaryCard from '@components/common/SummaryCard/SummaryCard'
 import Searchbox from '@components/common/Searchbox/Searchbox'
 import Dropdown from '@components/common/Dropdown/Dropdown'
 import DropdownTable from '@components/common/Table/DropdownTable/DropdownTable'
+import { useSearchFilter, useClearSearchFilter } from '@hooks/search'
 import { SiteSummary, ChevronDown } from '@icons/index'
 
 // mock data imports, to be received from API endpoint
@@ -20,6 +21,8 @@ const DropdownIcon = (props) => {
 }
 
 const SOSummary = () => {
+  const { searchResult, setSearchResult, handleSearch } =
+    useSearchFilter(siteData)
   const [anchorEl, setAnchorEl] = useState(null)
   const [selected, setSelected] = useState(0)
   const handleSelection = (e) => {
@@ -40,12 +43,16 @@ const SOSummary = () => {
 
   const iconRef = useRef(null)
 
+  // Clear the search result and revert to main data set
+  // whenever the dropdown table closes, using this custom hook
+  useClearSearchFilter(siteData, setSearchResult, anchorEl)
+
   return (
     <Box
       sx={{
         borderRadius: '0px 0px 0px 44px',
         overflow: 'hidden',
-        boxShadow: '6px 4px 14px rgba(243, 245, 250, 0.92)',
+        boxShadow: '6px 14px 14px -8px rgba(243, 245, 250, 0.92)',
         position: 'sticky',
         top: '65px',
         backgroundColor: '#fff',
@@ -160,8 +167,9 @@ const SOSummary = () => {
                 <DropdownTable
                   selected={selected}
                   handleSelection={handleSelection}
-                  tableDataBase={siteData}
+                  tableDataBase={searchResult}
                   columns={siteColumns}
+                  handleSearch={handleSearch}
                 />
               </MenuItem>
             </Menu>
