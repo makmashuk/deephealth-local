@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Grid } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
@@ -7,7 +7,8 @@ import TLSiteHeader from './TLSiteHeader'
 import { TLBackButton } from '@icons/index'
 import FilterExpanded from './FilterExpanded'
 import Table from '@components/common/Table/Table'
-import Chips from '@components/common/Chips/Chips'
+// import Chips from '@components/common/Chips/Chips'
+import Chips from './Chips'
 import SeeImagesIcon from '@components/common/Table/SeeImagesIcon'
 import { useRouter } from 'next/router'
 
@@ -33,6 +34,20 @@ const tech_list = [
     title: 'IMF not open',
   },
 ]
+
+const filter = {
+  positioning_issues: [
+    'Nipple not in profile',
+    'Nipple not in midline',
+    'Droopy breast',
+    'Not enough muscle',
+    'IMF not open',
+  ],
+}
+
+const selected = {
+  positioning_issues: ['Not enough muscle', 'IMF not open'],
+}
 
 const rawTableData = [
   {
@@ -181,23 +196,16 @@ const settings = {
 }
 
 function TLSiteContainer() {
+  const [expandedTable, setExpandedTable] = useState(false)
+  const [filterData, setFilterData] = useState(filter)
+
+  const [checkedData, setCheckedData] = useState(selected.positioning_issues) // checkedData is only positioning_issues which is related to chips
+  const [selectedData, setSelectedData] = useState(selected) // pass checkedData to the table
+  const [displayFilter, setDisplayFilter] = useState(false)
+
+  const [tableData, setTableData] = useState(rawTableData)
+
   const router = useRouter()
-
-  const [filterData, setFilterData] = React.useState(tech_list)
-  const [checkedData, setCheckedData] = React.useState([
-    {
-      key: '4',
-      title: 'Not enough muscle',
-    },
-    {
-      key: '5',
-      title: 'IMF not open',
-    },
-  ]) // pass checkedData to the table
-
-  const [tableData, setTableData] = React.useState(rawTableData)
-
-  const [displayFilter, setDisplayFilter] = React.useState(false)
 
   const handleDisplayFilters = (e) => {
     e.preventDefault()
@@ -211,42 +219,60 @@ function TLSiteContainer() {
     setDisplayFilter(false)
   }
 
-  const handleCheckedData = (data) => {
-    console.log('checked data received on parent')
+  const handleSelectedData = (data) => {
+    console.log('selected data received on parent')
     console.log(data)
-    setCheckedData(data)
+    if (data.positioning_issues.length > 0) {
+      data.positioning_issues.forEach((pos, i) => {
+        if (pos === 'Select All') {
+          console.log('Select All detected')
+          data.positioning_issues = data.positioning_issues.filter(
+            (item) => item !== 'Select All'
+          )
+        }
+      })
+      setCheckedData(data.positioning_issues)
+    } else {
+      setCheckedData([])
+    }
+    console.log('chips data updated')
+    console.log('checked data')
+    setSelectedData(data)
+    // pass selectedData to tables
   }
 
   const handleChips = (data) => {
     console.log('chips data received on parent')
     console.log(data)
-    setCheckedData(data) // checkedData will always be the same because it is hardcoded
-    console.log('checkedData')
-    console.log(checkedData)
-
-    // handle table data
-    const filteredTableData = rawTableData.filter((item) => {
-      return data.some((checkedItem) => {
-        return item.title === checkedItem.title
-      })
-    })
-
-    // console.log('filteredTableData')
-    // console.log(filteredTableData)
-    setTableData(filteredTableData)
-    console.log('tableData')
-    console.log(tableData)
+    setCheckedData(data)
   }
 
   const handleClearAll = () => {
     console.log('handleClearAll')
-    setCheckedData([])
+    setSelectedData({
+      quality: [],
+      views: [],
+      flag: [],
+      density: [],
+      positioning_issues: [],
+    })
+    console.log(selectedData)
   }
 
-  const handleTableData = (data) => {
-    console.log('handleTableData')
-    console.log(data)
-    setTableData(data)
+  const handleSearch = (e) => {
+    console.log(e.target.value)
+    let keyword = e.target.value
+    const filterSearch = rawTableData.filter((item) => {
+      return (
+        item.accession_number.toLowerCase().includes(keyword.toLowerCase()) ||
+        item.date.toLowerCase().includes(keyword.toLowerCase()) ||
+        item.view.toLowerCase().includes(keyword.toLowerCase()) ||
+        item.images.toLowerCase().includes(keyword.toLowerCase())
+      )
+    })
+    console.log('filterSearch')
+    console.log(filterSearch)
+    setTableData(filterSearch)
   }
 
   const handleOnClickClose = (e) => {
@@ -401,6 +427,7 @@ function TLSiteContainer() {
           </Grid>
 
           <Grid item xs={12}>
+            {/* <Chips chips={checkedData} setChips={handleChips} /> */}
             <Chips chips={checkedData} setChips={handleChips} />
           </Grid>
 
@@ -416,9 +443,10 @@ function TLSiteContainer() {
         >
           <FilterExpanded
             data={filterData}
-            checkedData={checkedData}
+            selectedData={selectedData}
+            setData={handleSelectedData}
+            selectedPosData={checkedData}
             setDisplayFilter={handleModalClose}
-            setData={handleCheckedData}
             setClearAll={handleClearAll}
           />
         </div>

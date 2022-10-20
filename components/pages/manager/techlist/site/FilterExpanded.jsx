@@ -1,43 +1,18 @@
 import { useState } from 'react';
-import { Grid } from '@mui/material';
-import { Card, CardContent } from '@mui/material';
 import GroupButton from "@components/common/GroupButton/GroupButton";
-import Button from '@mui/material/Button';
-import FormGroup from '@mui/material/FormGroup';
-import FormControl from '@mui/material/FormControl';
 
-import { CheckboxWithLabel } from 'formik-mui';
-import { useFormik, Formik, Form, Field, FormikProvider } from "formik";
+import { Grid, Card, CardContent, Radio, Button, FormGroup, FormControl, FormControlLabel, MenuItem } from '@mui/material';
+
+import { CheckboxWithLabel, RadioGroup, Select } from 'formik-mui';
+import { Formik, Form, Field } from "formik";
 import { CloseWindow, Trash } from '@icons/index';
 
-const FilterExpanded = ( { data, checkedData, setDisplayFilter, setData, setClearAll } ) => {
+const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisplayFilter, setClearAll } ) => {
 
   const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState(data);
-  const [checked, setChecked] = useState(checkedData);
+  const [positionData, setPositionData] = useState(data.positioning_issues);
   const [timeRange, setTimeRange] = useState("year");
-
-  let checkedKeys = checked.map((item) => item.key);
-  const [checkedKeysX, setCheckedKeysX] = useState(checkedKeys);
-
-
-  const formik = useFormik({
-    initialValues: {
-      keys: checkedKeysX
-    },
-    onSubmit: (values) => {
-      let checkedItems = values.keys.map((key) => {
-        return data.find((item) => item.key === key);
-      });
-      console.log("checkedItems", checkedItems)
-      setChecked(checkedItems);
-      setData(checkedItems);
-      setCheckedKeysX(checkedItems.map((item) => item.key));
-      console.log(checkedKeysX)
-      handleClose();
-    },
-    enableReinitialize: true,
-  });
+  const [selected, setSelected] = useState(selectedData);
 
   const handleClose = () => {
     setShowModal(!showModal);
@@ -48,10 +23,8 @@ const FilterExpanded = ( { data, checkedData, setDisplayFilter, setData, setClea
     e.preventDefault();
     console.log('Clear all was clicked from filter');
     setClearAll(true)
-    setData([])
-    setChecked([])
-    setCheckedKeysX({
-      keys: []
+    setData({
+      positioning_issues: []
     })
   }
 
@@ -106,7 +79,7 @@ const FilterExpanded = ( { data, checkedData, setDisplayFilter, setData, setClea
       <div style={{ borderTop: "1px solid #EDEFF5" }}></div>
 
       <CardContent>
-        <Grid container spacing={0}>
+      <Grid container spacing={0}>
           <Grid
             item xs={12} sm={12} md={12}
             sx={{
@@ -138,136 +111,143 @@ const FilterExpanded = ( { data, checkedData, setDisplayFilter, setData, setClea
             <GroupButton buttons={["Year", "Quarter", "Month", "Week"]} buttonOnClickHandler={handleTimeRange} />
           </Grid>
 
-
-          <Grid
-            item xs={12} sm={12} md={12}
-            mt={3}
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
+          <Formik
+            initialValues={{
+              positioning_issues: selectedPosData.length == positionData.length ? positionDataWithAll : selectedPosData
             }}
+            onSubmit={(values, { setSubmitting, resetForm }) => {
+              // const filteredFieldsCounts = {
+              //   positioning_issues: values?.positioning_issues?.length ?? undefined,
+              // };
+              console.log('submitted values')
+              console.log(values)
+              setSubmitting(false);
+              setSelected(values)
+              setData(values)
+              handleClose()
+              resetForm();
+            }}
+            enableReinitialize
           >
-            <span
-              style={{
-                fontStyle: 'normal',
-                fontWeight: 700,
-                fontSize: '16px',
-                color: '#44495B',
-              }}
-            >
-              Positioning issues
-            </span>
-          </Grid>
-
-          <FormikProvider value={formik}>
-            <Form
-              onSubmit={formik.handleSubmit}
-              style={{ width: "100%" }}
-            >
-              <Grid
-                item xs={12} sm={12} md={12}
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "flex-start",
-                  alignItems: "flex-start",
-                }}
-              >
-                <FormControl
-                  component="fieldset"
-                  style={{ display: "flex" }}>
-                  <FormGroup
-                    // do not disable after submit
-                    // disabled={formik.isSubmitting}
-                  >
-                    {formData.map(opt => (
-                      <Field
-                        type="checkbox"
-                        component={CheckboxWithLabel}
-                        name="keys"
-                        key={opt.key}
-                        value={opt.key}
-                        Label={{ label: opt.title }}
-                        onChange={formik.handleChange}
-                      />
-                    ))}
-                  </FormGroup>
-                </FormControl>
-
-              </Grid>
-
-              <Grid
-                item xs={12} sm={12} md={12}
-                mt={2}
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "flex-end",
-                  alignItems: "center",
-                }}
-              >
+            {({ values }) => (
+              <Form style={{ width: "100%" }}>
                 <div
                   style={{
-                    cursor: 'pointer',
                     display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "flex-end",
-                    alignItems: "center"
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    height: "100%",
                   }}
-                  onClick={handleClearAll}
                 >
-                  <span
-                    style={{
-                      fontStyle: 'normal',
-                      fontWeight: 700,
-                      fontSize: '14px',
-                      color: '#6992FC',
+                <div>
+                  {/* Positioning Issues */}
+                  <Grid
+                    item xs={12} sm={12} md={12}
+                    mt={1}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "flex-start",
                     }}
                   >
-                    Clear All
-                  </span>
-                  &nbsp;<Trash size={14} color={"#6992FC"} />
+                    <span
+                      style={{
+                        fontStyle: 'normal',
+                        fontWeight: 700,
+                        fontSize: '16px',
+                        color: '#44495B',
+                      }}
+                    >
+                      Positioning Issues
+                    </span>
+                  </Grid>
+                  <Grid
+                    item xs={12} sm={12} md={12}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "flex-start",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    {positionData.map((positioning_issues, index) => (
+                      <Field
+                        key={index}
+                        type="checkbox"
+                        component={CheckboxWithLabel}
+                        name="positioning_issues"
+                        value={positioning_issues}
+                        Label={{ label: positioning_issues }}
+                      />
+                    ))}
+                  </Grid>
                 </div>
-              </Grid>
 
-              <Grid
-                item xs={12} sm={12} md={12}
-                mt={2}
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Button
-                  style={{
-                    padding: '4px 8px',
-                    background: '#6992FC',
-                    borderRadius: '12px',
-                    color: 'white',
-                    textTransform: 'none',
-                    width: '100%',
-                  }}
-                  type="submit"
-                >
-                  <span
+
+                {/* clear all */}
+                <div>
+                  <div
                     style={{
-                      fontStyle: 'normal',
-                      fontWeight: 700,
-                      fontSize: '14px',
-                      color: 'white',
-                      lineHeight: "24px"
+                      cursor: 'pointer',
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                      alignItems: "center"
                     }}
+                    onClick={handleClearAll}
                   >
-                    Apply filters
-                  </span>
-                </Button>
-              </Grid>
-            </Form>
-          </FormikProvider>
+                    <span
+                      style={{
+                        fontStyle: 'normal',
+                        fontWeight: 700,
+                        fontSize: '14px',
+                        color: '#6992FC',
+                      }}
+                    >
+                      Clear All
+                    </span>
+                    &nbsp;<Trash size={14} color={"#6992FC"} />
+                  </div>
+                </div>
+
+
+
+                {/* submit button  */}
+                <div
+                  style={{
+                    marginTop: '1rem',
+                  }}
+                >
+                  <Button
+                    style={{
+                      padding: '4px 8px',
+                      background: '#6992FC',
+                      borderRadius: '12px',
+                      color: 'white',
+                      textTransform: 'none',
+                      width: '100%',
+                    }}
+                    type="submit"
+                  >
+                    <span
+                      style={{
+                        fontStyle: 'normal',
+                        fontWeight: 700,
+                        fontSize: '14px',
+                        color: 'white',
+                        lineHeight: "24px"
+                      }}
+                    >
+                      Apply filters
+                    </span>
+                  </Button>
+                </div>
+
+                </div>
+              </Form>
+            )}
+          </Formik>
         </Grid>
 
       </CardContent>
