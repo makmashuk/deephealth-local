@@ -1,82 +1,68 @@
-import { useState, useForm, useCallback } from 'react';
+import { useState } from 'react';
 import { Grid } from '@mui/material';
 import { Card, CardContent } from '@mui/material';
 import GroupButton from "@components/common/GroupButton/GroupButton";
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import { useFormik } from 'formik';
+
+import { CheckboxWithLabel } from 'formik-mui';
+import { useFormik, Formik, Form, Field, FormikProvider } from "formik";
 import { CloseWindow, Trash } from '@icons/index';
 
-const tech_list = [
-  {
-    id: '1',
-    name: 'Nipple not in profile',
-    is_checked: true,
-  },
-  {
-    id: '2',
-    name: 'Nipple not in midline',
-    is_checked: false,
-  },
-  {
-    id: '3',
-    name: 'Droopy breast',
-    is_checked: true,
-  },
-  {
-    id: '4',
-    name: 'Not enough muscle',
-    is_checked: false,
-  },
-  {
-    id: '5',
-    name: 'IMF not open',
-    is_checked: false,
-  },
-]
+const FilterExpanded = ( { data, checkedData, setDisplayFilter, setData, setClearAll } ) => {
 
-const FilterExpanded = ( { data, setDisplayFilter, setData } ) => {
-
-  // to toggle modal
   const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState(data);
+  const [checked, setChecked] = useState(checkedData);
+  const [timeRange, setTimeRange] = useState("year");
+
+  let checkedKeys = checked.map((item) => item.key);
+  const [checkedKeysX, setCheckedKeysX] = useState(checkedKeys);
+
 
   const formik = useFormik({
-    initialValues:{
-      tech_list: tech_list
+    initialValues: {
+      keys: checkedKeysX
     },
-    // add validation later
     onSubmit: (values) => {
-      console.log(values)
-      setData(values)
+      let checkedItems = values.keys.map((key) => {
+        return data.find((item) => item.key === key);
+      });
+      console.log("checkedItems", checkedItems)
+      setChecked(checkedItems);
+      setData(checkedItems);
+      setCheckedKeysX(checkedItems.map((item) => item.key));
+      console.log(checkedKeysX)
+      handleClose();
     },
+    enableReinitialize: true,
   });
 
-  const [timeRange, setTimeRange] = useState("year");
-  const [formData, setFormData] = useState(data);
-
-  const handleClose = (e) => {
-    e.preventDefault();
-    console.log('filter close clicked.');
+  const handleClose = () => {
     setShowModal(!showModal);
     setDisplayFilter(!showModal)
   }
 
   const handleClearAll = (e) => {
     e.preventDefault();
-    console.log('Clear all was clicked.');
+    console.log('Clear all was clicked from filter');
+    setClearAll(true)
+    setData([])
+    setChecked([])
+    setCheckedKeysX({
+      keys: []
+    })
   }
 
   const handleTimeRange = (event) => {
-    setTimeRange(event.target.value);
     console.log(timeRange)
+    setTimeRange(event.target.value);
   };
 
   return (
     <Card
-      sx={{ width: "330px", height: "100%", borderRadius: "0px", boxShadow: "none" }}
+      sx={{ width: "330px", height: "92.75vh", borderRadius: "0px", boxShadow: "none", position: "absolute", right: "0px", top: "68px", zIndex: "1000", backgroundColor: "#fff" }}
     >
       <CardContent>
         <Grid container spacing={0}>
@@ -175,123 +161,115 @@ const FilterExpanded = ( { data, setDisplayFilter, setData } ) => {
             </span>
           </Grid>
 
-          <form
-            style={{ width: "100%" }}
-            onSubmit={formik.handleSubmit}
-          >
-            <Grid
-              item xs={12} sm={12} md={12}
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
-              }}
+          <FormikProvider value={formik}>
+            <Form
+              onSubmit={formik.handleSubmit}
+              style={{ width: "100%" }}
             >
-              <FormControl component="fieldset">
-                <FormGroup aria-label="position" row={false}>
-                  {formData.map((data, index) => (
-                    <FormControlLabel
-                      key={index}
-                      value="end"
-                      control={
-                        <Checkbox
-                          checked={formik.values.tech_list[index].is_checked}
-                          onChange={formik.handleChange}
-                          name={`tech_list[${index}].is_checked`}
-                          sx={{ color: '#44495B', p: '8px' }}
-                        />
-                      }
-                      label={data.title}
-                      labelPlacement="end"
-                      sx={{
-                        fontStyle: 'normal',
-                        '& .MuiTypography-root': {
-                          fontSize: '14px',
-                          fontWeight: '700',
-                          color: '#44495B',
-                        },
-                      }}
-                    />
-                  ))}
-                </FormGroup>
-              </FormControl>
-            </Grid>
+              <Grid
+                item xs={12} sm={12} md={12}
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-start",
+                  alignItems: "flex-start",
+                }}
+              >
+                <FormControl
+                  component="fieldset"
+                  style={{ display: "flex" }}>
+                  <FormGroup
+                    // do not disable after submit
+                    // disabled={formik.isSubmitting}
+                  >
+                    {formData.map(opt => (
+                      <Field
+                        type="checkbox"
+                        component={CheckboxWithLabel}
+                        name="keys"
+                        key={opt.key}
+                        value={opt.key}
+                        Label={{ label: opt.title }}
+                        onChange={formik.handleChange}
+                      />
+                    ))}
+                  </FormGroup>
+                </FormControl>
+                {/* <pre>{JSON.stringify(values, 0, 2)}</pre> */}
+              </Grid>
 
-            <div>
-            <Grid
-              item xs={12} sm={12} md={12}
-              mt={2}
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "flex-end",
-                alignItems: "center",
-              }}
-            >
-              <div
-                style={{
-                  cursor: 'pointer',
+              <Grid
+                item xs={12} sm={12} md={12}
+                mt={2}
+                sx={{
                   display: "flex",
                   flexDirection: "row",
                   justifyContent: "flex-end",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
-                onClick={handleClearAll}
               >
-                <span
+                <div
                   style={{
-                    fontStyle: 'normal',
-                    fontWeight: 700,
-                    fontSize: '14px',
-                    color: '#6992FC',
+                    cursor: 'pointer',
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
+                    alignItems: "center"
                   }}
+                  onClick={handleClearAll}
                 >
-                  Clear All
-                </span>
-                &nbsp;<Trash size={14} color={"#6992FC"} />
-              </div>
-            </Grid>
+                  <span
+                    style={{
+                      fontStyle: 'normal',
+                      fontWeight: 700,
+                      fontSize: '14px',
+                      color: '#6992FC',
+                    }}
+                  >
+                    Clear All
+                  </span>
+                  &nbsp;<Trash size={14} color={"#6992FC"} />
+                </div>
+              </Grid>
 
-            <Grid
-              item xs={12} sm={12} md={12}
-              mt={2}
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Button
-                style={{
-                  padding: '4px 8px',
-                  background: '#6992FC',
-                  borderRadius: '12px',
-                  color: 'white',
-                  textTransform: 'none',
-                  width: '100%',
+              <Grid
+                item xs={12} sm={12} md={12}
+                mt={2}
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-                type="submit"
               >
-                <span
+                <Button
                   style={{
-                    fontStyle: 'normal',
-                    fontWeight: 700,
-                    fontSize: '14px',
+                    padding: '4px 8px',
+                    background: '#6992FC',
+                    borderRadius: '12px',
                     color: 'white',
-                    lineHeight: "24px"
+                    textTransform: 'none',
+                    width: '100%',
                   }}
+                  type="submit"
                 >
-                  Apply filters
-                </span>
-              </Button>
-            </Grid>
-            </div>
-
-          </form>
-
+                  <span
+                    style={{
+                      fontStyle: 'normal',
+                      fontWeight: 700,
+                      fontSize: '14px',
+                      color: 'white',
+                      lineHeight: "24px"
+                    }}
+                  >
+                    Apply filters
+                  </span>
+                </Button>
+              </Grid>
+            </Form>
+          </FormikProvider>
         </Grid>
+
       </CardContent>
     </Card>
 

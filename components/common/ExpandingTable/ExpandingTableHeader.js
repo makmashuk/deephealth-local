@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 
 const arrowDown = (
   <svg
     clipRule="evenodd"
-    height={"1rem"}
+    height={'1rem'}
     fillRule="evenodd"
     strokeLinejoin="round"
     strokeMiterlimit="2"
@@ -15,11 +15,11 @@ const arrowDown = (
       fillRule="nonzero"
     />
   </svg>
-);
+)
 const arrowUp = (
   <svg
     clipRule="evenodd"
-    height={"1.1rem"}
+    height={'1.1rem'}
     fillRule="evenodd"
     strokeLinejoin="round"
     strokeMiterlimit="2"
@@ -31,7 +31,7 @@ const arrowUp = (
       fillRule="nonzero"
     />
   </svg>
-);
+)
 export default function ExpandingTableHeader({
   columns,
   rows,
@@ -39,76 +39,94 @@ export default function ExpandingTableHeader({
   sortableFields,
   setSortableFields,
   selectAll,
+  settings,
 }) {
   const handleIconForSortable = (item) => {
-    const indexOflement = sortableFields.findIndex((el) => el.name === item.field);
+    const indexOflement = sortableFields.findIndex(
+      (el) => el.name === item.field
+    )
 
     if (item.sortable) {
-      const sortingOrder = sortableFields.find((el) => el.name === item.field);
+      const sortingOrder = sortableFields.find((el) => el.name === item.field)
       if (indexOflement > -1) {
-        if (sortingOrder.order === "ASC") return arrowDown;
-        if (sortingOrder.order === "DSC") return arrowUp;
+        if (sortingOrder.order === 'ASC') return arrowDown
+        if (sortingOrder.order === 'DSC') return arrowUp
       }
-      return arrowDown;
+      return arrowDown
     }
-  };
+  }
 
   const handleRowClick = (newField) => {
     // toggoling sorting order
-    const indexOfElement = sortableFields.findIndex((item) => item.name === newField.name);
+    const indexOfElement = sortableFields.findIndex(
+      (item) => item.name === newField.name
+    )
     if (indexOfElement > -1) {
-      if (sortableFields[indexOfElement].order === "DSC") {
-        newField.order = "ASC";
+      if (sortableFields[indexOfElement].order === 'DSC') {
+        newField.order = 'ASC'
       }
-      if (sortableFields[indexOfElement].order === "ASC") {
-        newField.order = "DSC";
+      if (sortableFields[indexOfElement].order === 'ASC') {
+        newField.order = 'DSC'
       }
 
-      const updatedList = [...sortableFields];
-      updatedList.splice(indexOfElement, 1);
-      updatedList.push(newField);
-      setSortableFields([...updatedList]);
+      const updatedList = [...sortableFields]
+      updatedList.splice(indexOfElement, 1)
+      updatedList.push(newField)
+      setSortableFields([...updatedList])
     } else {
-      newField.order = "ASC";
-      setSortableFields((fields) => [...fields, newField]);
+      newField.order = 'ASC'
+      setSortableFields((fields) => [...fields, newField])
     }
-  };
+  }
 
   const handleSorting = (item) => {
     if (item.sortable) {
-      let field = { name: item.field };
-      handleRowClick(field);
+      let field = { name: item.field }
+      handleRowClick(field)
     }
-  };
+  }
   return (
     <>
       <tr>
         {columns.data.map((item, i) => {
           return (
-            <th key={i} onClick={() => handleSorting(item)} style={{ width: item.width }}>
+            <th
+              key={i}
+              onClick={() => handleSorting(item)}
+              style={{
+                width: item.width,
+              }}
+            >
               <div
                 className="d--f ai--c fw-bold"
-                style={{ gap: "0.25rem", justifyContent: item.align ? item.align : "left" }}
+                style={{
+                  gap: '0.25rem',
+                  justifyContent: item.align ? item.align : 'left',
+                }}
               >
                 {item.box && item.box}
                 {item.title}
                 {handleIconForSortable(item)}
               </div>
             </th>
-          );
+          )
         })}
         {columns.selectable ? (
           <th>
-            <input type="checkbox" onChange={selectAll} checked={selected.length === rows.length} />
+            <input
+              type="checkbox"
+              onChange={selectAll}
+              checked={selected.length === rows.length}
+            />
           </th>
         ) : null}
       </tr>
     </>
-  );
+  )
 }
 
 ExpandingTableHeader.defaultProps = {
-  title: "",
+  title: '',
   sortable: false,
-  box: "",
-};
+  box: '',
+}

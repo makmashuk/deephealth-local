@@ -12,7 +12,7 @@
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
-  color: #6A6E83;
+  color: #6a6e83;
 }
 
 .table th:hover {
@@ -26,11 +26,8 @@
 
 .table tbody tr td {
   padding: 0.6rem 1rem;
-}
-
-.table tbody tr td {
-  text-align: center; 
+  text-align: center;
   font-weight: 500;
   font-size: 14px;
-  color: #6A6E83;
+  color: #6a6e83;
 }

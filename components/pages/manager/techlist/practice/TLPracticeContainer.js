@@ -10,8 +10,7 @@ import TLPracticeList from './TLPracticeList'
 import { useRouter } from 'next/router'
 
 function TLPracticeContainer() {
-
-  const router = useRouter();
+  const router = useRouter()
   return (
     <>
       <TLPracticeHeader />
@@ -20,22 +19,27 @@ function TLPracticeContainer() {
         padding={2}
         rowSpacing={2}
         columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-      ><Grid item xs={12}>
-        </Grid>
-
+      >
         <Grid item xs={12}>
           <Grid container>
             <Grid
               item
-              md={6}
-              xs={6}
+              md={5}
+              xs={5}
               sx={{
                 display: 'flex',
                 justifyContent: 'flex-start',
                 alignItems: 'center',
               }}
             >
-              <TLBackButton onClick={()=> router.push('/')} />
+              <span
+                style={{
+                  cursor: 'pointer',
+                }}
+                onClick={() => router.back()}
+              >
+                <TLBackButton />
+              </span>
               &nbsp;&nbsp;&nbsp;
               <span
                 style={{
@@ -50,13 +54,17 @@ function TLPracticeContainer() {
               </span>
             </Grid>
 
+            <Grid item md={3} xs={3}></Grid>
+
             <Grid
               item
-              xs={5}
+              xs={3}
               sx={{
                 display: 'flex',
-                justifyContent: 'flex-end',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
+              px={2}
             >
               <TextField
                 id="input-with-icon-textfield"
@@ -65,8 +73,9 @@ function TLPracticeContainer() {
                 fullWidth
                 style={{
                   background: 'white',
-                  width: '340px',
-                  marginRight: '16px',
+                  width: '100%',
+                  height: '36px',
+                  borderRadius: '8px',
                 }}
                 placeholder="Type to search..."
                 InputProps={{
@@ -76,35 +85,52 @@ function TLPracticeContainer() {
                     </InputAdornment>
                   ),
                   sx: {
-                    height: 32,
+                    height: 36,
                     fontSize: 12,
                     color: '#000',
                     borderRadius: '8px',
+                    border: '1px solid #EDEFF5',
                   },
                 }}
               />
             </Grid>
+
+            {/* filterButton */}
             <Grid
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+                cursor: 'pointer',
+              }}
+              // onClick={handleDisplayFilters}
               item
               xs={1}
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-evenly',
-              }}
             >
-              <Button
+              <div
                 style={{
+                  display: 'flex',
+                  justifyContent: 'space-evenly',
+                  alignItems: 'center',
                   padding: '4px 8px',
                   background: '#6992FC',
                   borderRadius: '12px',
-                  color: 'white',
+                  color: '#ffffff',
                   textTransform: 'none',
                   width: '100%',
+                  height: '36px',
                 }}
               >
                 <Icon.Filter size={16} />
-                &nbsp;&nbsp;&nbsp;Filters
-              </Button>
+                &nbsp;&nbsp;
+                <span
+                  style={{
+                    color: '#ffffff',
+                  }}
+                >
+                  Filters
+                </span>
+              </div>
             </Grid>
           </Grid>
         </Grid>
