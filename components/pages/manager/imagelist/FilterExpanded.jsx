@@ -43,6 +43,20 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
     setTimeRange(event.target.value);
   };
 
+  const handleOnChange = (event) => {
+    console.log("Form::onChange");
+    console.log(event.target.value)
+    if (event.target.value) {
+      setData({
+        quality: selected.quality,
+        views: selected.views,
+        flag: selected.flag,
+        density: selected.density,
+        positioning_issues: positionDataWithAll
+      })
+    }
+  };
+
   return (
     <Card
       sx={{ width: "330px", height: "92.75vh", borderRadius: "0px", boxShadow: "none", position: "absolute", right: "0px", top: "68px", zIndex: "1000", backgroundColor: "#fff", overflowY: "scroll" }}
@@ -157,7 +171,10 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
             enableReinitialize
           >
             {({ values }) => (
-              <Form style={{ height: "100%" }}>
+              <Form
+                style={{ height: "100%" }}
+                onChange={handleOnChange}
+              >
                 <div
                   style={{
                     display: "flex",
