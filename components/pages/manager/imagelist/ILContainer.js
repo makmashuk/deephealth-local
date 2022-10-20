@@ -224,6 +224,22 @@ function ILDefaultContainer() {
       : setExpandedTable(true)
   }
 
+  const handleSearch = (e) => {
+    console.log(e.target.value)
+    let keyword = e.target.value
+    const filterSearch = rawTableData.filter((item) => {
+      return (
+        item.accession_number.toLowerCase().includes(keyword.toLowerCase()) ||
+        item.date.toLowerCase().includes(keyword.toLowerCase()) ||
+        item.view.toLowerCase().includes(keyword.toLowerCase()) ||
+        item.images.toLowerCase().includes(keyword.toLowerCase())
+      )
+    })
+    console.log('filterSearch')
+    console.log(filterSearch)
+    setTableData(filterSearch)
+  }
+
   const handleOnClickClose = (e) => {
     e.preventDefault()
     console.log('close clicked')
@@ -330,6 +346,7 @@ function ILDefaultContainer() {
                       border: '1px solid #EDEFF5',
                     },
                   }}
+                  onKeyUp={handleSearch}
                 />
               </Grid>
 
