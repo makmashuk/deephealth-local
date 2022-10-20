@@ -14,7 +14,7 @@ import { useSearchFilter, useClearSearchFilter } from '@hooks/search'
 import { TechnologistSummary, ChevronDown } from '@icons/index'
 
 // mock data imports, to be received from API endpoint
-import { techData, siteColumns } from '@components/mockData/dropdownTableData'
+import { techData, techColumns } from '@components/mockData/dropdownTableData'
 import { summaryCardsData } from '@components/mockData/summaryCardsData'
 import { miniCardData } from '@components/mockData/miniCardData'
 
@@ -170,7 +170,7 @@ const TCSummary = () => {
                     selected={selected}
                     handleSelection={handleSelection}
                     tableDataBase={searchResult}
-                    columns={siteColumns}
+                    columns={techColumns}
                     handleSearch={handleSearch}
                   />
                 </MenuItem>
