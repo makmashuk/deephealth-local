@@ -10,17 +10,13 @@ import { CloseWindow, Trash } from '@icons/index';
 const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisplayFilter, setClearAll } ) => {
 
   const [showModal, setShowModal] = useState(false);
-
   const [qualityData, setQualityData] = useState(data.quality);
   const [viewsData, setViewsData] = useState(data.views);
   const [flagData, setFlagData] = useState(data.flag);
   const [densityData, setDensityData] = useState(data.density);
   const [positionData, setPositionData] = useState(data.positioning_issues);
-
   const [timeRange, setTimeRange] = useState("year");
-
   const [selected, setSelected] = useState(selectedData);
-
 
   const positionDataWithAll = [...positionData, 'Select All'];
 
@@ -33,10 +29,12 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
     e.preventDefault();
     console.log('Clear all was clicked from filter');
     setClearAll(true)
-    setData([])
-    setChecked([])
-    setCheckedKeysX({
-      keys: []
+    setData({
+      quality: [],
+      views: [],
+      flag: [],
+      density: [],
+      positioning_issues: []
     })
   }
 
@@ -425,7 +423,11 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
 
 
                 {/* submit button  */}
-                <div>
+                <div
+                  style={{
+                    marginTop: '1rem',
+                  }}
+                >
                   <Button
                     style={{
                       padding: '4px 8px',

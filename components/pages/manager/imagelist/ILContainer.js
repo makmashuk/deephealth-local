@@ -179,20 +179,23 @@ function ILDefaultContainer() {
   const handleSelectedData = (data) => {
     console.log('selected data received on parent')
     console.log(data)
-    setCheckedData(data.positioning_issues)
-    data.positioning_issues.forEach((pos, i) => {
-      if (pos === 'Select All') {
-        console.log('Select All detected')
-        // remove it from selection.
-        data.positioning_issues = data.positioning_issues.filter(
-          (item) => item !== 'Select All'
-        )
-      }
-    })
+    if (data.positioning_issues.length > 0) {
+      data.positioning_issues.forEach((pos, i) => {
+        if (pos === 'Select All') {
+          console.log('Select All detected')
+          data.positioning_issues = data.positioning_issues.filter(
+            (item) => item !== 'Select All'
+          )
+        }
+      })
+      setCheckedData(data.positioning_issues)
+    } else {
+      setCheckedData([])
+    }
     console.log('chips data updated')
     console.log('checked data')
-    // pass selectedData to tables
     setSelectedData(data)
+    // pass selectedData to tables
   }
 
   const handleChips = (data) => {
@@ -203,7 +206,14 @@ function ILDefaultContainer() {
 
   const handleClearAll = () => {
     console.log('handleClearAll')
-    setSelectedData([])
+    setSelectedData({
+      quality: [],
+      views: [],
+      flag: [],
+      density: [],
+      positioning_issues: [],
+    })
+    console.log(selectedData)
   }
 
   const handleOptions = (e) => {
