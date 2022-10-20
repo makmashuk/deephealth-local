@@ -167,26 +167,30 @@ const columns = [
     title: 'Technologist',
     align: 'left',
     sortable: true,
+    routable: true,
   },
   {
     field: 'study_volume',
     title: 'Study Volume',
     align: 'right',
     sortable: true,
+    routable: false,
   },
   {
     field: 'avg_img_per_study',
     title: 'Avg. img/study',
     align: 'right',
     sortable: true,
+    routable: false,
   },
   {
     field: 'avg_issues_per_image',
     title: 'Avg. issues per image',
     align: 'right',
     sortable: true,
+    routable: false,
   },
-  { field: 'actions', title: 'Actions', align: 'left', sortable: false },
+  { field: 'actions', title: 'Actions', align: 'left', sortable: false, routable: false, },
 ]
 
 const settings = {
