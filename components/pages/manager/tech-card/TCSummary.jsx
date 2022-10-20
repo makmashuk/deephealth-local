@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
@@ -10,10 +10,11 @@ import Dropdown from '@components/common/Dropdown/Dropdown'
 import DropdownTable from '@components/common/Table/DropdownTable/DropdownTable'
 import SummaryCard from '@components/common/SummaryCard/SummaryCard'
 import MiniSummaryCard from '@components/common/MiniSummaryCard/MiniSummaryCard'
+import { useSearchFilter, useClearSearchFilter } from '@hooks/search'
 import { TechnologistSummary, ChevronDown } from '@icons/index'
 
 // mock data imports, to be received from API endpoint
-import { techData, siteColumns } from '@components/mockData/dropdownTableData'
+import { techData, techColumns } from '@components/mockData/dropdownTableData'
 import { summaryCardsData } from '@components/mockData/summaryCardsData'
 import { miniCardData } from '@components/mockData/miniCardData'
 
@@ -22,6 +23,8 @@ const DropdownIcon = (props) => {
 }
 
 const TCSummary = () => {
+  const { searchResult, setSearchResult, handleSearch } =
+    useSearchFilter(techData)
   const [anchorEl, setAnchorEl] = useState(null)
   const [selected, setSelected] = useState(0)
   const handleSelection = (e) => {
@@ -42,12 +45,16 @@ const TCSummary = () => {
 
   const iconRef = useRef(null)
 
+  // Clear the search result and revert to main data set
+  // whenever the dropdown table closes, using this custom hook
+  useClearSearchFilter(techData, setSearchResult, anchorEl)
+
   return (
     <Box
       sx={{
         borderRadius: '0px 0px 0px 44px',
         overflow: 'hidden',
-        boxShadow: '6px 4px 14px rgba(243, 245, 250, 0.92)',
+        boxShadow: '6px 14px 14px -8px rgba(243, 245, 250, 0.92)',
         position: 'sticky',
         top: '65px',
         backgroundColor: '#fff',
@@ -137,6 +144,10 @@ const TCSummary = () => {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
                 sx={{
                   '& .MuiPaper-root': {
                     maxWidth: '510px',
@@ -157,9 +168,10 @@ const TCSummary = () => {
                 <MenuItem>
                   <DropdownTable
                     selected={selected}
-                    tableData={techData}
-                    columns={siteColumns}
                     handleSelection={handleSelection}
+                    tableDataBase={searchResult}
+                    columns={techColumns}
+                    handleSearch={handleSearch}
                   />
                 </MenuItem>
               </Menu>

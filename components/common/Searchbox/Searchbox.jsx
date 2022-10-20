@@ -1,18 +1,15 @@
 import styles from './Searchbox.module.css'
 
-const Searchbox = ({ big = false, fullWidth = false }) => {
-  let styleClasses = `${styles.search}`
-  big && (styleClasses += ` ${styles.big}`)
-  fullWidth && (styleClasses += ` ${styles.fullWidth}`)
-
+const Searchbox = ({ big, fullWidth, handleSearch }) => {
   return (
     <form>
       <input
-        className={styleClasses}
+        className={`${styles.search} ${big && styles.big} ${
+          fullWidth && styles.fullWidth
+        }`}
         type="search"
-        name=""
-        id=""
         placeholder="Type to search..."
+        onChange={handleSearch && ((e) => handleSearch(e))}
       />
     </form>
   )

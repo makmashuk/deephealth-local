@@ -88,7 +88,7 @@ export default function SOPositioningIssues() {
           </span>
         </Box>
 
-        <Box
+        {/* <Box
           sx={{
             textAlign: 'center',
             mt: '1.5rem',
@@ -105,7 +105,7 @@ export default function SOPositioningIssues() {
           >
             View detailed breakdown {'>'}
           </span>
-        </Box>
+        </Box> */}
       </CardContent>
     </Card>
   )

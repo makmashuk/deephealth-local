@@ -10,31 +10,24 @@ import styles from '@components/layouts/Sidebar/sidebar.module.css'
 const SIDEBAR_LINKS = [
   {
     id: '46f7dc9b-e75d-40e0-8d14-1e7334d16d5e',
-    link: '/manager/site-overview',
-    title: 'Dashboard',
-    slug: 'dashboard',
+    link: '/practice',
+    title: 'Practice',
+    slug: 'practice',
     icon: '',
     expanded_text: '',
   },
   {
     id: '46f7dc9b-e75d-40e0-8d14-1e7334d16d5ee',
-    link: '/',
+    link: '/practice/techlist/summary/image',
     title: 'Image List',
     slug: 'image-list',
     icon: '',
   },
   {
     id: '46f7dc9b-e75d-40e0-8d14-1e7334d16d5eee',
-    link: '/manager/tech-card',
+    link: '/practice/techlist/',
     title: 'Technologists List',
     slug: 'technologists-list',
-    icon: '',
-  },
-  {
-    id: '46f7dc9b-e75d-40e0-8d14-1e7334d16d5eeee',
-    link: '/',
-    title: 'test',
-    slug: 'test',
     icon: '',
   },
 ]
@@ -128,7 +121,7 @@ export default function SideBar({ setExpSidebar }) {
                 : styles['sidebar__link__icon__expanded'])
             }
           >
-            {link.slug === 'dashboard' ? (
+            {link.slug === 'practice' ? (
               <span style={{ display: 'flex', alignItems: 'center' }}>
                 <Icon.Home
                   size={25}

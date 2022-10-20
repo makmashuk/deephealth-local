@@ -7,11 +7,18 @@ export const muiCustomTheme = createTheme({
     primary: {
       main: '#6992FC',
       dark: '#5475CA',
+      light: '#87A8FD',
+    },
+    error: {
+      main: '#FF5B51',
+      light: '#FF9D97',
+      dark: '#CC4941',
     },
     text: {
-      primary: 'rgba(68, 73, 91, 1)',
-      secondary: 'rgba(106, 110, 131, 1)',
-      disabled: 'rgba(168, 177, 206, 1)',
+      primary: '#44495B',
+      secondary: '#6A6E83',
+      disabled: '#A8B1CE',
+      error: '#FF5B51',
     },
   },
   typography: {
