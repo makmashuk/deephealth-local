@@ -98,7 +98,7 @@ const SOSummary = () => {
         </Grid>
       </Grid>
 
-      <Grid container sx={{ rowGap: '1rem', paddingTop: '15px' }}>
+      <Grid container spacing={2} sx={{ rowGap: '1rem', paddingTop: '15px' }}>
         <Grid
           item
           xs={12}

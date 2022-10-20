@@ -1,9 +1,14 @@
-import React from 'react'
+import MainLayout from '@components/layouts/MainLayout'
+import ILContainer from '@components/pages/manager/imagelist/ILContainer'
 
-function  Image() {
+function defaultPage() {
   return (
-    <div> Image index</div>
+    <div>
+      <MainLayout>
+        <ILContainer />
+      </MainLayout>
+    </div>
   )
 }
 
-export default Image
+export default defaultPage

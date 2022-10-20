@@ -152,6 +152,7 @@ export const muiCustomTheme = createTheme({
       styleOverrides: {
         root: {
           boxShadow: 'none',
+          height: '100%',
         },
       },
     },

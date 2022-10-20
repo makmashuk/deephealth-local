@@ -10,7 +10,7 @@ function ContainerSite() {
   return (
     <div>
       <SOSummary/>
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 2 }}>
+      <Grid paddingX={2} container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 2 }}>
         <Grid item xs={3}>
         <SOViews/>
         </Grid>
@@ -20,7 +20,7 @@ function ContainerSite() {
         <Grid item xs={3}>
           <SOPositioningIssues/>
         </Grid>
-        <Grid item xs={12} margin={2}>
+        <Grid item xs={12} marginY={2}>
           <SOTable/>
         </Grid>
       </Grid>

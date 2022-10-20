@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import DropdownTable from '@components/common/Table/DropdownTable/DropdownTable'
 import { Site, ChevronDown } from '@icons/index'
-
+import { useSearchFilter, useClearSearchFilter } from '@hooks/search'
 // mock data imports, to be received from API endpoint
 import { siteData, siteColumns } from '@components/mockData/dropdownTableData'
 
@@ -16,6 +16,8 @@ const DropdownIcon = (props) => {
 }
 
 const TLSiteHeader = () => {
+  const { searchResult, setSearchResult, handleSearch } =
+    useSearchFilter(siteData)
   const [anchorEl, setAnchorEl] = useState(null)
   const [selected, setSelected] = useState(0)
   const handleSelection = (e) => {
@@ -35,6 +37,7 @@ const TLSiteHeader = () => {
   }
 
   const iconRef = useRef(null)
+  useClearSearchFilter(siteData, setSearchResult, anchorEl)
   return (
     <Box
       sx={{
@@ -116,9 +119,10 @@ const TLSiteHeader = () => {
                 <MenuItem>
                   <DropdownTable
                     selected={selected}
-                    tableData={siteData}
-                    columns={siteColumns}
                     handleSelection={handleSelection}
+                    tableDataBase={searchResult}
+                    columns={siteColumns}
+                    handleSearch={handleSearch}
                   />
                 </MenuItem>
               </Menu>

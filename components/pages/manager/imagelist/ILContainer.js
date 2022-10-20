@@ -297,9 +297,7 @@ function ILDefaultContainer() {
                 }}
               >
                 <div
-                  style={{
-                    width: '70%',
-                  }}
+            
                 >
                   <GroupButton
                     buttons={['By images', 'By studies']}
