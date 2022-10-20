@@ -96,13 +96,15 @@ const DropdownTable = ({
           </Typography>
         )}
       </CardContent>
-      <CardActions
-        sx={{ padding: '24px 20px 22px', borderTop: '1px solid #EDEFF5' }}
-      >
-        <Button variant="contained" size="medium" disableElevation fullWidth>
-          Compare Sites
-        </Button>
-      </CardActions>
+      {tableDataBase && Object.keys(tableDataBase[0])[1] === 'sites' && (
+        <CardActions
+          sx={{ padding: '24px 20px 22px', borderTop: '1px solid #EDEFF5' }}
+        >
+          <Button variant="contained" size="medium" disableElevation fullWidth>
+            Compare Sites
+          </Button>
+        </CardActions>
+      )}
     </Card>
   )
 }
