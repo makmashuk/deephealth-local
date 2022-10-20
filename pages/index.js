@@ -7,7 +7,7 @@ const Home = () => {
 
   const router = useRouter();
   useEffect(()=>{
-    router.push('/manager/site-overview');
+    router.push('/practice');
   },[])
 
   return (

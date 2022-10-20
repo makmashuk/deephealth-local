@@ -124,7 +124,7 @@ const SOTable = () => {
       <Table columns={columns} rows={rawTableData} settings={settings} />
       <div className="mt-3 mb-3" style={{ textAlign: 'center' }}>
         <p
-          onClick={() => router.push('/manager/techlist/practice')}
+          onClick={() => router.push('/practice/techlist/')}
           className="cursor-pointer text-accent-400"
         >
           View more {'>'}
