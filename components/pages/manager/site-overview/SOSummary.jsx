@@ -24,7 +24,6 @@ const SOSummary = () => {
   const [selected, setSelected] = useState(0)
   const handleSelection = (e) => {
     setSelected(Number(e.target.getAttribute('rowid')))
-    console.log('data')
     handleClose()
   }
   const open = Boolean(anchorEl)
@@ -136,6 +135,10 @@ const SOSummary = () => {
               anchorEl={anchorEl}
               open={open}
               onClose={handleClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
               sx={{
                 '& .MuiPaper-root': {
                   maxWidth: '510px',
@@ -156,9 +159,9 @@ const SOSummary = () => {
               <MenuItem>
                 <DropdownTable
                   selected={selected}
-                  tableData={siteData}
-                  columns={siteColumns}
                   handleSelection={handleSelection}
+                  tableDataBase={siteData}
+                  columns={siteColumns}
                 />
               </MenuItem>
             </Menu>
