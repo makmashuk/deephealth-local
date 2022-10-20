@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import DropdownTable from '@components/common/Table/DropdownTable/DropdownTable'
+import { useSearchFilter, useClearSearchFilter } from '@hooks/search'
 import { Practice, ChevronDown } from '@icons/index'
 
 // mock data imports, to be received from API endpoint
@@ -19,6 +20,8 @@ const DropdownIcon = (props) => {
 }
 
 const TLPracticeHeader = () => {
+  const { searchResult, setSearchResult, handleSearch } =
+    useSearchFilter(practiceData)
   const [anchorEl, setAnchorEl] = useState(null)
   const [selected, setSelected] = useState(1)
   const handleSelection = (e) => {
@@ -38,12 +41,17 @@ const TLPracticeHeader = () => {
   }
 
   const iconRef = useRef(null)
+
+  // Clear the search result and revert to main data set
+  // whenever the dropdown table closes, using this custom hook
+  useClearSearchFilter(practiceData, setSearchResult, anchorEl)
+
   return (
     <Box
       sx={{
         borderRadius: '0px 0px 0px 44px',
         overflow: 'hidden',
-        boxShadow: '6px 4px 14px rgba(243, 245, 250, 0.92)',
+        boxShadow: '6px 14px 14px -8px rgba(243, 245, 250, 0.92)',
         position: 'sticky',
         top: '65px',
         backgroundColor: '#fff',
@@ -101,6 +109,10 @@ const TLPracticeHeader = () => {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
                 sx={{
                   '& .MuiPaper-root': {
                     maxWidth: '510px',
@@ -121,9 +133,10 @@ const TLPracticeHeader = () => {
                 <MenuItem>
                   <DropdownTable
                     selected={selected}
-                    tableData={practiceData}
-                    columns={practiceColumns}
                     handleSelection={handleSelection}
+                    tableDataBase={searchResult}
+                    columns={practiceColumns}
+                    handleSearch={handleSearch}
                   />
                 </MenuItem>
               </Menu>
