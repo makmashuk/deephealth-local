@@ -1,20 +1,26 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 import Login from '@components/pages/login/Login'
 
-
 const Home = () => {
-
-  const router = useRouter();
-  useEffect(()=>{
-    router.push('/practice');
-  },[])
+  const router = useRouter()
+  // useEffect(()=>{
+  //   router.push('/practice');
+  // },[])
 
   return (
-    <div style={{ position: "relative", minHeight: "calc(100vh - var(--size-nav))" }}>
-      <div className="container">
-      <Login/>
-
+    <div
+      style={{
+        position: 'relative',
+        minHeight: '100vh',
+      }}
+    >
+      <div
+        style={{
+          background: '#FFF',
+        }}
+      >
+        <Login />
       </div>
     </div>
   )
