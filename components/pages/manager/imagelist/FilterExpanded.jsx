@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import GroupButton from "@components/common/GroupButton/GroupButton";
 
-import { Grid, Card, CardContent, Radio, Button, FormGroup, FormControl, FormControlLabel } from '@mui/material';
+import { Grid, Card, CardContent, Radio, Button, FormGroup, FormControl, FormControlLabel, MenuItem } from '@mui/material';
 
 import { CheckboxWithLabel, RadioGroup, Select } from 'formik-mui';
 import { Formik, Form, Field } from "formik";
@@ -20,6 +20,9 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
   const [timeRange, setTimeRange] = useState("year");
 
   const [selected, setSelected] = useState(selectedData);
+
+
+  const positionDataWithAll = [...positionData, 'Select All'];
 
   const handleClose = () => {
     setShowModal(!showModal);
@@ -126,18 +129,27 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
               views: selected.views,
               flag: selected.flag,
               density: selected.density,
-              positioning_issues: selectedPosData
+              positioning_issues: selectedPosData.length == positionData.length ? positionDataWithAll : selectedPosData
             }}
             onSubmit={(values, { setSubmitting, resetForm }) => {
-              const filteredFieldsCounts = {
-                quality: values?.quality?.length ?? undefined,
-                views: values?.views?.length ?? undefined,
-                flag: values?.flag?.length ?? undefined,
-                density: values?.density?.length ?? undefined,
-                positioning_issues: values?.positioning_issues?.length ?? undefined,
-              };
-              console.log('filteredFieldsCounts')
-              console.log(filteredFieldsCounts)
+              // const filteredFieldsCounts = {
+              //   quality: values?.quality?.length ?? undefined,
+              //   views: values?.views?.length ?? undefined,
+              //   flag: values?.flag?.length ?? undefined,
+              //   density: values?.density?.length ?? undefined,
+              //   positioning_issues: values?.positioning_issues?.length ?? undefined,
+              // };
+              console.log('submitted values')
+              console.log(values)
+              // if 'All' found in values.positioning_issues array then select all
+              values.positioning_issues.forEach((pos, i) => {
+                if (pos === 'Select All') {
+                  console.log(selectedPosData)
+                  console.log('Select All detected')
+                  values.positioning_issues = positionData
+                }
+              });
+
               setSubmitting(false);
               setSelected(values)
               setData(values)
@@ -362,6 +374,14 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
                       alignItems: "flex-start",
                     }}
                   >
+                    <Field
+                      key={0}
+                      type="checkbox"
+                      component={CheckboxWithLabel}
+                      name="positioning_issues"
+                      Label={{ label: "Select All" }}
+                      value={'Select All'}
+                    />
                     {positionData.map((positioning_issues, index) => (
                       <Field
                         key={index}

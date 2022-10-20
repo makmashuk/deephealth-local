@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Grid } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
@@ -12,6 +12,7 @@ import IListExpanded from './IListExpanded' // for -> by studies table
 import FilterExpanded from './FilterExpanded'
 import Chips from './Chips'
 import GroupButton from '@components/common/GroupButton/GroupButton'
+import { StarOutline, StarFilled } from '@icons/index'
 
 const filter = {
   quality: ['Perfect', 'Good', 'Bad'],
@@ -35,15 +36,133 @@ const selected = {
   positioning_issues: ['Not enough muscle', 'IMF not open'],
 }
 
-function ILDefaultContainer() {
-  const [expandedTable, setExpandedTable] = React.useState(false)
-  const [filterData, setFilterData] = React.useState(filter)
+const tableColumns = [
+  {
+    field: 'images',
+    title: 'Images',
+    align: 'left',
+    sortable: true,
+  },
+  {
+    field: 'accession_number',
+    title: 'Accession number',
+    align: 'left',
+    sortable: true,
+  },
+  {
+    field: 'date',
+    title: 'Date',
+    align: 'left',
+    sortable: true,
+  },
+  {
+    field: 'view',
+    title: 'View',
+    align: 'left',
+    sortable: true,
+  },
+  {
+    field: 'issues',
+    title: 'Issues',
+    align: 'right',
+    sortable: true,
+  },
+  {
+    field: 'starred',
+    title: 'Starred',
+    align: 'right',
+    sortable: true,
+  },
+]
 
-  const [checkedData, setCheckedData] = React.useState(
-    selected.positioning_issues
-  ) // checkedData is only positioning_issues which is related to chips
-  const [selectedData, setSelectedData] = React.useState(selected) // pass checkedData to the table
-  const [displayFilter, setDisplayFilter] = React.useState(false)
+const rawTableData = [
+  {
+    id: 1,
+    images: 'Image_1',
+    accession_number: 'BWC5174901DSA',
+    date: '03.05.2022',
+    view: 'RMLO',
+    issues: '0',
+    starred: <StarOutline size={10} />,
+    positioning_issues: 'Not enough muscle',
+  },
+  {
+    id: 2,
+    images: 'Image_2',
+    accession_number: 'ZUH291076825321',
+    date: '02.05.2022',
+    view: 'RMLO',
+    issues: '0',
+    starred: <StarFilled size={10} />,
+    positioning_issues: 'IMF not open',
+  },
+  {
+    id: 3,
+    images: 'Image_3',
+    accession_number: 'DQO098271492753',
+    date: '01.05.2022',
+    view: 'LMLO',
+    issues: '1',
+    starred: <StarOutline size={10} />,
+    positioning_issues: 'IMF not open',
+  },
+  {
+    id: 4,
+    images: 'Image_4',
+    accession_number: 'MT2QS8219312912010',
+    date: '28.04.2022',
+    view: 'LMLO',
+    issues: '2',
+    starred: <StarOutline size={10} />,
+    positioning_issues: 'Droopy breast',
+  },
+  {
+    id: 5,
+    images: 'Image_5',
+    accession_number: 'DQO098271492753',
+    date: '27.05.2022',
+    view: 'LCC',
+    issues: '2',
+    starred: <StarFilled size={10} />,
+    positioning_issues: 'Not enough muscle',
+  },
+  {
+    id: 6,
+    images: 'Image_6',
+    accession_number: 'MT2QS8219312912010',
+    date: '27.05.2022',
+    view: 'LMLO',
+    issues: '2',
+    starred: <StarFilled size={10} />,
+    positioning_issues: 'Nipple not in midline',
+  },
+]
+
+const tableSettings = {
+  last_child_no_border: false,
+  header_border_bottom_color: '#e1e1e1',
+  header_bg_color: '#EDEFF5',
+}
+
+function ILDefaultContainer() {
+  const [expandedTable, setExpandedTable] = useState(false)
+  const [filterData, setFilterData] = useState(filter)
+
+  const [checkedData, setCheckedData] = useState(selected.positioning_issues) // checkedData is only positioning_issues which is related to chips
+  const [selectedData, setSelectedData] = useState(selected) // pass checkedData to the table
+  const [displayFilter, setDisplayFilter] = useState(false)
+
+  const [tableData, setTableData] = useState(rawTableData)
+
+  // useEffect
+  useEffect(() => {
+    const updatedTableData = rawTableData.filter((item) =>
+      checkedData.includes(item.positioning_issues)
+    )
+    console.log('updatedTableData')
+    setTableData(updatedTableData)
+    console.log(updatedTableData)
+  }, [checkedData])
 
   const handleDisplayFilters = (e) => {
     e.preventDefault()
@@ -61,7 +180,17 @@ function ILDefaultContainer() {
     console.log('selected data received on parent')
     console.log(data)
     setCheckedData(data.positioning_issues)
+    data.positioning_issues.forEach((pos, i) => {
+      if (pos === 'Select All') {
+        console.log('Select All detected')
+        // remove it from selection.
+        data.positioning_issues = data.positioning_issues.filter(
+          (item) => item !== 'Select All'
+        )
+      }
+    })
     console.log('chips data updated')
+    console.log('checked data')
     // pass selectedData to tables
     setSelectedData(data)
   }
@@ -70,7 +199,6 @@ function ILDefaultContainer() {
     console.log('chips data received on parent')
     console.log(data)
     setCheckedData(data)
-    console.log(selectedData)
   }
 
   const handleClearAll = () => {
@@ -257,7 +385,15 @@ function ILDefaultContainer() {
           </Grid>
 
           <Grid item xs={12}>
-            {!expandedTable ? <IList /> : <IListExpanded />}
+            {!expandedTable ? (
+              <IList
+                columns={tableColumns}
+                rows={tableData}
+                settings={tableSettings}
+              />
+            ) : (
+              <IListExpanded />
+            )}
           </Grid>
         </Grid>
 

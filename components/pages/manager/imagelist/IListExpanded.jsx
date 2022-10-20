@@ -103,7 +103,7 @@ const IListExpanded = () => {
               cursor: "pointer",
               paddingLeft: "10px",
             }}
-            onClick={() => setIsOpen((state) => !state)}
+            // onClick={() => setIsOpen((state) => !state)}
           >
             {value}
           </span>
@@ -157,7 +157,6 @@ const IListExpanded = () => {
       issues: "0",
       flagged: true,
       select: "hello",
-
       subData: [
         {
           id: 11,
