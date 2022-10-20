@@ -69,8 +69,6 @@ function ILDefaultContainer() {
   const handleChips = (data) => {
     console.log('chips data received on parent')
     console.log(data)
-    // only set the positioning_issues to setSelectedData
-    setSelectedData({ ...selectedData, positioning_issues: data })
     setCheckedData(data)
     console.log(selectedData)
   }
@@ -272,6 +270,7 @@ function ILDefaultContainer() {
             data={filterData}
             selectedData={selectedData}
             setData={handleSelectedData}
+            selectedPosData={checkedData}
             setDisplayFilter={handleModalClose}
             setClearAll={handleClearAll}
           />

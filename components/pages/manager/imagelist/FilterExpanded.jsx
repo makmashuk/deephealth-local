@@ -4,10 +4,10 @@ import GroupButton from "@components/common/GroupButton/GroupButton";
 import { Grid, Card, CardContent, Radio, Button, FormGroup, FormControl, FormControlLabel } from '@mui/material';
 
 import { CheckboxWithLabel, RadioGroup, Select } from 'formik-mui';
-import { useFormik, Formik, Form, Field } from "formik";
+import { Formik, Form, Field } from "formik";
 import { CloseWindow, Trash } from '@icons/index';
 
-const FilterExpanded = ( { data, selectedData, setDisplayFilter, setData, setClearAll } ) => {
+const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisplayFilter, setClearAll } ) => {
 
   const [showModal, setShowModal] = useState(false);
 
@@ -121,14 +121,13 @@ const FilterExpanded = ( { data, selectedData, setDisplayFilter, setData, setCle
           </Grid>
 
           <Formik
-            // initialValues={{
-            //   quality: ['Perfect'],
-            //   views: [],
-            //   flag: [],
-            //   density: [],
-            //   positioning_issues: [],
-            // }}
-            initialValues={selected}
+            initialValues={{
+              quality: selected.quality,
+              views: selected.views,
+              flag: selected.flag,
+              density: selected.density,
+              positioning_issues: selectedPosData
+            }}
             onSubmit={(values, { setSubmitting, resetForm }) => {
               const filteredFieldsCounts = {
                 quality: values?.quality?.length ?? undefined,
@@ -143,7 +142,7 @@ const FilterExpanded = ( { data, selectedData, setDisplayFilter, setData, setCle
               setSelected(values)
               setData(values)
               handleClose()
-              // resetForm();
+              resetForm();
             }}
             enableReinitialize
           >
@@ -433,9 +432,9 @@ const FilterExpanded = ( { data, selectedData, setDisplayFilter, setData, setCle
                 </div>
 
             </div>
-          </Form>
-        )}
-      </Formik>
+              </Form>
+            )}
+          </Formik>
         </Grid>
 
       </CardContent>
