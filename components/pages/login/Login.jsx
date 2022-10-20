@@ -340,7 +340,7 @@ function Login() {
                 }}
                 onClick={(e) => {
                   e.preventDefault()
-                  router.push('/manager/site-overview')
+                  router.push('/practice')
                 }}
               >
                 Login
