@@ -15,7 +15,6 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Searchbox from '@components/common/Searchbox/Searchbox'
-import { useSearch } from '@hooks/useSearch'
 import { AlertTriangle } from '@icons/index'
 import styles from './DropdownTable.module.css'
 
@@ -24,8 +23,8 @@ const DropdownTable = ({
   handleSelection,
   tableDataBase,
   columns,
+  handleSearch,
 }) => {
-  const { searchResult, handleSearch } = useSearch(tableDataBase)
   return (
     <Card sx={{ minWidth: 476, padding: 0, transition: 'all 0.3s' }}>
       <CardHeader
@@ -37,7 +36,7 @@ const DropdownTable = ({
         <Searchbox fullWidth handleSearch={handleSearch} />
       </div>
       <CardContent sx={{ padding: 0 }}>
-        {searchResult.length > 0 ? (
+        {tableDataBase.length > 0 ? (
           <TableContainer sx={{ maxHeight: 400 }}>
             <Table stickyHeader className={styles.table}>
               <TableHead>
@@ -52,7 +51,7 @@ const DropdownTable = ({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {searchResult.map((row) => {
+                {tableDataBase.map((row) => {
                   return (
                     <TableRow
                       key={row.id}

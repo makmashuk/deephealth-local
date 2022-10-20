@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import DropdownTable from '@components/common/Table/DropdownTable/DropdownTable'
+import { useSearchFilter, useClearSearchFilter } from '@hooks/search'
 import { Site, ChevronDown } from '@icons/index'
 
 // mock data imports, to be received from API endpoint
@@ -16,6 +17,8 @@ const DropdownIcon = (props) => {
 }
 
 const TLSiteHeader = () => {
+  const { searchResult, setSearchResult, handleSearch } =
+    useSearchFilter(siteData)
   const [anchorEl, setAnchorEl] = useState(null)
   const [selected, setSelected] = useState(0)
   const handleSelection = (e) => {
@@ -35,12 +38,17 @@ const TLSiteHeader = () => {
   }
 
   const iconRef = useRef(null)
+
+  // Clear the search result and revert to main data set
+  // whenever the dropdown table closes, using this custom hook
+  useClearSearchFilter(siteData, setSearchResult, anchorEl)
+
   return (
     <Box
       sx={{
         borderRadius: '0px 0px 0px 44px',
         overflow: 'hidden',
-        boxShadow: '6px 4px 14px rgba(243, 245, 250, 0.92)',
+        boxShadow: '6px 14px 14px -8px rgba(243, 245, 250, 0.92)',
         position: 'sticky',
         top: '65px',
         backgroundColor: '#fff',
@@ -96,6 +104,10 @@ const TLSiteHeader = () => {
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'right',
+                }}
                 sx={{
                   '& .MuiPaper-root': {
                     maxWidth: '510px',
@@ -116,9 +128,10 @@ const TLSiteHeader = () => {
                 <MenuItem>
                   <DropdownTable
                     selected={selected}
-                    tableData={siteData}
-                    columns={siteColumns}
                     handleSelection={handleSelection}
+                    tableDataBase={searchResult}
+                    columns={siteColumns}
+                    handleSearch={handleSearch}
                   />
                 </MenuItem>
               </Menu>
