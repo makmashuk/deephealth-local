@@ -156,5 +156,14 @@ export const muiCustomTheme = createTheme({
         },
       },
     },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          '&:last-child': {
+            paddingBottom: 0,
+          },
+        },
+      },
+    },
   },
 })
