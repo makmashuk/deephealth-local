@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, createContext } from 'react'
 import { Grid } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
@@ -6,34 +6,11 @@ import * as Icon from 'react-feather'
 import TLSiteHeader from './TLSiteHeader'
 import { TLBackButton } from '@icons/index'
 import FilterExpanded from './FilterExpanded'
-import Table from '@components/common/Table/Table'
-// import Chips from '@components/common/Chips/Chips'
+import TListSite from './TListSite'
 import Chips from './Chips'
 import SeeImagesIcon from '@components/common/Table/SeeImagesIcon'
+import { TableRowContext } from '../../../../../contexts/TableRowContext'
 import { useRouter } from 'next/router'
-
-const tech_list = [
-  {
-    key: '1',
-    title: 'Nipple not in profile',
-  },
-  {
-    key: '2',
-    title: 'Nipple not in midline',
-  },
-  {
-    key: '3',
-    title: 'Droopy breast',
-  },
-  {
-    key: '4',
-    title: 'Not enough muscle',
-  },
-  {
-    key: '5',
-    title: 'IMF not open',
-  },
-]
 
 const filter = {
   positioning_issues: [
@@ -260,15 +237,15 @@ function TLSiteContainer() {
   }
 
   const handleSearch = (e) => {
-    console.log(e.target.value)
+    console.log('handleSearch')
     let keyword = e.target.value
+    console.log(keyword)
+
     const filterSearch = rawTableData.filter((item) => {
-      return (
-        item.accession_number.toLowerCase().includes(keyword.toLowerCase()) ||
-        item.date.toLowerCase().includes(keyword.toLowerCase()) ||
-        item.view.toLowerCase().includes(keyword.toLowerCase()) ||
-        item.images.toLowerCase().includes(keyword.toLowerCase())
-      )
+      return item.technologist.toLowerCase().includes(keyword.toLowerCase())
+      // item.study_volume.toLowerCase().includes(keyword.toLowerCase()) ||
+      // item.avg_img_per_study.toLowerCase().includes(keyword.toLowerCase()) ||
+      // item.avg_issues_per_image.toLowerCase().includes(keyword.toLowerCase())
     })
     console.log('filterSearch')
     console.log(filterSearch)
@@ -365,6 +342,7 @@ function TLSiteContainer() {
                       borderRadius: '8px',
                       border: '1px solid #EDEFF5',
                     },
+                    onKeyUp: (e) => handleSearch(e),
                   }}
                 />
               </Grid>
@@ -427,12 +405,13 @@ function TLSiteContainer() {
           </Grid>
 
           <Grid item xs={12}>
-            {/* <Chips chips={checkedData} setChips={handleChips} /> */}
             <Chips chips={checkedData} setChips={handleChips} />
           </Grid>
 
           <Grid item xs={12}>
-            <Table columns={columns} rows={tableData} settings={settings} />
+            <TableRowContext.Provider value={tableData}>
+              <TListSite columns={columns} settings={settings} />
+            </TableRowContext.Provider>
           </Grid>
         </Grid>
 

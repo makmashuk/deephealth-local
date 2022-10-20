@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import Table from '@components/common/Table/Table'
-import { TableRowContext } from '../../../../contexts/TableRowContext'
+import { TableRowContext } from '../../../../../contexts/TableRowContext'
 
-const ILlist = ( { columns, settings } ) => {
+const TLlistSite = ( { columns, settings } ) => {
   const rows = useContext(TableRowContext)
   return (
     <div className='flow'>
@@ -11,4 +11,4 @@ const ILlist = ( { columns, settings } ) => {
   )
 }
 
-export default ILlist
+export default TLlistSite

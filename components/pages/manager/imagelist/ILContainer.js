@@ -4,15 +4,13 @@ import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import * as Icon from 'react-feather'
 import ILSiteHeader from './ILSiteHeader'
-import { TLBackButton } from '@icons/index'
-
 import IList from './IList' // for -> by images table
 import IListExpanded from './IListExpanded' // for -> by studies table
-
 import FilterExpanded from './FilterExpanded'
 import Chips from './Chips'
 import GroupButton from '@components/common/GroupButton/GroupButton'
-import { StarOutline, StarFilled } from '@icons/index'
+import { StarOutline, StarFilled, TLBackButton } from '@icons/index'
+import { TableRowContext } from '@contexts/TableRowContext'
 
 const filter = {
   quality: ['Perfect', 'Good', 'Bad'],
@@ -296,9 +294,7 @@ function ILDefaultContainer() {
                   alignItems: 'center',
                 }}
               >
-                <div
-            
-                >
+                <div>
                   <GroupButton
                     buttons={['By images', 'By studies']}
                     buttonOnClickHandler={handleOptions}
@@ -411,11 +407,9 @@ function ILDefaultContainer() {
 
           <Grid item xs={12}>
             {!expandedTable ? (
-              <IList
-                columns={tableColumns}
-                rows={tableData}
-                settings={tableSettings}
-              />
+              <TableRowContext.Provider value={tableData}>
+                <IList columns={tableColumns} settings={tableSettings} />
+              </TableRowContext.Provider>
             ) : (
               <IListExpanded />
             )}
