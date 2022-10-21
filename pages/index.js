@@ -11,17 +11,12 @@ const Home = () => {
   return (
     <div
       style={{
+        background: '#FFF',
         position: 'relative',
         minHeight: '100vh',
       }}
     >
-      <div
-        style={{
-          background: '#FFF',
-        }}
-      >
-        <Login />
-      </div>
+      <Login />
     </div>
   )
 }

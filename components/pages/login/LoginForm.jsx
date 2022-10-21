@@ -6,6 +6,7 @@ import {
   IconButton,
   OutlinedInput,
   FormHelperText,
+  Box
 } from '@mui/material'
 
 import { useRouter } from 'next/router'
@@ -70,7 +71,14 @@ const LoginForm = ({ onClickResetPassword }) => {
   const router = useRouter()
 
   return (
-    <>
+    <Grid
+      container
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '0 2rem 0 0',
+      }}
+    >
       <Grid
         item
         xs={12}
@@ -79,6 +87,7 @@ const LoginForm = ({ onClickResetPassword }) => {
           display: 'flex',
           justifyContent: 'flex-start',
           alignItems: 'center',
+          padding: '0 0 4rem 0',
         }}
       >
         <span
@@ -102,7 +111,6 @@ const LoginForm = ({ onClickResetPassword }) => {
           display: 'flex',
           justifyContent: 'flex-start',
           alignItems: 'flex-start',
-          width: '100%',
         }}
       >
         <form
@@ -310,7 +318,7 @@ const LoginForm = ({ onClickResetPassword }) => {
           </Grid>
         </form>
       </Grid>
-    </>
+    </Grid>
   )
 }
 

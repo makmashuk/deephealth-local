@@ -47,24 +47,27 @@ const ResetPasswordForm = ({ onClickSignIn }) => {
     })
 
     return (
-      <>
+      <Grid
+        container
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          padding: '0 2rem 0 0',
+        }}
+      >
         <Grid
           item
           xs={12}
           md={12}
-          mt={12}
           style={{
             display: 'flex',
             justifyContent: 'flex-start',
             alignItems: 'center',
+            padding: '0 0 4rem 0',
           }}
         >
           <span
             style={{
-              display: 'flex',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-              alignSelf: 'flex-end',
               fontStyle: 'normal',
               fontWeight: '800',
               fontSize: '24px',
@@ -114,7 +117,6 @@ const ResetPasswordForm = ({ onClickSignIn }) => {
             alignItems: 'flex-start',
             width: '100%',
           }}
-          mb={12}
         >
           <form
             action=""
@@ -233,13 +235,20 @@ const ResetPasswordForm = ({ onClickSignIn }) => {
             </Grid>
           </form>
         </Grid>
-      </>
+      </Grid>
     )
   }
 
   const ResetFormSuccess = () => {
     return (
-      <>
+      <Grid
+        container
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          padding: '0 2rem 0 0',
+        }}
+      >
         <Grid
           item
           xs={12}
@@ -324,7 +333,7 @@ const ResetPasswordForm = ({ onClickSignIn }) => {
             Go to sign in
           </button>
         </Grid>
-      </>
+      </Grid>
     )
   }
 
