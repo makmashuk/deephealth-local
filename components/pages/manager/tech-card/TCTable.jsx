@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Table from '@components/common/Table/Table'
 import { useRouter } from 'next/router'
-import { TableRowContext } from '../../../../contexts/TableRowContext'
+import { TableRowContext } from '@contexts/TableRowContext'
 
 const TCTable = ({ columns, settings }) => {
   const router = useRouter()

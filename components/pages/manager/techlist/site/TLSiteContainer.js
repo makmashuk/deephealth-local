@@ -9,7 +9,7 @@ import FilterExpanded from './FilterExpanded'
 import TListSite from './TListSite'
 import Chips from './Chips'
 import SeeImagesIcon from '@components/common/Table/SeeImagesIcon'
-import { TableRowContext } from '../../../../../contexts/TableRowContext'
+import { TableRowContext } from '@contexts/TableRowContext'
 import { useRouter } from 'next/router'
 
 const filter = {
