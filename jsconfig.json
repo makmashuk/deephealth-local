@@ -17,6 +17,8 @@
     "**/*.tsx",
     "**/*.js",
     "components/pages/manager/imagelist/IListExpanded.jsx",
-    "components/pages/manager/imagelist/IListExpanded.jsx"
+    "components/pages/manager/imagelist/IListExpanded.jsx",
+    "components/pages/login/LoginForm.jsx",
+    "components/pages/login/LoginForm.jsx"
   ]
 }
