@@ -142,6 +142,106 @@ const tableSettings = {
   header_bg_color: '#EDEFF5',
 }
 
+const StarredTooltip = () => {
+  return (
+    <>
+      <Grid
+        item
+        xs={12}
+        sx={{
+          background: '#44495B',
+          boxShadow: '0px 12px 18px rgba(55, 63, 94, 0.2)',
+          borderRadius: '12px',
+          padding: '1rem',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '380px',
+          position: 'absolute',
+          bottom: '1rem',
+          right: '25rem',
+        }}
+      >
+        <span
+          style={{
+            fontWeight: '500',
+            fontSize: '14px',
+            lineHeight: '20px',
+            color: '#A8B1CE',
+          }}
+        >
+          Starring an image means to add it to “Images to review” list. Use this
+          feature to have a quick access to those list at any time.
+        </span>
+      </Grid>
+    </>
+  )
+}
+
+const DownloadTile = () => {
+  return (
+    <>
+      <Grid
+        item
+        xs={12}
+        sx={{
+          background: '#44495B',
+          boxShadow: '0px 12px 18px rgba(55, 63, 94, 0.2)',
+          borderRadius: '12px',
+          padding: '0.5rem',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '300px',
+          position: 'absolute',
+          bottom: '1rem',
+          right: '1rem',
+        }}
+      >
+        <Grid
+          item
+          xs={6}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontWeight: '700',
+            fontSize: '14px',
+            lineHeight: '16px',
+            color: '#ffffff',
+          }}
+        >
+          1 studies selected
+        </Grid>
+        <Grid
+          item
+          xs={6}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <button
+            style={{
+              background: '#6992FC',
+              border: 'none',
+              padding: '0.5rem 2rem',
+              borderRadius: '12px',
+              fontWeight: '700',
+              fontSize: '14px',
+              lineHeight: '16px',
+              color: '#ffffff',
+            }}
+          >
+            Export list
+          </button>
+        </Grid>
+      </Grid>
+    </>
+  )
+}
+
 function ILDefaultContainer() {
   const [expandedTable, setExpandedTable] = useState(false)
   const [filterData, setFilterData] = useState(filter)
@@ -413,6 +513,14 @@ function ILDefaultContainer() {
             ) : (
               <IListExpanded />
             )}
+          </Grid>
+
+          <Grid item xs={4}>
+            <StarredTooltip />
+          </Grid>
+
+          <Grid item xs={4}>
+            <DownloadTile />
           </Grid>
         </Grid>
 
