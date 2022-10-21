@@ -1,8 +1,6 @@
-import React, { useContext } from 'react';
-import { TableRowContext } from '../../../contexts/TableRowContext';
+import React from 'react';
 
-export default function TableBody({ columns, settings }) {
-  const rows = useContext(TableRowContext)
+export default function TableBody({ columns, rows, settings }) {
   return (
     <>
       {rows.map((item, i) => {

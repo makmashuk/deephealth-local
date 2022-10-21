@@ -5,7 +5,6 @@ import SOTrending from './SOTrending'
 import SOSummary from './SOSummary'
 import SOPositioningIssues from './SOPositioningIssues'
 import { Grid } from '@mui/material'
-import { TableRowContext } from '@contexts/TableRowContext'
 import SeeImagesIcon from '@components/common/Table/SeeImagesIcon'
 
 const progressData = [
@@ -125,18 +124,6 @@ const tableSettings = {
 
 function ContainerSite() {
   const [tableData, setTableData] = useState(rawTableData)
-  const handleSearch = (e) => {
-    console.log('handleSearch')
-    let keyword = e.target.value
-    console.log(keyword)
-
-    const filterSearch = rawTableData.filter((item) => {
-      return item.technologist.toLowerCase().includes(keyword.toLowerCase())
-    })
-    console.log('filterSearch')
-    console.log(filterSearch)
-    setTableData(filterSearch)
-  }
 
   return (
     <div>
@@ -157,9 +144,11 @@ function ContainerSite() {
           <SOPositioningIssues />
         </Grid>
         <Grid item xs={12} marginY={2}>
-          <TableRowContext.Provider value={tableData}>
-            <SOTable columns={tableColumns} settings={tableSettings} />
-          </TableRowContext.Provider>
+          <SOTable
+            columns={tableColumns}
+            rows={tableData}
+            settings={tableSettings}
+          />
         </Grid>
       </Grid>
     </div>

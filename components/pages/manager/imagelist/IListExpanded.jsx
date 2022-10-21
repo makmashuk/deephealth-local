@@ -64,8 +64,8 @@ const IListExpanded = () => {
         sortable: true,
       },
       {
-        field: "flagged",
-        title: "Flagged",
+        field: "starred",
+        title: "Starred",
         sortable: true,
         align: "center",
         format: (value) => (
@@ -116,8 +116,8 @@ const IListExpanded = () => {
         sortable: true,
       },
       {
-        field: "flagged",
-        title: "Flagged",
+        field: "starred",
+        title: "Starred",
         sortable: true,
         align: "center",
         format: (value) => (
@@ -145,7 +145,7 @@ const IListExpanded = () => {
       quality: "Perfect",
       bad: 111,
       issues: "0",
-      flagged: true,
+      starred: true,
       select: "hello",
       subData: [
         {
@@ -157,7 +157,7 @@ const IListExpanded = () => {
           quality: "Perfect",
           bad: 111,
           issues: "1",
-          flagged: true,
+          starred: true,
           select: "hello",
         },
         {
@@ -169,7 +169,7 @@ const IListExpanded = () => {
           quality: "Perfect",
           bad: 111,
           issues: "0",
-          flagged: true,
+          starred: true,
           select: "hello",
         },
         {
@@ -181,7 +181,7 @@ const IListExpanded = () => {
           quality: "Perfect",
           bad: 111,
           issues: "0",
-          flagged: true,
+          starred: true,
           select: "hello",
         },
       ],
@@ -197,7 +197,7 @@ const IListExpanded = () => {
       quality: "Perfect",
       bad: 11,
       issues: "0",
-      flagged: false,
+      starred: false,
       subData: [
         {
           id: 21,
@@ -208,7 +208,7 @@ const IListExpanded = () => {
           quality: "Perfect",
           bad: 111,
           issues: "1",
-          flagged: true,
+          starred: true,
           select: "hello",
         },
         {
@@ -220,7 +220,7 @@ const IListExpanded = () => {
           quality: "Perfect",
           bad: 111,
           issues: "0",
-          flagged: true,
+          starred: true,
           select: "hello",
         },
         {
@@ -232,7 +232,7 @@ const IListExpanded = () => {
           quality: "Perfect",
           bad: 111,
           issues: "0",
-          flagged: true,
+          starred: true,
           select: "hello",
         },
       ],
@@ -247,7 +247,7 @@ const IListExpanded = () => {
       quality: "Perfect",
       bad: 511,
       issues: "1",
-      flagged: false,
+      starred: false,
     },
     {
       id: 4,
@@ -259,7 +259,7 @@ const IListExpanded = () => {
       quality: "Perfect",
       bad: 511,
       issues: "1",
-      flagged: true,
+      starred: true,
     },
     {
       id: 5,
@@ -271,7 +271,7 @@ const IListExpanded = () => {
       quality: "Perfect",
       bad: 511,
       issues: "0",
-      flagged: false,
+      starred: false,
     },
     {
       id: 6,
@@ -283,7 +283,7 @@ const IListExpanded = () => {
       quality: "Perfect",
       bad: 511,
       issues: "1",
-      flagged: false,
+      starred: false,
     },
     {
       id: 7,
@@ -295,7 +295,7 @@ const IListExpanded = () => {
       quality: "Perfect",
       bad: 511,
       issues: "1",
-      flagged: false,
+      starred: false,
     },
     {
       id: 8,
@@ -307,7 +307,7 @@ const IListExpanded = () => {
       quality: "Perfect",
       bad: 511,
       issues: "0",
-      flagged: false,
+      starred: false,
     },
   ];
 

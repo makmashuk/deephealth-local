@@ -8,6 +8,11 @@ export default function Table({ columns, rows, settings }) {
   const [sortableFields, setSortableFields] = useState([])
   const [tableData, setTableData] = useState(rows)
 
+  // useEffect(() => {
+  //   console.log('Table: useEffect')
+  //   console.log(rows)
+  // }, [rows])
+
   const handleSorting = (sortField, sortOrder) => {
     if (sortField) {
       const sorted = [...tableData].sort((a, b) => {
@@ -78,7 +83,7 @@ export default function Table({ columns, rows, settings }) {
           />
         </thead>
         <tbody>
-          <TableBody columns={columns} settings={settings} />
+          <TableBody columns={columns} rows={rows} settings={settings} />
         </tbody>
       </table>
     </div>

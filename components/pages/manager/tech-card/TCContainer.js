@@ -6,7 +6,6 @@ import TCSummary from './TCSummary'
 import TCPositioningIssues from './TCPositioningIssues'
 import { Grid } from '@mui/material'
 import { StarOutline, StarFilled } from '@components/icons'
-import { TableRowContext } from '@contexts/TableRowContext'
 
 const rawTableData = [
   {
@@ -107,24 +106,6 @@ const tableSettings = {
 
 function ContainerSite() {
   const [tableData, setTableData] = useState(rawTableData)
-  const handleSearch = (e) => {
-    console.log('handleSearch')
-    let keyword = e.target.value
-    console.log(keyword)
-
-    const filterSearch = rawTableData.filter((item) => {
-      return (
-        item.technologist.toLowerCase().includes(keyword.toLowerCase()) ||
-        item.site.toLowerCase().includes(keyword.toLowerCase())
-      )
-      // item.study_volume.toLowerCase().includes(keyword.toLowerCase()) ||
-      // item.avg_img_per_study.toLowerCase().includes(keyword.toLowerCase()) ||
-      // item.avg_issues_per_image.toLowerCase().includes(keyword.toLowerCase())
-    })
-    console.log('filterSearch')
-    console.log(filterSearch)
-    setTableData(filterSearch)
-  }
 
   return (
     <div>
@@ -140,9 +121,7 @@ function ContainerSite() {
           <TCPositioningIssues />
         </Grid>
         <Grid item xs={12} margin={2}>
-          <TableRowContext.Provider value={tableData}>
-            <TCTable columns={columns} settings={tableSettings} />
-          </TableRowContext.Provider>
+          <TCTable columns={columns} rows={tableData} settings={tableSettings} />
         </Grid>
       </Grid>
     </div>

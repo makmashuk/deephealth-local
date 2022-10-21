@@ -7,7 +7,6 @@ import { TLBackButton } from '@icons/index'
 import TLPracticeHeader from './TLPracticeHeader'
 import TLPracticeList from './TLPracticeList'
 import ProgressLineMultiple from '@components/common/Charts/ProgressLineMultiple'
-import { TableRowContext } from '@contexts/TableRowContext'
 import { useRouter } from 'next/router'
 
 const progressData = [
@@ -199,15 +198,11 @@ function TLPracticeContainer() {
     console.log('handleSearch')
     let keyword = e.target.value
     console.log(keyword)
-
     const filterSearch = rawTableData.filter((item) => {
       return (
         item.technologist.toLowerCase().includes(keyword.toLowerCase()) ||
         item.site.toLowerCase().includes(keyword.toLowerCase())
       )
-      // item.study_volume.toLowerCase().includes(keyword.toLowerCase()) ||
-      // item.avg_img_per_study.toLowerCase().includes(keyword.toLowerCase()) ||
-      // item.avg_issues_per_image.toLowerCase().includes(keyword.toLowerCase())
     })
     console.log('filterSearch')
     console.log(filterSearch)
@@ -338,9 +333,11 @@ function TLPracticeContainer() {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <TableRowContext.Provider value={tableData}>
-            <TLPracticeList columns={columns} settings={tableSettings} />
-          </TableRowContext.Provider>
+          <TLPracticeList
+            columns={columns}
+            rows={tableData}
+            settings={tableSettings}
+          />
         </Grid>
         <Grid item xs={12}></Grid>
       </Grid>

@@ -1,11 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Table from '@components/common/Table/Table'
 import { useRouter } from 'next/router'
-import { TableRowContext } from '@contexts/TableRowContext'
 
-const SOTable = ({ columns, settings }) => {
+const SOTable = ({ columns, rows, settings }) => {
   const router = useRouter()
-  const rows = useContext(TableRowContext)
   return (
     <div className="flow">
       <Table columns={columns} rows={rows} settings={settings} />

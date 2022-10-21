@@ -9,7 +9,6 @@ import FilterExpanded from './FilterExpanded'
 import TListSite from './TListSite'
 import Chips from './Chips'
 import SeeImagesIcon from '@components/common/Table/SeeImagesIcon'
-import { TableRowContext } from '@contexts/TableRowContext'
 import { useRouter } from 'next/router'
 
 const filter = {
@@ -409,9 +408,7 @@ function TLSiteContainer() {
           </Grid>
 
           <Grid item xs={12}>
-            <TableRowContext.Provider value={tableData}>
-              <TListSite columns={columns} settings={settings} />
-            </TableRowContext.Provider>
+            <TListSite columns={columns} rows={tableData} settings={settings} />
           </Grid>
         </Grid>
 
