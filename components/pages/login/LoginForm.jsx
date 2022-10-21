@@ -11,6 +11,7 @@ import {
 import { useRouter } from 'next/router'
 import {
   Visibility,
+  VisibilityOff,
   ValidationAlertIcon,
 } from '@icons/index'
 import { useFormik } from 'formik'
@@ -204,7 +205,7 @@ const LoginForm = ({ onClickResetPassword }) => {
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}
                   >
-                    {formValues.showPassword ? <Visibility color={'#FF0000'} /> : <Visibility color={'#A8B1CE'} />}
+                    {formValues.showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
               }
