@@ -291,6 +291,8 @@ const LoginForm = ({ onClickResetPassword }) => {
               style={{
                 background: '#6992fc',
                 borderRadius: '12px',
+                fontSize: '16px',
+                fontWeight: 700,
                 width: '100%',
                 border: 'none',
                 color: '#fff',
