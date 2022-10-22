@@ -36,7 +36,7 @@ const DropdownTable = ({
         <Searchbox fullWidth handleSearch={handleSearch} />
       </div>
       <CardContent sx={{ padding: 0 }}>
-        {tableDataBase && tableDataBase.length > 0 ? (
+        {tableDataBase.length > 0 ? (
           <TableContainer sx={{ maxHeight: 400 }}>
             <Table stickyHeader className={styles.table}>
               <TableHead>

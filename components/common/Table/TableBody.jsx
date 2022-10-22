@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from '@mui/material'
 
 export default function TableBody({ columns, rows, settings }) {
   return (
@@ -20,6 +21,25 @@ export default function TableBody({ columns, rows, settings }) {
                 return (
                   <td key={header.field} style={{ textAlign: header.align }}>
                     {header.format(item[header.field])}
+                  </td>
+                )
+              }
+              if (header.routable) {
+                return (
+                  <td key={header.field} style={{ textAlign: header.align }}>
+                    <Link
+                      href="/practice/techlist/summary"
+                      underline="none"
+                      color="text.secondary"
+                      sx={{
+                        transition: 'all 0.3s ease-out',
+                        '&:hover': {
+                          color: '#6992FC',
+                        },
+                      }}
+                    >
+                      {item[header.field]}
+                    </Link>
                   </td>
                 )
               }
