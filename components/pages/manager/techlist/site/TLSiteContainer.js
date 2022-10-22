@@ -1,5 +1,5 @@
-import React, { useState, useEffect, createContext } from 'react'
-import { Grid } from '@mui/material'
+import React, { useState, useEffect, useCallback } from 'react'
+import { Grid, debounce } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import * as Icon from 'react-feather'
@@ -235,21 +235,19 @@ function TLSiteContainer() {
     console.log(selectedData)
   }
 
-  const handleSearch = (e) => {
-    console.log('handleSearch')
-    let keyword = e.target.value
-    console.log(keyword)
-
-    const filterSearch = rawTableData.filter((item) => {
-      return item.technologist.toLowerCase().includes(keyword.toLowerCase())
-      // item.study_volume.toLowerCase().includes(keyword.toLowerCase()) ||
-      // item.avg_img_per_study.toLowerCase().includes(keyword.toLowerCase()) ||
-      // item.avg_issues_per_image.toLowerCase().includes(keyword.toLowerCase())
-    })
-    console.log('filterSearch')
-    console.log(filterSearch)
-    setTableData(filterSearch)
-  }
+  const handleSearchDebounce = useCallback(
+    debounce((e) => {
+      console.log(e.target.value)
+      let keyword = e.target.value
+      const filterSearch = rawTableData.filter((item) => {
+        return item.technologist.toLowerCase().includes(keyword.toLowerCase())
+      })
+      console.log('filterSearch')
+      console.log(filterSearch)
+      setTableData(filterSearch)
+    }, 2000),
+    []
+  )
 
   const handleOnClickClose = (e) => {
     e.preventDefault()
@@ -341,8 +339,8 @@ function TLSiteContainer() {
                       borderRadius: '8px',
                       border: '1px solid #EDEFF5',
                     },
-                    onKeyUp: (e) => handleSearch(e),
                   }}
+                  onKeyUp={handleSearchDebounce}
                 />
               </Grid>
 

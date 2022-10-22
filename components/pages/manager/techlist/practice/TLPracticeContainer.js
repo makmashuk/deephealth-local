@@ -1,5 +1,5 @@
-import React, { useState, useEffect, createContext } from 'react'
-import { Grid } from '@mui/material'
+import React, { useState, useEffect, useCallback } from 'react'
+import { Grid, debounce } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import * as Icon from 'react-feather'
@@ -194,20 +194,23 @@ const tableSettings = {
 function TLPracticeContainer() {
   const router = useRouter()
   const [tableData, setTableData] = useState(rawTableData)
-  const handleSearch = (e) => {
-    console.log('handleSearch')
-    let keyword = e.target.value
-    console.log(keyword)
-    const filterSearch = rawTableData.filter((item) => {
-      return (
-        item.technologist.toLowerCase().includes(keyword.toLowerCase()) ||
-        item.site.toLowerCase().includes(keyword.toLowerCase())
-      )
-    })
-    console.log('filterSearch')
-    console.log(filterSearch)
-    setTableData(filterSearch)
-  }
+
+  const handleSearchDebounce = useCallback(
+    debounce((e) => {
+      console.log(e.target.value)
+      let keyword = e.target.value
+      const filterSearch = rawTableData.filter((item) => {
+        return (
+          item.technologist.toLowerCase().includes(keyword.toLowerCase()) ||
+          item.site.toLowerCase().includes(keyword.toLowerCase())
+        )
+      })
+      console.log('filterSearch')
+      console.log(filterSearch)
+      setTableData(filterSearch)
+    }, 2000),
+    []
+  )
 
   return (
     <>
@@ -289,8 +292,8 @@ function TLPracticeContainer() {
                     borderRadius: '8px',
                     border: '1px solid #EDEFF5',
                   },
-                  onKeyUp: (e) => handleSearch(e),
                 }}
+                onKeyUp={handleSearchDebounce}
               />
             </Grid>
 
