@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { Grid, debounce } from '@mui/material'
+import React, { useState, useEffect } from 'react'
+import { Grid } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import * as Icon from 'react-feather'
@@ -8,8 +8,13 @@ import { TLBackButton } from '@icons/index'
 import FilterExpanded from './FilterExpanded'
 import TListSite from './TListSite'
 import Chips from './Chips'
-import SeeImagesIcon from '@components/common/Table/SeeImagesIcon'
 import { useRouter } from 'next/router'
+
+import {
+  techListSiteColumns,
+  techListSiteRowData,
+  techListSiteTableSettings,
+} from '@components/mockData/techListSiteData'
 
 const filter = {
   positioning_issues: [
@@ -25,165 +30,14 @@ const selected = {
   positioning_issues: ['Not enough muscle', 'IMF not open'],
 }
 
-const rawTableData = [
-  {
-    id: 1,
-    technologist: 'Jimmy Cutler',
-    study_volume: 1534,
-    avg_img_per_study: 1.5,
-    avg_issues_per_image: 2.0,
-    actions: <SeeImagesIcon />,
-    title: 'Nipple not in profile',
-  },
-  {
-    id: 2,
-    technologist: 'Wade Warren',
-    study_volume: 2356,
-    avg_img_per_study: 2.3,
-    avg_issues_per_image: 1.7,
-    actions: <SeeImagesIcon />,
-    title: 'Nipple not in midline',
-  },
-  {
-    id: 3,
-    technologist: 'Devon Lane',
-    study_volume: 587,
-    avg_img_per_study: 2.4,
-    avg_issues_per_image: 1.3,
-    actions: <SeeImagesIcon />,
-    title: 'Nipple not in profile',
-  },
-  {
-    id: 4,
-    technologist: 'Rosy Black',
-    study_volume: 655,
-    avg_img_per_study: 1.5,
-    avg_issues_per_image: 1.2,
-    actions: <SeeImagesIcon />,
-    title: 'Nipple not in midline',
-  },
-  {
-    id: 5,
-    technologist: 'Tiger Woods',
-    study_volume: 432,
-    avg_img_per_study: 3.2,
-    avg_issues_per_image: 3.1,
-    actions: <SeeImagesIcon />,
-    title: 'IMF not open',
-  },
-  {
-    id: 6,
-    technologist: 'Adriana Smith',
-    study_volume: 546,
-    avg_img_per_study: 1.1,
-    avg_issues_per_image: 1.5,
-    actions: <SeeImagesIcon />,
-    title: 'Not enough muscle',
-  },
-  {
-    id: 7,
-    technologist: 'Jane Forester',
-    study_volume: 321,
-    avg_img_per_study: 0.7,
-    avg_issues_per_image: 1.3,
-    actions: <SeeImagesIcon />,
-    title: 'IMF not open',
-  },
-  {
-    id: 8,
-    technologist: 'Toby McGuire',
-    study_volume: 518,
-    avg_img_per_study: 0.8,
-    avg_issues_per_image: 2.8,
-    actions: <SeeImagesIcon />,
-    title: 'IMF not open',
-  },
-  {
-    id: 9,
-    technologist: 'Toni Kroos',
-    study_volume: 444,
-    avg_img_per_study: 0.6,
-    title: 'Droopy breast',
-    actions: <SeeImagesIcon />,
-    avg_issues_per_image: 1.3,
-    title: 'Droopy breast',
-  },
-  {
-    id: 10,
-    technologist: 'Fede Valverde',
-    study_volume: 777,
-    avg_img_per_study: 0.2,
-    avg_issues_per_image: 2.8,
-    actions: <SeeImagesIcon />,
-    title: 'Droopy breast',
-  },
-  {
-    id: 11,
-    technologist: 'Cristiano Ronaldo',
-    study_volume: 878,
-    avg_img_per_study: 0.8,
-    avg_issues_per_image: 1.3,
-    actions: <SeeImagesIcon />,
-    title: 'Not enough muscle',
-  },
-  {
-    id: 12,
-    technologist: 'John Doe',
-    study_volume: 518,
-    avg_img_per_study: 0.4,
-    avg_issues_per_image: 2.8,
-    actions: <SeeImagesIcon />,
-    title: 'Not enough muscle',
-  },
-]
-
-const columns = [
-  {
-    field: 'technologist',
-    title: 'Technologist',
-    align: 'left',
-    sortable: true,
-    routable: true,
-  },
-  {
-    field: 'study_volume',
-    title: 'Study Volume',
-    align: 'right',
-    sortable: true,
-    routable: false,
-  },
-  {
-    field: 'avg_img_per_study',
-    title: 'Avg. img/study',
-    align: 'right',
-    sortable: true,
-    routable: false,
-  },
-  {
-    field: 'avg_issues_per_image',
-    title: 'Avg. issues per image',
-    align: 'right',
-    sortable: true,
-    routable: false,
-  },
-  { field: 'actions', title: 'Actions', align: 'left', sortable: false, routable: false, },
-]
-
-const settings = {
-  last_child_no_border: false,
-  header_border_bottom_color: '#e1e1e1',
-  header_bg_color: '#EDEFF5',
-}
-
 function TLSiteContainer() {
-  const [expandedTable, setExpandedTable] = useState(false)
   const [filterData, setFilterData] = useState(filter)
 
   const [checkedData, setCheckedData] = useState(selected.positioning_issues) // checkedData is only positioning_issues which is related to chips
   const [selectedData, setSelectedData] = useState(selected) // pass checkedData to the table
   const [displayFilter, setDisplayFilter] = useState(false)
 
-  const [tableData, setTableData] = useState(rawTableData)
+  const [tableData, setTableData] = useState(techListSiteRowData)
 
   const router = useRouter()
 
@@ -239,23 +93,18 @@ function TLSiteContainer() {
     console.log(selectedData)
   }
 
-  const handleSearchDebounce = useCallback(
-    debounce((e) => {
-      console.log(e.target.value)
-      let keyword = e.target.value
-      const filterSearch = rawTableData.filter((item) => {
+  const handleSearch = (e) => {
+    e.preventDefault()
+    let keyword = e.target.value
+
+    setTimeout(() => {
+      const filterSearch = techListSiteRowData.filter((item) => {
         return item.technologist.toLowerCase().includes(keyword.toLowerCase())
       })
       console.log('filterSearch')
       console.log(filterSearch)
       setTableData(filterSearch)
-    }, 2000),
-    []
-  )
-
-  const handleOnClickClose = (e) => {
-    e.preventDefault()
-    console.log('close clicked')
+    }, 2000)
   }
 
   return (
@@ -344,7 +193,7 @@ function TLSiteContainer() {
                       border: '1px solid #EDEFF5',
                     },
                   }}
-                  onKeyUp={handleSearchDebounce}
+                  onKeyUp={handleSearch}
                 />
               </Grid>
 
@@ -410,7 +259,11 @@ function TLSiteContainer() {
           </Grid>
 
           <Grid item xs={12}>
-            <TListSite columns={columns} rows={tableData} settings={settings} />
+            <TListSite
+              columns={techListSiteColumns}
+              rows={tableData}
+              settings={techListSiteTableSettings}
+            />
           </Grid>
         </Grid>
 

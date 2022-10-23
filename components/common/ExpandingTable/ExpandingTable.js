@@ -68,10 +68,7 @@ export default function ExpandingTable({ columns, rows, settings }) {
   }, [sortableFields])
 
   return (
-    <div
-      className="card"
-      // style={{ overflow: 'scroll' }}
-    >
+    <div className="card" style={{ overflowY: 'scroll' }}>
       <table className={styles.table}>
         <thead>
           <ExpandingTableHeader

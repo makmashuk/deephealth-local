@@ -1,15 +1,29 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { debounce, Grid } from '@mui/material'
+import React, { useState, useEffect, useMemo } from 'react'
+import { Grid } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import * as Icon from 'react-feather'
 import ILSiteHeader from './ILSiteHeader'
+import IList from './IList' // for -> by studies table
 import IListExpanded from './IListExpanded' // for -> by studies table
 import FilterExpanded from './FilterExpanded'
 import Chips from './Chips'
 import GroupButton from '@components/common/GroupButton/GroupButton'
 import { StarOutline, StarFilled, TLBackButton } from '@icons/index'
 import Table from '@components/common/Table/Table'
+import ExpandingTable from '@components/common/ExpandingTable/ExpandingTable'
+
+import {
+  ilTableColumnsByImages,
+  ilTableRowDataByImages,
+  ilTableSettingsByImages,
+} from '@components/mockData/imageListByImagesData'
+
+import {
+  ilTableColumnsByStudies,
+  ilTableRowDataByStudies,
+  ilTableSettingsByStudies,
+} from '@components/mockData/imageListByStudiesData'
 
 const filter = {
   quality: ['Perfect', 'Good', 'Bad'],
@@ -31,114 +45,6 @@ const selected = {
   flag: ['Flagged'],
   density: ['Dense'],
   positioning_issues: ['Not enough muscle', 'IMF not open'],
-}
-
-const tableColumns = [
-  {
-    field: 'images',
-    title: 'Images',
-    align: 'left',
-    sortable: true,
-  },
-  {
-    field: 'accession_number',
-    title: 'Accession number',
-    align: 'left',
-    sortable: true,
-  },
-  {
-    field: 'date',
-    title: 'Date',
-    align: 'left',
-    sortable: true,
-  },
-  {
-    field: 'view',
-    title: 'View',
-    align: 'left',
-    sortable: true,
-  },
-  {
-    field: 'issues',
-    title: 'Issues',
-    align: 'right',
-    sortable: true,
-  },
-  {
-    field: 'starred',
-    title: 'Starred',
-    align: 'right',
-    sortable: true,
-  },
-]
-
-const rawTableData = [
-  {
-    id: 1,
-    images: 'Image_1',
-    accession_number: 'BWC5174901DSA',
-    date: '03.05.2022',
-    view: 'RMLO',
-    issues: '0',
-    starred: <StarOutline size={10} />,
-    positioning_issues: 'Not enough muscle',
-  },
-  {
-    id: 2,
-    images: 'Image_2',
-    accession_number: 'ZUH291076825321',
-    date: '02.05.2022',
-    view: 'RMLO',
-    issues: '0',
-    starred: <StarFilled size={10} />,
-    positioning_issues: 'IMF not open',
-  },
-  {
-    id: 3,
-    images: 'Image_3',
-    accession_number: 'DQO098271492753',
-    date: '01.05.2022',
-    view: 'LMLO',
-    issues: '1',
-    starred: <StarOutline size={10} />,
-    positioning_issues: 'IMF not open',
-  },
-  {
-    id: 4,
-    images: 'Image_4',
-    accession_number: 'MT2QS8219312912010',
-    date: '28.04.2022',
-    view: 'LMLO',
-    issues: '2',
-    starred: <StarOutline size={10} />,
-    positioning_issues: 'Droopy breast',
-  },
-  {
-    id: 5,
-    images: 'Image_5',
-    accession_number: 'DQO098271492753',
-    date: '27.05.2022',
-    view: 'LCC',
-    issues: '2',
-    starred: <StarFilled size={10} />,
-    positioning_issues: 'Not enough muscle',
-  },
-  {
-    id: 6,
-    images: 'Image_6',
-    accession_number: 'MT2QS8219312912010',
-    date: '27.05.2022',
-    view: 'LMLO',
-    issues: '2',
-    starred: <StarFilled size={10} />,
-    positioning_issues: 'Nipple not in midline',
-  },
-]
-
-const tableSettings = {
-  last_child_no_border: false,
-  header_border_bottom_color: '#e1e1e1',
-  header_bg_color: '#EDEFF5',
 }
 
 const StarredTooltip = () => {
@@ -249,15 +155,28 @@ function ILDefaultContainer() {
   const [selectedData, setSelectedData] = useState(selected) // pass checkedData to the table
   const [displayFilter, setDisplayFilter] = useState(false)
 
-  const [tableData, setTableData] = useState(rawTableData)
+  const [tableData, setTableData] = useState(ilTableRowDataByImages)
+  const [expandedTableData, setExpandedTableData] = useState(
+    ilTableRowDataByStudies
+  )
 
-  // useEffect
+  // useEffect to update when chips -> positioning_issues is changed (by images)
   useEffect(() => {
-    const updatedTableData = rawTableData.filter((item) =>
+    const updatedTableData = ilTableRowDataByImages.filter((item) =>
       checkedData.includes(item.positioning_issues)
     )
     console.log('updatedTableData')
     setTableData(updatedTableData)
+    console.log(updatedTableData)
+  }, [checkedData])
+
+  // by studies (expanded table)
+  useEffect(() => {
+    const updatedTableData = ilTableRowDataByStudies.filter((item) =>
+      checkedData.includes(item.positioning_issues)
+    )
+    console.log('updatedTableData')
+    setExpandedTableData(updatedTableData)
     console.log(updatedTableData)
   }, [checkedData])
 
@@ -319,26 +238,45 @@ function ILDefaultContainer() {
     e.target.value === 'by images'
       ? setExpandedTable(false)
       : setExpandedTable(true)
+    // clear the handleSearch input name search
   }
 
-  const handleSearchDebounce = useCallback(
-    debounce((e) => {
-      console.log(e.target.value)
-      let keyword = e.target.value
-      const filterSearch = rawTableData.filter((item) => {
-        return (
-          item.accession_number.toLowerCase().includes(keyword.toLowerCase()) ||
-          item.date.toLowerCase().includes(keyword.toLowerCase()) ||
-          item.view.toLowerCase().includes(keyword.toLowerCase()) ||
-          item.images.toLowerCase().includes(keyword.toLowerCase())
-        )
-      })
-      console.log('filterSearch')
-      console.log(filterSearch)
-      setTableData(filterSearch)
-    }, 2000),
-    []
-  )
+  const handleSearch = (e) => {
+    e.preventDefault()
+    let keyword = e.target.value
+
+    setTimeout(() => {
+      if (!expandedTable) {
+        const filterSearch = ilTableRowDataByImages.filter((item) => {
+          return (
+            item.accession_number
+              .toLowerCase()
+              .includes(keyword.toLowerCase()) ||
+            item.date.toLowerCase().includes(keyword.toLowerCase()) ||
+            item.view.toLowerCase().includes(keyword.toLowerCase()) ||
+            item.images.toLowerCase().includes(keyword.toLowerCase())
+          )
+        })
+        console.log('filterSearch')
+        console.log(filterSearch)
+        setTableData(filterSearch)
+      } else {
+        const expandedFilterSearch = ilTableRowDataByStudies.filter((item) => {
+          return (
+            item.accession_number
+              .toLowerCase()
+              .includes(keyword.toLowerCase()) ||
+            item.date.toLowerCase().includes(keyword.toLowerCase()) ||
+            item.quality.toLowerCase().includes(keyword.toLowerCase()) ||
+            item.image.toLowerCase().includes(keyword.toLowerCase())
+          )
+        })
+        console.log('expandedFilterSearch')
+        console.log(expandedFilterSearch)
+        setExpandedTableData(expandedFilterSearch)
+      }
+    }, 2000)
+  }
 
   return (
     <>
@@ -437,7 +375,7 @@ function ILDefaultContainer() {
                       border: '1px solid #EDEFF5',
                     },
                   }}
-                  onKeyUp={handleSearchDebounce}
+                  onKeyUp={handleSearch}
                 />
               </Grid>
 
@@ -504,13 +442,17 @@ function ILDefaultContainer() {
 
           <Grid item xs={12}>
             {!expandedTable ? (
-              <Table
-                columns={tableColumns}
+              <IList
+                columns={ilTableColumnsByImages}
                 rows={tableData}
-                settings={tableSettings}
+                settings={ilTableSettingsByImages}
               />
             ) : (
-              <IListExpanded />
+              <IListExpanded
+                columns={ilTableColumnsByStudies}
+                rows={expandedTableData}
+                settings={ilTableSettingsByStudies}
+              />
             )}
           </Grid>
 

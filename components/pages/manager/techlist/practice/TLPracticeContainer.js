@@ -6,200 +6,24 @@ import * as Icon from 'react-feather'
 import { TLBackButton } from '@icons/index'
 import TLPracticeHeader from './TLPracticeHeader'
 import TLPracticeList from './TLPracticeList'
-import ProgressLineMultiple from '@components/common/Charts/ProgressLineMultiple'
 import { useRouter } from 'next/router'
 
-const progressData = [
-  {
-    percentage: '50',
-    color: '#27C052',
-  },
-  {
-    percentage: '30',
-    color: '#ABD84B',
-  },
-  {
-    percentage: '20',
-    color: '#DF6666',
-  },
-]
-
-const columns = [
-  {
-    field: 'technologist',
-    title: 'Technologist',
-    align: 'left',
-    sortable: true,
-    format: (value) => (
-      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-        <span style={{ flex: 1 }}>{value}</span>
-        <ProgressLineMultiple
-          progressParts={progressData}
-          height="2px"
-          width="7em"
-        />
-      </div>
-    ),
-  },
-  {
-    field: 'site',
-    title: 'Site',
-    align: 'left',
-    sortable: true,
-  },
-  {
-    field: 'perfect_images',
-    title: 'Perfect images',
-    align: 'right',
-    sortable: true,
-  },
-  {
-    field: 'good_images',
-    title: 'Good images',
-    align: 'right',
-    sortable: true,
-  },
-  {
-    field: 'bad_images',
-    title: 'Bad images',
-    align: 'right',
-    sortable: true,
-  },
-  {
-    field: 'study_volume',
-    title: 'Study Volume',
-    align: 'right',
-    sortable: true,
-  },
-  {
-    field: 'avg_img_per_study',
-    title: 'Avg. img/study',
-    align: 'right',
-    sortable: true,
-  },
-]
-
-const rawTableData = [
-  {
-    id: 1,
-    technologist: 'Jimmy Cutler',
-    progress: (
-      <ProgressLineMultiple progressParts={progressData} height="2px" />
-    ),
-    site: 'USCF General Hospital',
-    perfect_images: '25%',
-    good_images: '50%',
-    bad_images: '25%',
-    study_volume: 1534,
-    avg_img_per_study: 1.5,
-  },
-  {
-    id: 2,
-    technologist: 'Wade Warren',
-    site: 'Princeton Plainsborough',
-    perfect_images: '25%',
-    good_images: '50%',
-    bad_images: '25%',
-    study_volume: 1534,
-    avg_img_per_study: 1.5,
-  },
-  {
-    id: 3,
-    technologist: 'Devon Lane',
-    site: 'Dallas General Hospital',
-    perfect_images: '25%',
-    good_images: '50%',
-    bad_images: '25%',
-    study_volume: 1534,
-    avg_img_per_study: 1.5,
-  },
-  {
-    id: 4,
-    technologist: 'Rosy Black',
-    site: 'Boston Radiology',
-    perfect_images: '25%',
-    good_images: '50%',
-    bad_images: '25%',
-    study_volume: 1534,
-    avg_img_per_study: 1.5,
-  },
-  {
-    id: 5,
-    technologist: 'Rosy Black',
-    site: 'Boston Radiology',
-    perfect_images: '25%',
-    good_images: '50%',
-    bad_images: '25%',
-    study_volume: 1534,
-    avg_img_per_study: 1.5,
-  },
-  {
-    id: 6,
-    technologist: 'Rosy Black',
-    site: 'Boston Radiology',
-    perfect_images: '25%',
-    good_images: '50%',
-    bad_images: '25%',
-    study_volume: 1534,
-    avg_img_per_study: 1.5,
-  },
-  {
-    id: 7,
-    technologist: 'Rosy Black',
-    site: 'Boston Radiology',
-    perfect_images: '25%',
-    good_images: '50%',
-    bad_images: '25%',
-    study_volume: 1534,
-    avg_img_per_study: 1.5,
-  },
-  {
-    id: 8,
-    technologist: 'Rosy Black',
-    site: 'Boston Radiology',
-    perfect_images: '25%',
-    good_images: '50%',
-    bad_images: '25%',
-    study_volume: 1534,
-    avg_img_per_study: 1.5,
-  },
-  {
-    id: 9,
-    technologist: 'Rosy Black',
-    site: 'Boston Radiology',
-    perfect_images: '25%',
-    good_images: '50%',
-    bad_images: '25%',
-    study_volume: 1534,
-    avg_img_per_study: 1.5,
-  },
-  {
-    id: 10,
-    technologist: 'Rosy Black',
-    site: 'Boston Radiology',
-    perfect_images: '25%',
-    good_images: '50%',
-    bad_images: '25%',
-    study_volume: 1534,
-    avg_img_per_study: 1.5,
-  },
-]
-
-const tableSettings = {
-  last_child_no_border: false,
-  header_border_bottom_color: '#e1e1e1',
-  header_bg_color: '#EDEFF5',
-}
+import {
+  techListPracticeColumns,
+  techListPracticeRowData,
+  techListPracticeTableSettings,
+} from '@components/mockData/techListPracticeData'
 
 function TLPracticeContainer() {
   const router = useRouter()
-  const [tableData, setTableData] = useState(rawTableData)
+  const [tableData, setTableData] = useState(techListPracticeRowData)
 
-  const handleSearchDebounce = useCallback(
-    debounce((e) => {
-      console.log(e.target.value)
-      let keyword = e.target.value
-      const filterSearch = rawTableData.filter((item) => {
+  const handleSearch = (e) => {
+    e.preventDefault()
+    let keyword = e.target.value
+
+    setTimeout(() => {
+      const filterSearch = techListPracticeRowData.filter((item) => {
         return (
           item.technologist.toLowerCase().includes(keyword.toLowerCase()) ||
           item.site.toLowerCase().includes(keyword.toLowerCase())
@@ -208,9 +32,8 @@ function TLPracticeContainer() {
       console.log('filterSearch')
       console.log(filterSearch)
       setTableData(filterSearch)
-    }, 2000),
-    []
-  )
+    }, 2000)
+  }
 
   return (
     <>
@@ -293,7 +116,7 @@ function TLPracticeContainer() {
                     border: '1px solid #EDEFF5',
                   },
                 }}
-                onKeyUp={handleSearchDebounce}
+                onKeyUp={handleSearch}
               />
             </Grid>
 
@@ -337,9 +160,9 @@ function TLPracticeContainer() {
         </Grid>
         <Grid item xs={12}>
           <TLPracticeList
-            columns={columns}
+            columns={techListPracticeColumns}
             rows={tableData}
-            settings={tableSettings}
+            settings={techListPracticeTableSettings}
           />
         </Grid>
         <Grid item xs={12}></Grid>
