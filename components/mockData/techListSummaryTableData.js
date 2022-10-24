@@ -115,7 +115,7 @@ export const techListSummaryColumns = [
   {
     field: 'issues',
     title: 'Issues',
-    align: 'right',
+    align: 'center',
     sortable: true,
   },
   { field: 'action', title: 'Flagged', align: 'center', sortable: true },
