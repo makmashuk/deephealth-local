@@ -180,4 +180,5 @@ export const techListPracticeTableSettings = {
   last_child_no_border: false,
   header_border_bottom_color: '#e1e1e1',
   header_bg_color: '#EDEFF5',
+  header_padding: '1rem',
 }

@@ -5,107 +5,15 @@ import TCTrending from './TCTrending'
 import TCSummary from './TCSummary'
 import TCPositioningIssues from './TCPositioningIssues'
 import { Grid } from '@mui/material'
-import { StarOutline, StarFilled } from '@components/icons'
 
-const rawTableData = [
-  {
-    images: 'Image_1',
-    accession_number: 1534,
-    date: '03.05.22',
-    view: 'RMLO',
-    issues: 2.0,
-    action: <StarOutline size={10} />,
-  },
-  {
-    images: 'Image_1',
-    accession_number: 1534,
-    date: '03.05.22',
-    view: 'RMLO',
-    issues: 2.0,
-    action: <StarOutline size={10} />,
-  },
-  {
-    images: 'Image_1',
-    accession_number: 1534,
-    date: '03.05.22',
-    view: 'RMLO',
-    issues: 2.0,
-    action: <StarOutline size={10} />,
-  },
-  {
-    images: 'Image_1',
-    accession_number: 1534,
-    date: '03.05.22',
-    view: 'RMLO',
-    issues: 2.0,
-    action: <StarOutline size={10} />,
-  },
-  {
-    images: 'Image_1',
-    accession_number: 1534,
-    date: '03.05.22',
-    view: 'RMLO',
-    issues: 2.0,
-    action: <StarOutline size={10} />,
-  },
-  {
-    images: 'Image_1',
-    accession_number: 1534,
-    date: '03.05.22',
-    view: 'RMLO',
-    issues: 2.0,
-    action: <StarFilled size={10} />,
-  },
-  {
-    images: 'Image_1',
-    accession_number: 1534,
-    date: '03.05.22',
-    view: 'RMLO',
-    issues: 2.0,
-    action: <StarOutline size={10} />,
-  },
-]
-const columns = [
-  {
-    field: 'images',
-    title: 'Images',
-    align: 'left',
-    sortable: true,
-  },
-  {
-    field: 'accession_number',
-    title: 'Accession Number',
-    align: 'right',
-    sortable: true,
-  },
-  {
-    field: 'date',
-    title: 'Date',
-    align: 'right',
-    sortable: true,
-  },
-  {
-    field: 'view',
-    title: 'View',
-    align: 'right',
-    sortable: true,
-  },
-  {
-    field: 'issues',
-    title: 'Issues',
-    align: 'right',
-    sortable: true,
-  },
-  { field: 'action', title: 'Flagged', align: 'center', sortable: false },
-]
-const tableSettings = {
-  last_child_no_border: false,
-  header_border_bottom_color: '#e1e1e1',
-  header_bg_color: '#EDEFF5',
-}
+import {
+  techListSummaryColumns,
+  techListSummaryTableRowData,
+  techListSummaryTableSettings,
+} from '@components/mockData/techListSummaryTableData'
 
 function ContainerSite() {
-  const [tableData, setTableData] = useState(rawTableData)
+  const [tableData, setTableData] = useState(techListSummaryTableRowData)
 
   return (
     <div>
@@ -121,7 +29,11 @@ function ContainerSite() {
           <TCPositioningIssues />
         </Grid>
         <Grid item xs={12} margin={2}>
-          <TCTable columns={columns} rows={tableData} settings={tableSettings} />
+          <TCTable
+            columns={techListSummaryColumns}
+            rows={tableData}
+            settings={techListSummaryTableSettings}
+          />
         </Grid>
       </Grid>
     </div>

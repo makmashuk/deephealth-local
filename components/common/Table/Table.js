@@ -68,7 +68,10 @@ export default function Table({ columns, rows, settings }) {
   }, [sortableFields])
 
   return (
-    <div className="card" style={{ overflowY: 'scroll' }}>
+    <div
+      className="card"
+      // style={{ overflowY: 'scroll' }}
+    >
       <table className={styles.table}>
         <thead>
           <TableHeader
