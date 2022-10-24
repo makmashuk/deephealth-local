@@ -48,42 +48,6 @@ const selected = {
   positioning_issues: ['Not enough muscle', 'IMF not open'],
 }
 
-const StarredTooltip = () => {
-  return (
-    <>
-      <Grid
-        item
-        xs={12}
-        sx={{
-          background: '#44495B',
-          boxShadow: '0px 12px 18px rgba(55, 63, 94, 0.2)',
-          borderRadius: '12px',
-          padding: '1rem',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '380px',
-          position: 'absolute',
-          bottom: '1rem',
-          right: '25rem',
-        }}
-      >
-        <span
-          style={{
-            fontWeight: '500',
-            fontSize: '14px',
-            lineHeight: '20px',
-            color: '#A8B1CE',
-          }}
-        >
-          Starring an image means to add it to “Images to review” list. Use this
-          feature to have a quick access to those list at any time.
-        </span>
-      </Grid>
-    </>
-  )
-}
-
 const DownloadTile = () => {
   return (
     <>
@@ -101,7 +65,7 @@ const DownloadTile = () => {
           width: '300px',
           position: 'absolute',
           bottom: '1rem',
-          right: '1rem',
+          right: '26rem',
         }}
       >
         <Grid
@@ -475,10 +439,6 @@ function ILContainer() {
             <Button onClick={generatePDF} variant="contained">
               Download PDF
             </Button>
-          </Grid>
-
-          <Grid item xs={4}>
-            <StarredTooltip />
           </Grid>
 
           <Grid item xs={4}>

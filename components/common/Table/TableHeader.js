@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { StarredTooltip } from '@components/common/Tooltip/StarredTooltip'
+import { Info } from '@icons/index'
 
 const arrowDown = (
   <svg
@@ -34,6 +36,7 @@ const arrowUp = (
     />
   </svg>
 )
+
 export default function TableHeaderRow({
   columns,
   rows,
@@ -43,6 +46,19 @@ export default function TableHeaderRow({
   selectAll,
   settings,
 }) {
+  const [tooltip, setTooltip] = useState(false)
+
+  const InfoIcon = () => {
+    return (
+      <span
+        onMouseEnter={() => setTooltip(true)}
+        onMouseLeave={() => setTooltip(false)}
+      >
+        <Info />
+      </span>
+    )
+  }
+
   const handleIconForSortable = (item) => {
     const indexOflement = sortableFields.findIndex(
       (el) => el.name === item.field
@@ -118,11 +134,14 @@ export default function TableHeaderRow({
                 <span style={{ flexShrink: 0 }}>
                   {handleIconForSortable(item)}
                 </span>
+                {item.title == 'Starred' ? <InfoIcon /> : ''}
               </div>
             </th>
           )
         })}
       </tr>
+
+      {tooltip && <StarredTooltip />}
     </>
   )
 }
