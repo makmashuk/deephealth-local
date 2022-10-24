@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { Grid } from '@mui/material'
+import { Grid, Button } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import * as Icon from 'react-feather'
@@ -9,9 +9,7 @@ import IListExpanded from './IListExpanded' // for -> by studies table
 import FilterExpanded from './FilterExpanded'
 import Chips from './Chips'
 import GroupButton from '@components/common/GroupButton/GroupButton'
-import { StarOutline, StarFilled, TLBackButton } from '@icons/index'
-import Table from '@components/common/Table/Table'
-import ExpandingTable from '@components/common/ExpandingTable/ExpandingTable'
+import { TLBackButton } from '@icons/index'
 
 import {
   ilTableColumnsByImages,
@@ -24,6 +22,9 @@ import {
   ilTableRowDataByStudies,
   ilTableSettingsByStudies,
 } from '@components/mockData/imageListByStudiesData'
+
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
 
 const filter = {
   quality: ['Perfect', 'Good', 'Bad'],
@@ -147,7 +148,7 @@ const DownloadTile = () => {
   )
 }
 
-function ILDefaultContainer() {
+function ILContainer() {
   const [expandedTable, setExpandedTable] = useState(false)
   const [filterData, setFilterData] = useState(filter)
 
@@ -276,6 +277,20 @@ function ILDefaultContainer() {
         setExpandedTableData(expandedFilterSearch)
       }
     }, 2000)
+  }
+
+  const generatePDF = () => {
+    const pdfTable = document.getElementById('pdfTable')
+    pdfTable.style.maxWidth = '780px'
+    console.log(pdfTable)
+    html2canvas(pdfTable).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF('p', 'pt', 'a4')
+      pdf.addImage(imgData, 'PNG', 0, 0)
+      let timeStamps = new Date().getTime()
+      pdf.save(`test_${timeStamps}.pdf`)
+    })
+    pdfTable.style.maxWidth = 'none'
   }
 
   return (
@@ -440,7 +455,7 @@ function ILDefaultContainer() {
             <Chips chips={checkedData} setChips={handleChips} />
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item xs={12} id="pdfTable">
             {!expandedTable ? (
               <IList
                 columns={ilTableColumnsByImages}
@@ -454,6 +469,12 @@ function ILDefaultContainer() {
                 settings={ilTableSettingsByStudies}
               />
             )}
+          </Grid>
+
+          <Grid item xs={2} md={2}>
+            <Button onClick={generatePDF} variant="contained">
+              Download PDF
+            </Button>
           </Grid>
 
           <Grid item xs={4}>
@@ -484,4 +505,4 @@ function ILDefaultContainer() {
   )
 }
 
-export default ILDefaultContainer
+export default ILContainer

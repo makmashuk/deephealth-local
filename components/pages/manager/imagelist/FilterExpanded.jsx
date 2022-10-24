@@ -3,7 +3,6 @@ import GroupButton from "@components/common/GroupButton/GroupButton";
 
 import { Grid, Card, CardContent, Radio, Button, FormGroup, FormControl, FormControlLabel, MenuItem, Checkbox } from '@mui/material';
 
-import { CheckboxWithLabel, RadioGroup, Select } from 'formik-mui';
 import { Formik, Form, Field } from "formik";
 import { CloseWindow, Trash } from '@icons/index';
 
