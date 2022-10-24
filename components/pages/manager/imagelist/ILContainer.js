@@ -42,7 +42,7 @@ const filter = {
 const selected = {
   quality: ['Perfect'],
   views: ['RMLO', 'LCC'],
-  flag: ['Flagged'],
+  flag: 'Flagged',
   density: ['Dense'],
   positioning_issues: ['Not enough muscle', 'IMF not open'],
 }

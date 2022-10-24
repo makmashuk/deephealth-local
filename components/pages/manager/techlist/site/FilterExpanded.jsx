@@ -171,16 +171,42 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
                       alignItems: "flex-start",
                     }}
                   >
-                    {positionData.map((positioning_issues, index) => (
-                      <Field
-                        key={index}
-                        type="checkbox"
-                        component={CheckboxWithLabel}
-                        name="positioning_issues"
-                        value={positioning_issues}
-                        Label={{ label: positioning_issues }}
-                      />
-                    ))}
+                    <div
+                      role="group"
+                      aria-labelledby="checkbox-group"
+                      style={{
+                        display: "flex",
+                        flexDirection: "column"
+                      }}
+                    >
+                      {positionData.map((positioning_issues, index) => (
+                        <label
+                          key={index}
+                          style={{ display: "flex", alignItems: "center", lineHeight: "1.6" }}
+                        >
+                          <Field
+                            type="checkbox"
+                            name="positioning_issues"
+                            value={positioning_issues}
+                            style={{
+                              marginRight: "10px",
+                              width: "14px",
+                              height: "14px",
+                            }}
+                          />
+                          <span
+                            style={{
+                              fontStyle: 'normal',
+                              fontWeight: 700,
+                              fontSize: '14px',
+                              color: '#44495B',
+                            }}
+                          >
+                            {positioning_issues}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
                   </Grid>
                 </div>
 

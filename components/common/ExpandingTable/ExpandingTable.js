@@ -9,6 +9,10 @@ export default function ExpandingTable({ columns, rows, settings }) {
   const [sortableFields, setSortableFields] = useState([])
   const [tableData, setTableData] = useState(rows)
 
+  useEffect(() => {
+    setTableData(rows)
+  }, [rows])
+
   const handleSorting = (sortField, sortOrder) => {
     if (sortField) {
       const sorted = [...tableData].sort((a, b) => {
