@@ -23,9 +23,6 @@ import {
   ilTableSettingsByStudies,
 } from '@components/mockData/imageListByStudiesData'
 
-import jsPDF from 'jspdf'
-import html2canvas from 'html2canvas'
-
 const filter = {
   quality: ['Perfect', 'Good', 'Bad'],
   views: ['RMLO', 'LMLO', 'RCC', 'LCC'],
@@ -46,70 +43,6 @@ const selected = {
   flag: 'Flagged',
   density: ['Dense'],
   positioning_issues: ['Not enough muscle', 'IMF not open'],
-}
-
-const DownloadTile = () => {
-  return (
-    <>
-      <Grid
-        item
-        xs={12}
-        sx={{
-          background: '#44495B',
-          boxShadow: '0px 12px 18px rgba(55, 63, 94, 0.2)',
-          borderRadius: '12px',
-          padding: '0.5rem',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '300px',
-          position: 'absolute',
-          bottom: '1rem',
-          right: '26rem',
-        }}
-      >
-        <Grid
-          item
-          xs={6}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            fontWeight: '700',
-            fontSize: '14px',
-            lineHeight: '16px',
-            color: '#ffffff',
-          }}
-        >
-          1 studies selected
-        </Grid>
-        <Grid
-          item
-          xs={6}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <button
-            style={{
-              background: '#6992FC',
-              border: 'none',
-              padding: '0.5rem 2rem',
-              borderRadius: '12px',
-              fontWeight: '700',
-              fontSize: '14px',
-              lineHeight: '16px',
-              color: '#ffffff',
-            }}
-          >
-            Export list
-          </button>
-        </Grid>
-      </Grid>
-    </>
-  )
 }
 
 function ILContainer() {
@@ -241,20 +174,6 @@ function ILContainer() {
         setExpandedTableData(expandedFilterSearch)
       }
     }, 2000)
-  }
-
-  const generatePDF = () => {
-    const pdfTable = document.getElementById('pdfTable')
-    pdfTable.style.maxWidth = '780px'
-    console.log(pdfTable)
-    html2canvas(pdfTable).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png')
-      const pdf = new jsPDF('p', 'pt', 'a4')
-      pdf.addImage(imgData, 'PNG', 0, 0)
-      let timeStamps = new Date().getTime()
-      pdf.save(`test_${timeStamps}.pdf`)
-    })
-    pdfTable.style.maxWidth = 'none'
   }
 
   return (
@@ -419,7 +338,7 @@ function ILContainer() {
             <Chips chips={checkedData} setChips={handleChips} />
           </Grid>
 
-          <Grid item xs={12} id="pdfTable">
+          <Grid item xs={12}>
             {!expandedTable ? (
               <IList
                 columns={ilTableColumnsByImages}
@@ -433,16 +352,6 @@ function ILContainer() {
                 settings={ilTableSettingsByStudies}
               />
             )}
-          </Grid>
-
-          <Grid item xs={2} md={2}>
-            <Button onClick={generatePDF} variant="contained">
-              Download PDF
-            </Button>
-          </Grid>
-
-          <Grid item xs={4}>
-            <DownloadTile />
           </Grid>
         </Grid>
 

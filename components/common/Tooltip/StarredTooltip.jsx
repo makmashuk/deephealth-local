@@ -16,8 +16,8 @@ export const StarredTooltip = () => {
           alignItems: 'center',
           width: '380px',
           position: 'absolute',
-          bottom: '1rem',
-          right: '1rem',
+          top: '21rem',
+          right: '2rem',
           transition: 'all 2s ease-in-out',
         }}
       >
