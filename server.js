@@ -6,7 +6,7 @@ const fs = require('fs')
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
-const port = 8443
+const PORT = process.env.PORT || 8443
 
 const httpsOptions = {
   key: fs.readFileSync('./cert/localhost.key'),
@@ -17,8 +17,8 @@ app.prepare().then(() => {
   createServer(httpsOptions, (req, res) => {
     const parsedUrl = parse(req.url, true)
     handle(req, res, parsedUrl)
-  }).listen(port, (err) => {
+  }).listen(PORT, (err) => {
     if (err) throw err
-    console.log('> Server started on https://localhost:8443')
+    console.log(`Server started on https://localhost:${PORT}`)
   })
 })
