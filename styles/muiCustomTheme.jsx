@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material/styles'
-import { color } from '@mui/system'
 
 // MUI theme customization
 export const muiCustomTheme = createTheme({
@@ -131,6 +130,9 @@ export const muiCustomTheme = createTheme({
       styleOverrides: {
         root: {
           textTransform: 'capitalize',
+          '&:hover, &:active': {
+            boxShadow: 'none',
+          },
         },
         contained: {
           background: '#6992FC',
@@ -142,9 +144,17 @@ export const muiCustomTheme = createTheme({
             background: '#3F5897',
           },
         },
+        sizeLarge: {
+          paddingTop: '12px',
+          paddingBottom: '12px',
+          borderRadius: '12px',
+        },
         sizeMedium: {
           padding: '9px 16px 7px',
           borderRadius: '12px',
+        },
+        sizeSmall: {
+          borderRadius: '8px',
         },
       },
     },

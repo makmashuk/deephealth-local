@@ -1,6 +1,18 @@
+import { useState } from 'react'
 import { Link } from '@mui/material'
+import { Typography } from '@mui/material'
+import ImageModal from '../ImageModal/ImageModal'
 
 export default function TableBody({ columns, rows, settings }) {
+  const [open, setOpen] = useState(false)
+  const [index, setIndex] = useState(0)
+
+  const handleModal = (id) => {
+    setOpen(true)
+    setIndex(id)
+  }
+  const handleClose = () => setOpen(false)
+
   return (
     <>
       {rows.map((item, i) => {
@@ -20,6 +32,20 @@ export default function TableBody({ columns, rows, settings }) {
                 return (
                   <td key={header.field} style={{ textAlign: header.align }}>
                     {header.format(item[header.field])}
+                  </td>
+                )
+              }
+              if (header.field === 'images') {
+                return (
+                  <td key={header.field} style={{ textAlign: header.align }}>
+                    <Typography
+                      variant="body1"
+                      color="primary"
+                      sx={{ cursor: 'pointer' }}
+                      onClick={() => handleModal(item.id - 1)}
+                    >
+                      {item[header.field]}
+                    </Typography>
                   </td>
                 )
               }
@@ -51,6 +77,12 @@ export default function TableBody({ columns, rows, settings }) {
           </tr>
         )
       })}
+      <ImageModal
+        open={open}
+        handleClose={handleClose}
+        index={index}
+        setIndex={setIndex}
+      />
     </>
   )
 }

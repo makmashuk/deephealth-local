@@ -1,5 +1,111 @@
 import { SvgIcon } from '@mui/material'
 
+export const ArrowLeft = ({
+  size = '24',
+  color = '#44495B',
+  strokeWidth = '1.5',
+}) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M19 12H5M5 12L12 19M5 12L12 5"
+        stroke={color}
+        fill="none"
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+export const MinusNeutral = () => {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M3 6H9"
+        stroke="#EDEFF5"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+export const CheckRight = () => {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M2.5 6.22222L4.63018 8.5L9.5 3.5"
+        stroke="#A8B1CE"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+export const CloseWrong = () => {
+  return (
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M9.0052 4.05544C9.2981 3.76254 9.2981 3.28767 9.0052 2.99478C8.71231 2.70188 8.23744 2.70188 7.94454 2.99478L9.0052 4.05544ZM2.9948 7.94452C2.7019 8.23742 2.7019 8.71229 2.9948 9.00518C3.28769 9.29808 3.76256 9.29808 4.05546 9.00518L2.9948 7.94452ZM4.05546 2.99478C3.76256 2.70188 3.28769 2.70188 2.9948 2.99478C2.7019 3.28767 2.7019 3.76254 2.9948 4.05544L4.05546 2.99478ZM7.94454 9.00518C8.23744 9.29808 8.71231 9.29808 9.0052 9.00518C9.2981 8.71229 9.2981 8.23742 9.0052 7.94452L7.94454 9.00518ZM7.94454 2.99478L2.9948 7.94452L4.05546 9.00518L9.0052 4.05544L7.94454 2.99478ZM2.9948 4.05544L7.94454 9.00518L9.0052 7.94452L4.05546 2.99478L2.9948 4.05544Z"
+        fill="#FF5B51"
+      />
+    </svg>
+  )
+}
+
+export const InfoCircle = ({
+  size = '24',
+  stroke = '#44495B',
+  strokeWidth = '1.5',
+}) => {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 16V12M12 8H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+        stroke={stroke}
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 export const AlertTriangle = (props) => {
   return (
     <SvgIcon
@@ -53,7 +159,12 @@ export const ChevronRight = ({
   )
 }
 
-export const Star = ({ size = '24', stroke = '#000', strokeWidth = '2' }) => {
+export const Star = ({
+  size = '24',
+  stroke = '#000',
+  strokeWidth = '2',
+  fill = 'none',
+}) => {
   return (
     <svg
       width={size}
@@ -65,6 +176,7 @@ export const Star = ({ size = '24', stroke = '#000', strokeWidth = '2' }) => {
       <path
         d="M12.7542 4.23685L12.7542 4.23688L12.7586 4.24543L14.3478 7.32099C14.6818 8.10997 15.44 8.51288 16.0847 8.64168C16.0973 8.64419 16.1099 8.64638 16.1226 8.64825L19.5258 9.14814C19.5265 9.14825 19.5273 9.14836 19.528 9.14847C20.2151 9.2557 20.477 10.1003 20.0211 10.5703L17.5284 12.8609C17.5208 12.868 17.5133 12.8752 17.5059 12.8826C16.979 13.4088 16.6394 14.1489 16.7979 14.9551L17.3962 18.2421C17.5011 18.9636 16.7996 19.4636 16.1694 19.1521L13.0669 17.5526C13.0456 17.5417 13.0237 17.5317 13.0015 17.5228C12.3216 17.2512 11.6212 17.2512 10.9413 17.5228C10.9191 17.5317 10.8972 17.5417 10.8759 17.5526L7.77338 19.1521C7.14318 19.4636 6.44169 18.9636 6.54658 18.2421L7.14491 14.955C7.2884 14.224 7.02615 13.3486 6.40417 12.8499L4.03114 10.4795C4.02184 10.4702 4.0123 10.4612 4.00252 10.4524C3.74884 10.2243 3.69699 9.92549 3.79569 9.64288C3.89827 9.34912 4.15714 9.10416 4.51507 9.04835L7.92043 8.54812C7.93313 8.54626 7.94578 8.54407 7.95836 8.54155C8.59443 8.41448 9.34514 8.01969 9.68498 7.34078L9.68504 7.34081L9.68929 7.33204L11.1789 4.25703C11.6183 3.53524 12.4525 3.63413 12.7542 4.23685Z"
         stroke={stroke}
+        fill={fill}
         strokeWidth={strokeWidth}
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -318,6 +430,7 @@ export const Close = ({ size, color }) => {
     </svg>
   )
 }
+
 export const StarOutline = ({ size, color }) => {
   return (
     <svg
@@ -358,6 +471,7 @@ export const StarFilled = ({ size, color }) => {
     </svg>
   )
 }
+
 export const Site = () => {
   return (
     <svg
