@@ -66,7 +66,7 @@ function ILContainer() {
       const updatedTableData = ilTableRowDataByImages.filter((item) =>
         checkedData.includes(item.positioning_issues)
       )
-      console.log('updatedTableData')
+      console.log('updatedTableData by images')
       setTableData(updatedTableData)
       console.log(updatedTableData)
     }
@@ -80,11 +80,40 @@ function ILContainer() {
       const updatedTableData = ilTableRowDataByStudies.filter((item) =>
         checkedData.includes(item.positioning_issues)
       )
-      console.log('updatedTableData')
+      console.log('updatedTableData by studies')
       setExpandedTableData(updatedTableData)
       console.log(updatedTableData)
     }
   }, [checkedData])
+
+  useEffect(() => {
+    if (
+      selectedData.quality.length === 0 &&
+      selectedData.views.length === 0 &&
+      selectedData.flag.length === 0 &&
+      selectedData.density.length === 0 &&
+      selectedData.positioning_issues.length === 0
+    ) {
+      setTableData(ilTableRowDataByImages)
+      setExpandedTableData(ilTableRowDataByStudies)
+    } else {
+      console.log('selectedData useEffect')
+      const updatedTableData = ilTableRowDataByImages.filter(
+        (item) =>
+          selectedData.views.includes(item.view) ||
+          selectedData.positioning_issues.includes(item.positioning_issues)
+      )
+      const updatedExpandedTableData = ilTableRowDataByStudies.filter(
+        (item) =>
+          selectedData.quality.includes(item.quality) ||
+          selectedData.views.includes(item.view) ||
+          selectedData.density.includes(item.density) ||
+          selectedData.positioning_issues.includes(item.positioning_issues)
+      )
+      setTableData(updatedTableData)
+      setExpandedTableData(updatedExpandedTableData)
+    }
+  }, [selectedData])
 
   const handleDisplayFilters = (e) => {
     e.preventDefault()
@@ -102,14 +131,6 @@ function ILContainer() {
     console.log('selected data received on parent')
     console.log(data)
     if (data.positioning_issues.length > 0) {
-      data.positioning_issues.forEach((pos, i) => {
-        if (pos === 'Select All') {
-          console.log('Select All detected')
-          data.positioning_issues = data.positioning_issues.filter(
-            (item) => item !== 'Select All'
-          )
-        }
-      })
       setCheckedData(data.positioning_issues)
     } else {
       setCheckedData([])
@@ -117,7 +138,6 @@ function ILContainer() {
     console.log('chips data updated')
     console.log('checked data')
     setSelectedData(data)
-    // pass selectedData to tables
   }
 
   const handleChips = (data) => {
@@ -125,6 +145,13 @@ function ILContainer() {
     console.log(data)
     if (data.length === 0) {
       setCheckedData([])
+      setSelectedData({
+        quality: [],
+        views: [],
+        flag: [],
+        density: [],
+        positioning_issues: [],
+      })
     } else {
       setCheckedData(data)
     }
@@ -144,11 +171,9 @@ function ILContainer() {
 
   const handleOptions = (e) => {
     e.preventDefault()
-    console.log('handleOptions')
     e.target.value === 'by images'
       ? setExpandedTable(false)
       : setExpandedTable(true)
-    // clear the handleSearch input name search
   }
 
   const handleSearch = (e) => {

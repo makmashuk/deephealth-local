@@ -68,8 +68,30 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
         views: selected.views,
         flag: selected.flag,
         density: selected.density,
-        positioning_issues: positionDataWithAll
+        positioning_issues: selected.positioning_issues
       })
+    }
+
+    if (event.target.value === 'Select All') {
+      if (event.target.checked) {
+        console.log("Select All checked");
+        setData({
+          quality: selected.quality,
+          views: selected.views,
+          flag: selected.flag,
+          density: selected.density,
+          positioning_issues: positionData
+        })
+      } else {
+        console.log("Select All unchecked");
+        setData({
+          quality: selected.quality,
+          views: selected.views,
+          flag: selected.flag,
+          density: selected.density,
+          positioning_issues: []
+        })
+      }
     }
   };
 
@@ -182,7 +204,7 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
               setSelected(values)
               setData(values)
               handleClose()
-              resetForm();
+              // resetForm();
             }}
             enableReinitialize
           >
