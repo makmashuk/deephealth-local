@@ -135,7 +135,7 @@ function ILContainer() {
     setSelectedData({
       quality: [],
       views: [],
-      flag: [],
+      flag: 'Unflagged',
       density: [],
       positioning_issues: [],
     })

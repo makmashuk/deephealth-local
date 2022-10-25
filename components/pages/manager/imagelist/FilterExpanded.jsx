@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import GroupButton from "@components/common/GroupButton/GroupButton";
 
 import { Grid, Card, CardContent, Button, Menu, MenuItem, Checkbox, Typography } from '@mui/material';
@@ -19,6 +19,11 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
   const handleClosePosIssuesMenu = () => {
     setAnchorElPosIssues(null)
   }
+
+  useEffect(() => {
+    console.log('selectedData updated')
+    setSelected(selectedData)
+  }, [selectedData])
 
   const [showModal, setShowModal] = useState(false);
   const [qualityData, setQualityData] = useState(data.quality);
@@ -573,7 +578,7 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
                         onClose={handleClosePosIssuesMenu}
                       >
                         <MenuItem
-                          onClick={handleClosePosIssuesMenu}
+                          // onClick={handleClosePosIssuesMenu}
                           sx={{ columnGap: '16px' }}
                           key={0}
                         >
@@ -615,7 +620,7 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
                         <div style={{ width: '100%', border: '1px solid #EDEFF5', }} />
                         {positionData.map((positioning_issues, index) => (
                           <MenuItem
-                            onClick={handleClosePosIssuesMenu}
+                            // onClick={handleClosePosIssuesMenu}
                             sx={{ columnGap: '16px' }}
                             key={index}
                           >
@@ -662,29 +667,28 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
 
 
                 {/* clear all */}
-                <div>
-                  <div
+                <div
+                  style={{
+                    cursor: 'pointer',
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
+                    alignItems: "center",
+                    marginTop: "1rem",
+                  }}
+                  onClick={handleClearAll}
+                >
+                  <span
                     style={{
-                      cursor: 'pointer',
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "flex-end",
-                      alignItems: "center"
+                      fontStyle: 'normal',
+                      fontWeight: 700,
+                      fontSize: '14px',
+                      color: '#6992FC',
                     }}
-                    onClick={handleClearAll}
                   >
-                    <span
-                      style={{
-                        fontStyle: 'normal',
-                        fontWeight: 700,
-                        fontSize: '14px',
-                        color: '#6992FC',
-                      }}
-                    >
-                      Clear All
-                    </span>
-                    &nbsp;<Trash size={14} color={"#6992FC"} />
-                  </div>
+                    Clear All
+                  </span>
+                  &nbsp;<Trash size={14} color={"#6992FC"} />
                 </div>
 
 

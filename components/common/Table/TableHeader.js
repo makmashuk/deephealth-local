@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Grid } from '@mui/material'
 import { StarredTooltip } from '@components/common/Tooltip/StarredTooltip'
 import { Info } from '@icons/index'
 
@@ -118,7 +119,7 @@ export default function TableHeaderRow({
                 padding: settings.header_padding ?? '1rem',
               }}
             >
-              <div
+              <Grid
                 style={{
                   display: 'flex',
                   gap: '0.25rem',
@@ -135,7 +136,7 @@ export default function TableHeaderRow({
                   {handleIconForSortable(item)}
                 </span>
                 {item.title == 'Starred' ? <InfoIcon /> : ''}
-              </div>
+              </Grid>
             </th>
           )
         })}
