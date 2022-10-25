@@ -68,8 +68,12 @@ export default function ExpandingTableBody({ columns, rows, settings, selected, 
                       if (columns.expandable) {
                         selectBatch(row?.subData?.map((el) => el?.id) ?? []);
                         selectOne(row?.id);
+                        console.log('selected ' + row?.id);
+                        // console.log(selected);
                       } else {
                         selectOne(row?.id);
+                        console.log('selected 2');
+                        // console.log(selected);
                       }
                     }}
                     checked={
