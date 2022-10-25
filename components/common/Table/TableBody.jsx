@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from '@mui/material'
 
 export default function TableBody({ columns, rows, settings }) {

@@ -1,6 +1,5 @@
-import React from 'react'
-import { Grid } from '@mui/material'
-import Button from '@mui/material/Button'
+import React, { useState, useEffect, useCallback } from 'react'
+import { Grid, debounce } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import * as Icon from 'react-feather'
@@ -9,8 +8,33 @@ import TLPracticeHeader from './TLPracticeHeader'
 import TLPracticeList from './TLPracticeList'
 import { useRouter } from 'next/router'
 
+import {
+  techListPracticeColumns,
+  techListPracticeRowData,
+  techListPracticeTableSettings,
+} from '@components/mockData/techListPracticeData'
+
 function TLPracticeContainer() {
   const router = useRouter()
+  const [tableData, setTableData] = useState(techListPracticeRowData)
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    let keyword = e.target.value
+
+    setTimeout(() => {
+      const filterSearch = techListPracticeRowData.filter((item) => {
+        return (
+          item.technologist.toLowerCase().includes(keyword.toLowerCase()) ||
+          item.site.toLowerCase().includes(keyword.toLowerCase())
+        )
+      })
+      console.log('filterSearch')
+      console.log(filterSearch)
+      setTableData(filterSearch)
+    }, 2000)
+  }
+
   return (
     <>
       <TLPracticeHeader />
@@ -92,6 +116,7 @@ function TLPracticeContainer() {
                     border: '1px solid #EDEFF5',
                   },
                 }}
+                onKeyUp={handleSearch}
               />
             </Grid>
 
@@ -103,7 +128,6 @@ function TLPracticeContainer() {
                 alignItems: 'center',
                 cursor: 'pointer',
               }}
-              // onClick={handleDisplayFilters}
               item
               xs={1}
             >
@@ -135,8 +159,13 @@ function TLPracticeContainer() {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <TLPracticeList />
+          <TLPracticeList
+            columns={techListPracticeColumns}
+            rows={tableData}
+            settings={techListPracticeTableSettings}
+          />
         </Grid>
+        <Grid item xs={12}></Grid>
       </Grid>
     </>
   )

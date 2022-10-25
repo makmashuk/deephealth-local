@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from 'react'
+import { StarredTooltip } from '@components/common/Tooltip/StarredTooltip'
+import { Info } from '@icons/index'
 
 const arrowDown = (
   <svg
     clipRule="evenodd"
-    height={"1rem"}
+    height={'1rem'}
     fillRule="evenodd"
     strokeLinejoin="round"
     strokeMiterlimit="2"
@@ -16,11 +18,11 @@ const arrowDown = (
       fillRule="nonzero"
     />
   </svg>
-);
+)
 const arrowUp = (
   <svg
     clipRule="evenodd"
-    height={"1.1rem"}
+    height={'1.1rem'}
     fillRule="evenodd"
     strokeLinejoin="round"
     strokeMiterlimit="2"
@@ -33,48 +35,74 @@ const arrowUp = (
       fillRule="nonzero"
     />
   </svg>
-);
-export default function TableHeaderRow({ columns, rows, selected, sortableFields, setSortableFields, selectAll, settings }) {
+)
+
+export default function TableHeaderRow({
+  columns,
+  rows,
+  selected,
+  sortableFields,
+  setSortableFields,
+  selectAll,
+  settings,
+}) {
+  const [tooltip, setTooltip] = useState(false)
+
+  const InfoIcon = () => {
+    return (
+      <span
+        onMouseEnter={() => setTooltip(true)}
+        onMouseLeave={() => setTooltip(false)}
+      >
+        <Info />
+      </span>
+    )
+  }
+
   const handleIconForSortable = (item) => {
-    const indexOflement = sortableFields.findIndex((el) => el.name === item.field);
+    const indexOflement = sortableFields.findIndex(
+      (el) => el.name === item.field
+    )
 
     if (item.sortable) {
-      const sortingOrder = sortableFields.find((el) => el.name === item.field);
+      const sortingOrder = sortableFields.find((el) => el.name === item.field)
       if (indexOflement > -1) {
-        if (sortingOrder.order === "ASC") return arrowDown;
-        if (sortingOrder.order === "DSC") return arrowUp;
+        if (sortingOrder.order === 'ASC') return arrowDown
+        if (sortingOrder.order === 'DSC') return arrowUp
       }
-      return arrowDown;
+      return arrowDown
     }
-  };
+  }
 
   const handleRowClick = (newField) => {
     // toggoling sorting order
-    const indexOfElement = sortableFields.findIndex((item) => item.name === newField.name);
+    const indexOfElement = sortableFields.findIndex(
+      (item) => item.name === newField.name
+    )
     if (indexOfElement > -1) {
-      if (sortableFields[indexOfElement].order === "DSC") {
-        newField.order = "ASC";
+      if (sortableFields[indexOfElement].order === 'DSC') {
+        newField.order = 'ASC'
       }
-      if (sortableFields[indexOfElement].order === "ASC") {
-        newField.order = "DSC";
+      if (sortableFields[indexOfElement].order === 'ASC') {
+        newField.order = 'DSC'
       }
 
-      const updatedList = [...sortableFields];
-      updatedList.splice(indexOfElement, 1);
-      updatedList.push(newField);
-      setSortableFields([...updatedList]);
+      const updatedList = [...sortableFields]
+      updatedList.splice(indexOfElement, 1)
+      updatedList.push(newField)
+      setSortableFields([...updatedList])
     } else {
-      newField.order = "ASC";
-      setSortableFields((fields) => [...fields, newField]);
+      newField.order = 'ASC'
+      setSortableFields((fields) => [...fields, newField])
     }
-  };
+  }
 
   const handleSorting = (item) => {
     if (item.sortable) {
-      let field = { name: item.field };
-      handleRowClick(field);
+      let field = { name: item.field }
+      handleRowClick(field)
     }
-  };
+  }
   return (
     <>
       <tr>
@@ -85,33 +113,41 @@ export default function TableHeaderRow({ columns, rows, selected, sortableFields
               onClick={() => handleSorting(item)}
               style={{
                 width: item.width,
-                background: settings.header_bg_color ?? "#FFF",
-                borderBottom: settings.header_border_bottom_color ?? "none",
-                padding: settings.header_padding ?? "1rem",
+                background: settings.header_bg_color ?? '#FFF',
+                borderBottom: settings.header_border_bottom_color ?? 'none',
+                padding: settings.header_padding ?? '1rem',
               }}
             >
               <div
                 style={{
-                  display: "flex",
-                  gap: "0.25rem",
-                  alignItems: "center",
-                  justifyContent: item.align ? item.align : "left",
+                  display: 'flex',
+                  gap: '0.25rem',
+                  alignItems: 'center',
+                  justifyContent: item.align ? item.align : 'left',
+                  fontWeight: 700,
+                  fontSize: '14px',
+                  color: '#6A6E83',
                 }}
               >
                 {item.box && item.box}
                 {item.title}
-                <span style={{ flexShrink: 0 }}>{handleIconForSortable(item)}</span>
+                <span style={{ flexShrink: 0 }}>
+                  {handleIconForSortable(item)}
+                </span>
+                {item.title == 'Starred' ? <InfoIcon /> : ''}
               </div>
             </th>
-          );
+          )
         })}
       </tr>
+
+      {tooltip && <StarredTooltip />}
     </>
-  );
+  )
 }
 
 TableHeaderRow.defaultProps = {
-  title: "",
+  title: '',
   sortable: false,
-  box: "",
-};
+  box: '',
+}

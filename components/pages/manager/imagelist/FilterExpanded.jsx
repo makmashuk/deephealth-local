@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import GroupButton from "@components/common/GroupButton/GroupButton";
 
-import { Grid, Card, CardContent, Radio, Button, FormGroup, FormControl, FormControlLabel, MenuItem } from '@mui/material';
+import { Grid, Card, CardContent, Radio, Button, FormGroup, FormControl, FormControlLabel, MenuItem, Checkbox } from '@mui/material';
 
-import { CheckboxWithLabel, RadioGroup, Select } from 'formik-mui';
 import { Formik, Form, Field } from "formik";
 import { CloseWindow, Trash } from '@icons/index';
 
@@ -172,7 +171,7 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
           >
             {({ values }) => (
               <Form
-                style={{ height: "100%" }}
+                style={{ width: "100%" }}
                 onChange={handleOnChange}
               >
                 <div
@@ -187,7 +186,7 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
                   {/* Quality */}
                   <Grid
                     item xs={12} sm={12} md={12}
-                    mt={1}
+                    mt={1.5}
                     sx={{
                       display: "flex",
                       flexDirection: "row",
@@ -213,24 +212,51 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
                       flexDirection: "column",
                       justifyContent: "flex-start",
                       alignItems: "flex-start",
+                      marginTop: "0.25rem",
                     }}
                   >
-                    {qualityData.map((quality, index) => (
-                      <Field
-                        key={index}
-                        type="checkbox"
-                        component={CheckboxWithLabel}
-                        name="quality"
-                        value={quality}
-                        Label={{ label: quality }}
-                      />
-                    ))}
+                    <div
+                      role="group"
+                      aria-labelledby="checkbox-group"
+                      style={{
+                        display: "flex",
+                        flexDirection: "column"
+                      }}
+                    >
+                      {qualityData.map((quality, index) => (
+                        <label
+                          key={index}
+                          style={{ display: "flex", alignItems: "center", lineHeight: "1.6" }}
+                        >
+                          <Field
+                            type="checkbox"
+                            name="quality"
+                            value={quality}
+                            style={{
+                              marginRight: "10px",
+                              width: "14px",
+                              height: "14px",
+                            }}
+                          />
+                          <span
+                            style={{
+                              fontStyle: 'normal',
+                              fontWeight: 700,
+                              fontSize: '14px',
+                              color: '#44495B',
+                            }}
+                          >
+                            {quality}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
                   </Grid>
 
                   {/* views */}
                   <Grid
                     item xs={12} sm={12} md={12}
-                    mt={1}
+                    mt={1.5}
                     sx={{
                       display: "flex",
                       flexDirection: "row",
@@ -256,24 +282,51 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
                       flexDirection: "row",
                       justifyContent: "flex-start",
                       alignItems: "flex-start",
+                      marginTop: "0.25rem",
                     }}
                   >
-                    {viewsData.map((view, index) => (
-                      <Field
-                        key={index}
-                        type="checkbox"
-                        component={CheckboxWithLabel}
-                        name="views"
-                        value={view}
-                        Label={{ label: view }}
-                      />
-                    ))}
+                    <div
+                      role="group"
+                      aria-labelledby="checkbox-group"
+                      style={{
+                        display: "flex",
+                        flexDirection: "column"
+                      }}
+                    >
+                      {viewsData.map((view, index) => (
+                        <label
+                          key={index}
+                          style={{ display: "flex", alignItems: "center", lineHeight: "1.6" }}
+                        >
+                          <Field
+                            type="checkbox"
+                            name="views"
+                            value={view}
+                            style={{
+                              marginRight: "10px",
+                              width: "14px",
+                              height: "14px",
+                            }}
+                          />
+                          <span
+                            style={{
+                              fontStyle: 'normal',
+                              fontWeight: 700,
+                              fontSize: '14px',
+                              color: '#44495B',
+                            }}
+                          >
+                            {view}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
                   </Grid>
 
                   {/* Flag */}
                   <Grid
                     item xs={12} sm={12} md={12}
-                    mt={1}
+                    mt={1.5}
                     sx={{
                       display: "flex",
                       flexDirection: "row",
@@ -293,32 +346,60 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
                     </span>
                   </Grid>
                   <Grid
-                    item xs={12} sm={12} md={12}
+                    item
+                    xs={12}
+                    sm={12}
+                    md={12}
                     sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "flex-start",
-                      alignItems: "flex-start",
+                      marginTop: "0.25rem",
                     }}
                   >
-                    <Field row component={RadioGroup} name="flag">
-                      {
-                        flagData.map((flag, index) => (
-                          <FormControlLabel
-                            key={index}
+                    <div
+                      role="group"
+                      aria-labelledby="my-radio-group"
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "start",
+                      }}
+                    >
+                      {flagData.map((flag, index) => (
+                        <label
+                          key={index}
+                          style={{ display: "flex", alignItems: "center", lineHeight: "1.6", paddingRight: '1rem' }}
+                        >
+                          <Field
+                            type="radio"
+                            name="flag"
                             value={flag}
-                            control={<Radio />}
-                            label={flag}
+                            style={{
+                              marginRight: "8px",
+                              width: "14px",
+                              height: "14px",
+                            }}
                           />
-                        ))
-                      }
-                    </Field>
+                          <span
+                            style={{
+                              fontStyle: 'normal',
+                              fontWeight: 700,
+                              fontSize: '14px',
+                              color: '#44495B',
+                            }}
+                          >
+                            {flag}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
                   </Grid>
 
                   {/* Density */}
                   <Grid
-                    item xs={12} sm={12} md={12}
-                    mt={1}
+                    item
+                    xs={12}
+                    sm={12}
+                    md={12}
+                    mt={1.5}
                     sx={{
                       display: "flex",
                       flexDirection: "row",
@@ -344,24 +425,51 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
                       flexDirection: "row",
                       justifyContent: "flex-start",
                       alignItems: "flex-start",
+                      marginTop: "0.25rem",
                     }}
                   >
-                    {densityData.map((density, index) => (
-                      <Field
-                        key={index}
-                        type="checkbox"
-                        component={CheckboxWithLabel}
-                        name="density"
-                        value={density}
-                        Label={{ label: density }}
-                      />
-                    ))}
+                    <div
+                      role="group"
+                      aria-labelledby="checkbox-group"
+                      style={{
+                        display: "flex",
+                        flexDirection: "column"
+                      }}
+                    >
+                      {densityData.map((density, index) => (
+                        <label
+                          key={index}
+                          style={{ display: "flex", alignItems: "center", lineHeight: "1.6" }}
+                        >
+                          <Field
+                            type="checkbox"
+                            name="density"
+                            value={density}
+                            style={{
+                              marginRight: "10px",
+                              width: "14px",
+                              height: "14px",
+                            }}
+                          />
+                          <span
+                            style={{
+                              fontStyle: 'normal',
+                              fontWeight: 700,
+                              fontSize: '14px',
+                              color: '#44495B',
+                            }}
+                          >
+                            {density}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
                   </Grid>
 
                   {/* Positioning Issues */}
                   <Grid
                     item xs={12} sm={12} md={12}
-                    mt={1}
+                    mt={1.5}
                     sx={{
                       display: "flex",
                       flexDirection: "row",
@@ -387,26 +495,70 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
                       flexDirection: "column",
                       justifyContent: "flex-start",
                       alignItems: "flex-start",
+                      marginTop: "0.25rem",
                     }}
                   >
-                    <Field
-                      key={0}
-                      type="checkbox"
-                      component={CheckboxWithLabel}
-                      name="positioning_issues"
-                      Label={{ label: "Select All" }}
-                      value={'Select All'}
-                    />
-                    {positionData.map((positioning_issues, index) => (
-                      <Field
-                        key={index}
-                        type="checkbox"
-                        component={CheckboxWithLabel}
-                        name="positioning_issues"
-                        value={positioning_issues}
-                        Label={{ label: positioning_issues }}
-                      />
-                    ))}
+                    <div
+                      role="group"
+                      aria-labelledby="checkbox-group"
+                      style={{
+                        display: "flex",
+                        flexDirection: "column"
+                      }}
+                    >
+                      <label
+                          key={0}
+                          style={{ display: "flex", alignItems: "center", lineHeight: "1.6" }}
+                        >
+                          <Field
+                            type="checkbox"
+                            name="positioning_issues"
+                            value="Select All"
+                            style={{
+                              marginRight: "10px",
+                              width: "14px",
+                              height: "14px",
+                            }}
+                          />
+                          <span
+                            style={{
+                              fontStyle: 'normal',
+                              fontWeight: 700,
+                              fontSize: '14px',
+                              color: '#44495B',
+                            }}
+                          >
+                            Select All
+                          </span>
+                      </label>
+                      {positionData.map((positioning_issues, index) => (
+                        <label
+                          key={index}
+                          style={{ display: "flex", alignItems: "center", lineHeight: "1.6" }}
+                        >
+                          <Field
+                            type="checkbox"
+                            name="positioning_issues"
+                            value={positioning_issues}
+                            style={{
+                              marginRight: "10px",
+                              width: "14px",
+                              height: "14px",
+                            }}
+                          />
+                          <span
+                            style={{
+                              fontStyle: 'normal',
+                              fontWeight: 700,
+                              fontSize: '14px',
+                              color: '#44495B',
+                            }}
+                          >
+                            {positioning_issues}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
                   </Grid>
                 </div>
 

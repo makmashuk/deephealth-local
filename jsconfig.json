@@ -11,12 +11,5 @@
     }
   },
   "exclude": ["node_modules", ".next", "out"],
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.js",
-    "components/pages/manager/imagelist/IListExpanded.jsx",
-    "components/pages/manager/imagelist/IListExpanded.jsx"
-  ]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
 }

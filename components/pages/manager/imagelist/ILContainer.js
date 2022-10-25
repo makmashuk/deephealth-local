@@ -1,18 +1,30 @@
-import React, { useState, useEffect } from 'react'
-import { Grid } from '@mui/material'
+import React, { useState, useEffect, useMemo } from 'react'
+import { Grid, Button } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import * as Icon from 'react-feather'
 import ILSiteHeader from './ILSiteHeader'
-import { TLBackButton } from '@icons/index'
-
-import IList from './IList' // for -> by images table
+import IList from './IList' // for -> by studies table
 import IListExpanded from './IListExpanded' // for -> by studies table
-
 import FilterExpanded from './FilterExpanded'
 import Chips from './Chips'
 import GroupButton from '@components/common/GroupButton/GroupButton'
-import { StarOutline, StarFilled } from '@icons/index'
+import { TLBackButton } from '@icons/index'
+
+import {
+  ilTableColumnsByImages,
+  ilTableRowDataByImages,
+  ilTableSettingsByImages,
+} from '@components/mockData/imageListByImagesData'
+
+import {
+  ilTableColumnsByStudies,
+  ilTableRowDataByStudies,
+  ilTableSettingsByStudies,
+} from '@components/mockData/imageListByStudiesData'
+
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
 
 const filter = {
   quality: ['Perfect', 'Good', 'Bad'],
@@ -31,120 +43,76 @@ const filter = {
 const selected = {
   quality: ['Perfect'],
   views: ['RMLO', 'LCC'],
-  flag: ['Flagged'],
+  flag: 'Flagged',
   density: ['Dense'],
   positioning_issues: ['Not enough muscle', 'IMF not open'],
 }
 
-const tableColumns = [
-  {
-    field: 'images',
-    title: 'Images',
-    align: 'left',
-    sortable: true,
-  },
-  {
-    field: 'accession_number',
-    title: 'Accession number',
-    align: 'left',
-    sortable: true,
-  },
-  {
-    field: 'date',
-    title: 'Date',
-    align: 'left',
-    sortable: true,
-  },
-  {
-    field: 'view',
-    title: 'View',
-    align: 'left',
-    sortable: true,
-  },
-  {
-    field: 'issues',
-    title: 'Issues',
-    align: 'right',
-    sortable: true,
-  },
-  {
-    field: 'starred',
-    title: 'Starred',
-    align: 'right',
-    sortable: true,
-  },
-]
-
-const rawTableData = [
-  {
-    id: 1,
-    images: 'Image_1',
-    accession_number: 'BWC5174901DSA',
-    date: '03.05.2022',
-    view: 'RMLO',
-    issues: '0',
-    starred: <StarOutline size={10} />,
-    positioning_issues: 'Not enough muscle',
-  },
-  {
-    id: 2,
-    images: 'Image_2',
-    accession_number: 'ZUH291076825321',
-    date: '02.05.2022',
-    view: 'RMLO',
-    issues: '0',
-    starred: <StarFilled size={10} />,
-    positioning_issues: 'IMF not open',
-  },
-  {
-    id: 3,
-    images: 'Image_3',
-    accession_number: 'DQO098271492753',
-    date: '01.05.2022',
-    view: 'LMLO',
-    issues: '1',
-    starred: <StarOutline size={10} />,
-    positioning_issues: 'IMF not open',
-  },
-  {
-    id: 4,
-    images: 'Image_4',
-    accession_number: 'MT2QS8219312912010',
-    date: '28.04.2022',
-    view: 'LMLO',
-    issues: '2',
-    starred: <StarOutline size={10} />,
-    positioning_issues: 'Droopy breast',
-  },
-  {
-    id: 5,
-    images: 'Image_5',
-    accession_number: 'DQO098271492753',
-    date: '27.05.2022',
-    view: 'LCC',
-    issues: '2',
-    starred: <StarFilled size={10} />,
-    positioning_issues: 'Not enough muscle',
-  },
-  {
-    id: 6,
-    images: 'Image_6',
-    accession_number: 'MT2QS8219312912010',
-    date: '27.05.2022',
-    view: 'LMLO',
-    issues: '2',
-    starred: <StarFilled size={10} />,
-    positioning_issues: 'Nipple not in midline',
-  },
-]
-
-const tableSettings = {
-  last_child_no_border: false,
-  header_border_bottom_color: '#e1e1e1',
-  header_bg_color: '#EDEFF5',
+const DownloadTile = () => {
+  return (
+    <>
+      <Grid
+        item
+        xs={12}
+        sx={{
+          background: '#44495B',
+          boxShadow: '0px 12px 18px rgba(55, 63, 94, 0.2)',
+          borderRadius: '12px',
+          padding: '0.5rem',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '300px',
+          position: 'absolute',
+          bottom: '1rem',
+          right: '26rem',
+        }}
+      >
+        <Grid
+          item
+          xs={6}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontWeight: '700',
+            fontSize: '14px',
+            lineHeight: '16px',
+            color: '#ffffff',
+          }}
+        >
+          1 studies selected
+        </Grid>
+        <Grid
+          item
+          xs={6}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <button
+            style={{
+              background: '#6992FC',
+              border: 'none',
+              padding: '0.5rem 2rem',
+              borderRadius: '12px',
+              fontWeight: '700',
+              fontSize: '14px',
+              lineHeight: '16px',
+              color: '#ffffff',
+            }}
+          >
+            Export list
+          </button>
+        </Grid>
+      </Grid>
+    </>
+  )
 }
 
-function ILDefaultContainer() {
+function ILContainer() {
   const [expandedTable, setExpandedTable] = useState(false)
   const [filterData, setFilterData] = useState(filter)
 
@@ -152,15 +120,28 @@ function ILDefaultContainer() {
   const [selectedData, setSelectedData] = useState(selected) // pass checkedData to the table
   const [displayFilter, setDisplayFilter] = useState(false)
 
-  const [tableData, setTableData] = useState(rawTableData)
+  const [tableData, setTableData] = useState(ilTableRowDataByImages)
+  const [expandedTableData, setExpandedTableData] = useState(
+    ilTableRowDataByStudies
+  )
 
-  // useEffect
+  // useEffect to update when chips -> positioning_issues is changed (by images)
   useEffect(() => {
-    const updatedTableData = rawTableData.filter((item) =>
+    const updatedTableData = ilTableRowDataByImages.filter((item) =>
       checkedData.includes(item.positioning_issues)
     )
     console.log('updatedTableData')
     setTableData(updatedTableData)
+    console.log(updatedTableData)
+  }, [checkedData])
+
+  // by studies (expanded table)
+  useEffect(() => {
+    const updatedTableData = ilTableRowDataByStudies.filter((item) =>
+      checkedData.includes(item.positioning_issues)
+    )
+    console.log('updatedTableData')
+    setExpandedTableData(updatedTableData)
     console.log(updatedTableData)
   }, [checkedData])
 
@@ -222,27 +203,58 @@ function ILDefaultContainer() {
     e.target.value === 'by images'
       ? setExpandedTable(false)
       : setExpandedTable(true)
+    // clear the handleSearch input name search
   }
 
   const handleSearch = (e) => {
-    console.log(e.target.value)
+    e.preventDefault()
     let keyword = e.target.value
-    const filterSearch = rawTableData.filter((item) => {
-      return (
-        item.accession_number.toLowerCase().includes(keyword.toLowerCase()) ||
-        item.date.toLowerCase().includes(keyword.toLowerCase()) ||
-        item.view.toLowerCase().includes(keyword.toLowerCase()) ||
-        item.images.toLowerCase().includes(keyword.toLowerCase())
-      )
-    })
-    console.log('filterSearch')
-    console.log(filterSearch)
-    setTableData(filterSearch)
+
+    setTimeout(() => {
+      if (!expandedTable) {
+        const filterSearch = ilTableRowDataByImages.filter((item) => {
+          return (
+            item.accession_number
+              .toLowerCase()
+              .includes(keyword.toLowerCase()) ||
+            item.date.toLowerCase().includes(keyword.toLowerCase()) ||
+            item.view.toLowerCase().includes(keyword.toLowerCase()) ||
+            item.images.toLowerCase().includes(keyword.toLowerCase())
+          )
+        })
+        console.log('filterSearch')
+        console.log(filterSearch)
+        setTableData(filterSearch)
+      } else {
+        const expandedFilterSearch = ilTableRowDataByStudies.filter((item) => {
+          return (
+            item.accession_number
+              .toLowerCase()
+              .includes(keyword.toLowerCase()) ||
+            item.date.toLowerCase().includes(keyword.toLowerCase()) ||
+            item.quality.toLowerCase().includes(keyword.toLowerCase()) ||
+            item.image.toLowerCase().includes(keyword.toLowerCase())
+          )
+        })
+        console.log('expandedFilterSearch')
+        console.log(expandedFilterSearch)
+        setExpandedTableData(expandedFilterSearch)
+      }
+    }, 2000)
   }
 
-  const handleOnClickClose = (e) => {
-    e.preventDefault()
-    console.log('close clicked')
+  const generatePDF = () => {
+    const pdfTable = document.getElementById('pdfTable')
+    pdfTable.style.maxWidth = '780px'
+    console.log(pdfTable)
+    html2canvas(pdfTable).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF('p', 'pt', 'a4')
+      pdf.addImage(imgData, 'PNG', 0, 0)
+      let timeStamps = new Date().getTime()
+      pdf.save(`test_${timeStamps}.pdf`)
+    })
+    pdfTable.style.maxWidth = 'none'
   }
 
   return (
@@ -296,9 +308,7 @@ function ILDefaultContainer() {
                   alignItems: 'center',
                 }}
               >
-                <div
-            
-                >
+                <div>
                   <GroupButton
                     buttons={['By images', 'By studies']}
                     buttonOnClickHandler={handleOptions}
@@ -409,16 +419,30 @@ function ILDefaultContainer() {
             <Chips chips={checkedData} setChips={handleChips} />
           </Grid>
 
-          <Grid item xs={12}>
+          <Grid item xs={12} id="pdfTable">
             {!expandedTable ? (
               <IList
-                columns={tableColumns}
+                columns={ilTableColumnsByImages}
                 rows={tableData}
-                settings={tableSettings}
+                settings={ilTableSettingsByImages}
               />
             ) : (
-              <IListExpanded />
+              <IListExpanded
+                columns={ilTableColumnsByStudies}
+                rows={expandedTableData}
+                settings={ilTableSettingsByStudies}
+              />
             )}
+          </Grid>
+
+          <Grid item xs={2} md={2}>
+            <Button onClick={generatePDF} variant="contained">
+              Download PDF
+            </Button>
+          </Grid>
+
+          <Grid item xs={4}>
+            <DownloadTile />
           </Grid>
         </Grid>
 
@@ -441,4 +465,4 @@ function ILDefaultContainer() {
   )
 }
 
-export default ILDefaultContainer
+export default ILContainer

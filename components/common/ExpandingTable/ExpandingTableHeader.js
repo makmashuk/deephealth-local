@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { StarredTooltip } from '@components/common/Tooltip/StarredTooltip'
+import { Info } from '@icons/index'
 
 const arrowDown = (
   <svg
@@ -32,6 +34,7 @@ const arrowUp = (
     />
   </svg>
 )
+
 export default function ExpandingTableHeader({
   columns,
   rows,
@@ -41,6 +44,19 @@ export default function ExpandingTableHeader({
   selectAll,
   settings,
 }) {
+  const [tooltip, setTooltip] = useState(false)
+
+  const InfoIcon = () => {
+    return (
+      <span
+        onMouseEnter={() => setTooltip(true)}
+        onMouseLeave={() => setTooltip(false)}
+      >
+        <Info />
+      </span>
+    )
+  }
+
   const handleIconForSortable = (item) => {
     const indexOflement = sortableFields.findIndex(
       (el) => el.name === item.field
@@ -100,6 +116,11 @@ export default function ExpandingTableHeader({
               <div
                 className="d--f ai--c fw-bold"
                 style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  fontWeight: '700',
+                  fontSize: '14px',
+                  color: '#6A6E83',
                   gap: '0.25rem',
                   justifyContent: item.align ? item.align : 'left',
                 }}
@@ -107,6 +128,7 @@ export default function ExpandingTableHeader({
                 {item.box && item.box}
                 {item.title}
                 {handleIconForSortable(item)}
+                {item.title == 'Starred' ? <InfoIcon /> : ''}
               </div>
             </th>
           )
@@ -121,6 +143,8 @@ export default function ExpandingTableHeader({
           </th>
         ) : null}
       </tr>
+
+      {tooltip && <StarredTooltip />}
     </>
   )
 }
