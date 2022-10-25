@@ -60,22 +60,30 @@ function ILContainer() {
 
   // useEffect to update when chips -> positioning_issues is changed (by images)
   useEffect(() => {
-    const updatedTableData = ilTableRowDataByImages.filter((item) =>
-      checkedData.includes(item.positioning_issues)
-    )
-    console.log('updatedTableData')
-    setTableData(updatedTableData)
-    console.log(updatedTableData)
+    if (checkedData.length === 0) {
+      setTableData(ilTableRowDataByImages)
+    } else {
+      const updatedTableData = ilTableRowDataByImages.filter((item) =>
+        checkedData.includes(item.positioning_issues)
+      )
+      console.log('updatedTableData')
+      setTableData(updatedTableData)
+      console.log(updatedTableData)
+    }
   }, [checkedData])
 
   // by studies (expanded table)
   useEffect(() => {
-    const updatedTableData = ilTableRowDataByStudies.filter((item) =>
-      checkedData.includes(item.positioning_issues)
-    )
-    console.log('updatedTableData')
-    setExpandedTableData(updatedTableData)
-    console.log(updatedTableData)
+    if (checkedData.length === 0) {
+      setExpandedTableData(ilTableRowDataByStudies)
+    } else {
+      const updatedTableData = ilTableRowDataByStudies.filter((item) =>
+        checkedData.includes(item.positioning_issues)
+      )
+      console.log('updatedTableData')
+      setExpandedTableData(updatedTableData)
+      console.log(updatedTableData)
+    }
   }, [checkedData])
 
   const handleDisplayFilters = (e) => {
@@ -115,7 +123,11 @@ function ILContainer() {
   const handleChips = (data) => {
     console.log('chips data received on parent')
     console.log(data)
-    setCheckedData(data)
+    if (data.length === 0) {
+      setCheckedData([])
+    } else {
+      setCheckedData(data)
+    }
   }
 
   const handleClearAll = () => {
