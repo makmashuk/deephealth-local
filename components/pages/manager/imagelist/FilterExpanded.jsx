@@ -1,12 +1,24 @@
 import { useState } from 'react';
 import GroupButton from "@components/common/GroupButton/GroupButton";
 
-import { Grid, Card, CardContent, Radio, Button, FormGroup, FormControl, FormControlLabel, MenuItem, Checkbox } from '@mui/material';
+import { Grid, Card, CardContent, Button, Menu, MenuItem, Checkbox, Typography } from '@mui/material';
 
 import { Formik, Form, Field } from "formik";
-import { CloseWindow, Trash } from '@icons/index';
+import { CloseWindow, Trash, ChevronDownMedium } from '@icons/index';
+
+const ChevronDownIcon = (props) => {
+  return <ChevronDownMedium sx={{ fontSize: '14px' }} {...props} />
+}
 
 const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisplayFilter, setClearAll } ) => {
+
+  const [anchorElPosIssues, setAnchorElPosIssues] = useState(null)
+  const handleOpenPosIssuesMenu = (event) => {
+    setAnchorElPosIssues(event.currentTarget)
+  }
+  const handleClosePosIssuesMenu = () => {
+    setAnchorElPosIssues(null)
+  }
 
   const [showModal, setShowModal] = useState(false);
   const [qualityData, setQualityData] = useState(data.quality);
@@ -469,23 +481,33 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
                   {/* Positioning Issues */}
                   <Grid
                     item xs={12} sm={12} md={12}
-                    mt={1.5}
+                    mt={2}
                     sx={{
                       display: "flex",
                       flexDirection: "row",
-                      justifyContent: "flex-start",
-                      alignItems: "flex-start",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      border: '1px solid #EDEFF5',
+                      borderRadius: '8px',
+                      cursor: 'pointer',
+                      padding: '6px 8px',
                     }}
+                    onClick={handleOpenPosIssuesMenu}
                   >
                     <span
                       style={{
                         fontStyle: 'normal',
                         fontWeight: 700,
-                        fontSize: '16px',
+                        fontSize: '14px',
                         color: '#44495B',
                       }}
                     >
                       Positioning Issues
+                    </span>
+                    <span>
+                      {values.positioning_issues.length > 0 && `(${values.positioning_issues.length})`}
+                      &nbsp;
+                      <ChevronDownIcon />
                     </span>
                   </Grid>
                   <Grid
@@ -506,58 +528,134 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
                         flexDirection: "column"
                       }}
                     >
-                      <label
+                      <Menu
+                        sx={{
+                          mt: '40px',
+                          '& .MuiPaper-root': {
+                            width: '228px',
+                            border: '1px solid #EDEFF5',
+                            borderRadius: '8px',
+                            // padding: '8px 3px',
+                            '& ul': {
+                              padding: '0',
+                              '& li.MuiMenuItem-root': {
+                                padding: '8px 12px',
+                                borderRadius: '8px',
+                                transition: 'all 300ms',
+                                '& path': {
+                                  transition: 'fill 1000ms',
+                                },
+                                '&:hover': {
+                                  background: '#F5F6F8',
+                                  '& .MuiTypography-root': {
+                                    color: '#44495B',
+                                  },
+                                  '& svg path': {
+                                    stroke: '#6A6E83',
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        }}
+                        id="menu-appbar"
+                        anchorEl={anchorElPosIssues}
+                        anchorOrigin={{
+                          vertical: 'top',
+                          horizontal: 'left',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'left',
+                        }}
+                        open={Boolean(anchorElPosIssues)}
+                        onClose={handleClosePosIssuesMenu}
+                      >
+                        <MenuItem
+                          onClick={handleClosePosIssuesMenu}
+                          sx={{ columnGap: '16px' }}
                           key={0}
-                          style={{ display: "flex", alignItems: "center", lineHeight: "1.6" }}
                         >
-                          <Field
-                            type="checkbox"
-                            name="positioning_issues"
-                            value="Select All"
-                            style={{
-                              marginRight: "10px",
-                              width: "14px",
-                              height: "14px",
-                            }}
-                          />
                           <span
-                            style={{
-                              fontStyle: 'normal',
-                              fontWeight: 700,
+                            sx={{
                               fontSize: '14px',
-                              color: '#44495B',
+                              lineHeight: '16px',
+                              fontWeight: '700',
+                              color: '#6A6E83',
                             }}
                           >
-                            Select All
+                            <label
+                              key={0}
+                              style={{ display: "flex", alignItems: "center", lineHeight: "1.6" }}
+                            >
+                              <Field
+                                type="checkbox"
+                                name="positioning_issues"
+                                value="Select All"
+                                style={{
+                                  marginRight: "10px",
+                                  width: "14px",
+                                  height: "14px",
+                                }}
+                              />
+                              <span
+                                style={{
+                                  fontStyle: 'normal',
+                                  fontWeight: 700,
+                                  fontSize: '14px',
+                                  color: '#44495B',
+                                }}
+                              >
+                                Select All
+                              </span>
+                            </label>
                           </span>
-                      </label>
-                      {positionData.map((positioning_issues, index) => (
-                        <label
-                          key={index}
-                          style={{ display: "flex", alignItems: "center", lineHeight: "1.6" }}
-                        >
-                          <Field
-                            type="checkbox"
-                            name="positioning_issues"
-                            value={positioning_issues}
-                            style={{
-                              marginRight: "10px",
-                              width: "14px",
-                              height: "14px",
-                            }}
-                          />
-                          <span
-                            style={{
-                              fontStyle: 'normal',
-                              fontWeight: 700,
-                              fontSize: '14px',
-                              color: '#44495B',
-                            }}
+                        </MenuItem>
+                        <div style={{ width: '100%', border: '1px solid #EDEFF5', }} />
+                        {positionData.map((positioning_issues, index) => (
+                          <MenuItem
+                            onClick={handleClosePosIssuesMenu}
+                            sx={{ columnGap: '16px' }}
+                            key={index}
                           >
-                            {positioning_issues}
-                          </span>
-                        </label>
-                      ))}
+                            <span
+                              sx={{
+                                fontSize: '14px',
+                                lineHeight: '16px',
+                                fontWeight: '700',
+                                color: '#6A6E83',
+                              }}
+                            >
+                                <label
+                                  key={index}
+                                  style={{ display: "flex", alignItems: "center", lineHeight: "1.6" }}
+                                >
+                                  <Field
+                                    type="checkbox"
+                                    name="positioning_issues"
+                                    value={positioning_issues}
+                                    style={{
+                                      marginRight: "10px",
+                                      width: "14px",
+                                      height: "14px",
+                                    }}
+                                  />
+                                  <span
+                                    style={{
+                                      fontStyle: 'normal',
+                                      fontWeight: 700,
+                                      fontSize: '14px',
+                                      color: '#44495B',
+                                    }}
+                                  >
+                                    {positioning_issues}
+                                  </span>
+                                </label>
+                            </span>
+                          </MenuItem>
+                        ))}
+                      </Menu>
                     </div>
                   </Grid>
                 </div>
