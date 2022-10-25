@@ -1,72 +1,78 @@
-import React, { useState, useEffect } from "react";
-import styles from "./styles/table.module.css";
-import TableHeader from "./TableHeader";
-import TableBody from "./TableBody";
+import React, { useState, useEffect } from 'react'
+import styles from './styles/table.module.css'
+import TableHeader from './TableHeader'
+import TableBody from './TableBody'
 
 export default function Table({ columns, rows, settings }) {
-  const [selected, setSelected] = useState([]);
-  const [sortableFields, setSortableFields] = useState([]);
-  const [tableData, setTableData] = useState(rows);
+  const [selected, setSelected] = useState([])
+  const [sortableFields, setSortableFields] = useState([])
+  const [tableData, setTableData] = useState(rows)
+
+  useEffect(() => {
+    setTableData(rows)
+  }, [rows])
 
   const handleSorting = (sortField, sortOrder) => {
     if (sortField) {
       const sorted = [...tableData].sort((a, b) => {
-        if (a[sortField] === null) return 1;
-        if (b[sortField] === null) return -1;
-        if (a[sortField] === null && b[sortField] === null) return 0;
+        if (a[sortField] === null) return 1
+        if (b[sortField] === null) return -1
+        if (a[sortField] === null && b[sortField] === null) return 0
         return (
-          a[sortField].toString().localeCompare(b[sortField].toString(), "en", {
+          a[sortField].toString().localeCompare(b[sortField].toString(), 'en', {
             numeric: true,
-          }) * (sortOrder === "ASC" ? 1 : -1)
-        );
-      });
-      setTableData(sorted);
+          }) * (sortOrder === 'ASC' ? 1 : -1)
+        )
+      })
+      setTableData(sorted)
     }
-  };
+  }
 
   const selectAll = () => {
     if (selected.length === rows.length) {
-      setSelected([]);
+      setSelected([])
     } else {
-      setSelected(rows.map((row) => row?.id));
+      setSelected(rows.map((row) => row?.id))
     }
-  };
+  }
 
   const selectOne = (id) => {
-    const one = selected.find((item) => item === id);
+    const one = selected.find((item) => item === id)
     if (one) {
-      const deleted = selected.filter((item) => item !== id);
-      setSelected(deleted);
+      const deleted = selected.filter((item) => item !== id)
+      setSelected(deleted)
     } else {
-      setSelected([...selected, id]);
+      setSelected([...selected, id])
     }
-  };
+  }
 
   const selectBatch = (arr) => {
-    console.log(arr);
-    const every = arr?.every((el) => selected.includes(el));
-    console.log(every);
+    console.log(arr)
+    const every = arr?.every((el) => selected.includes(el))
+    console.log(every)
 
     if (every) {
-      const deleted = selected.filter((item) => !arr.includes(item));
-      setSelected(deleted);
+      const deleted = selected.filter((item) => !arr.includes(item))
+      setSelected(deleted)
     } else {
-      setSelected([...selected, ...arr]);
+      setSelected([...selected, ...arr])
     }
-  };
+  }
 
   useEffect(() => {
     sortableFields.forEach((item) => {
-      handleSorting(item.name, item.order);
-    });
+      handleSorting(item.name, item.order)
+    })
     // console.log(sortableFields);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortableFields]);
+  }, [sortableFields])
 
   return (
-    <div className="card">
-      <table
-        className={styles.table}>
+    <div
+      className="card"
+      // style={{ overflowY: 'scroll' }}
+    >
+      <table className={styles.table}>
         <thead>
           <TableHeader
             columns={columns}
@@ -83,5 +89,5 @@ export default function Table({ columns, rows, settings }) {
         </tbody>
       </table>
     </div>
-  );
+  )
 }

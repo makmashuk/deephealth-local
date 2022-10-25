@@ -20,6 +20,13 @@ const DropdownIcon = (props) => {
   return <ChevronDown sx={{ fontSize: '20px' }} {...props} />
 }
 
+const dropdownOptions = [
+  { id: 0, value: 7, label: '1 Week' },
+  { id: 1, value: 30, label: '1 Month' },
+  { id: 2, value: 120, label: '1 Quarter' },
+  { id: 3, value: 365, label: '1 Year' },
+]
+
 const SOSummary = () => {
   const { searchResult, setSearchResult, handleSearch } =
     useSearchFilter(siteData)
@@ -82,7 +89,7 @@ const SOSummary = () => {
               <Typography variant="h2" color="textPrimary">
                 Summary statistics
               </Typography>
-              <Dropdown />
+              <Dropdown options={dropdownOptions} />
             </>
           </div>
           <div

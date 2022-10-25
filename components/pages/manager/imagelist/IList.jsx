@@ -1,11 +1,14 @@
+import React from 'react'
 import Table from '@components/common/Table/Table'
 
-const TLlist = ( { columns, rows, settings } ) => {
+const IList = ({columns, rows, settings}) => {
   return (
-    <div className='flow'>
-      <Table columns={columns} rows={rows} settings={settings} />
-    </div>
+    <Table
+      columns={columns}
+      rows={rows}
+      settings={settings}
+    />
   )
 }
 
-export default TLlist
+export default IList

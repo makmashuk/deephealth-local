@@ -40,7 +40,6 @@ const MuiSelect = styled(Select)`
 `
 
 const menuProps = {
-  getContentAnchorEl: null,
   anchorOrigin: {
     vertical: 'bottom',
     horizontal: 'left',
@@ -52,8 +51,8 @@ const menuProps = {
   disablePortal: true,
 }
 
-const Dropdown = () => {
-  const [duration, setDuration] = useState(20)
+const Dropdown = ({ options }) => {
+  const [duration, setDuration] = useState(30)
   const handleChange = (e) => {
     setDuration(e.target.value)
   }
@@ -76,10 +75,11 @@ const Dropdown = () => {
           '&:hover .MuiSelect-icon path': { stroke: '#6992FC' },
         }}
       >
-        <MenuItem value={10}>1 Week</MenuItem>
-        <MenuItem value={20}>1 Month</MenuItem>
-        <MenuItem value={30}>1 Quarter</MenuItem>
-        <MenuItem value={40}>1 Year</MenuItem>
+        {options.map((option) => (
+          <MenuItem key={option.id} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
       </MuiSelect>
     </FormControl>
   )
