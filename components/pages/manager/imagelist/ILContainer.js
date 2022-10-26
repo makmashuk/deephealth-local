@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react'
 import * as Icon from 'react-feather'
 import Chips from './Chips'
 import FilterExpanded from './FilterExpanded'
-import IList from './IList' // for -> by studies table
-import IListExpanded from './IListExpanded' // for -> by studies table
+import IList from './IList'
+import IListExpanded from './IListExpanded'
 import ILSiteHeader from './ILSiteHeader'
 
 import {
@@ -46,6 +46,8 @@ const selected = {
 }
 
 function ILContainer() {
+  const [onChangeCheckedFromChild, setOnChangeCheckedFromChild] =
+    useState(false)
   const [expandedTable, setExpandedTable] = useState(false)
   const [filterData, setFilterData] = useState(filter)
 
@@ -58,91 +60,88 @@ function ILContainer() {
     ilTableRowDataByStudies
   )
 
-  // useEffect to update when chips -> positioning_issues is changed (by images)
   useEffect(() => {
-    if (checkedData.length === 0) {
-      setTableData(ilTableRowDataByImages)
-    } else {
-      const updatedTableData = ilTableRowDataByImages.filter((item) =>
-        checkedData.includes(item.positioning_issues)
-      )
-      console.log('updatedTableData by images')
-      setTableData(updatedTableData)
-      console.log(updatedTableData)
-    }
-  }, [checkedData])
+    if (!onChangeCheckedFromChild) {
+      if (checkedData.length === 0) {
+        setTableData(ilTableRowDataByImages)
+        setExpandedTableData(ilTableRowDataByStudies)
+      } else {
+        const updatedTableData = ilTableRowDataByImages.filter((item) =>
+          checkedData.includes(item.positioning_issues)
+        )
+        console.log('updatedTableData by images')
+        setTableData(updatedTableData)
+        console.log(updatedTableData)
 
-  // by studies (expanded table)
-  useEffect(() => {
-    if (checkedData.length === 0) {
-      setExpandedTableData(ilTableRowDataByStudies)
-    } else {
-      const updatedTableData = ilTableRowDataByStudies.filter((item) =>
-        checkedData.includes(item.positioning_issues)
-      )
-      console.log('updatedTableData by studies')
-      setExpandedTableData(updatedTableData)
-      console.log(updatedTableData)
+        const updatedExpTableData = ilTableRowDataByStudies.filter((item) =>
+          checkedData.includes(item.positioning_issues)
+        )
+        console.log('updatedTableData by studies')
+        setExpandedTableData(updatedExpTableData)
+        console.log(updatedTableData)
+      }
     }
   }, [checkedData])
 
   useEffect(() => {
-    if (
-      selectedData.quality.length === 0 &&
-      selectedData.views.length === 0 &&
-      selectedData.flag.length === 0 &&
-      selectedData.density.length === 0 &&
-      selectedData.positioning_issues.length === 0
-    ) {
-      setTableData(ilTableRowDataByImages)
-      setExpandedTableData(ilTableRowDataByStudies)
-    } else {
-      console.log('selectedData useEffect')
-      const updatedTableData = ilTableRowDataByImages.filter(
-        (item) =>
-          selectedData.views.includes(item.view) ||
-          selectedData.positioning_issues.includes(item.positioning_issues)
-      )
-      const updatedExpandedTableData = ilTableRowDataByStudies.filter(
-        (item) =>
-          selectedData.quality.includes(item.quality) ||
-          selectedData.views.includes(item.view) ||
-          selectedData.density.includes(item.density) ||
-          selectedData.positioning_issues.includes(item.positioning_issues)
-      )
-      setTableData(updatedTableData)
-      setExpandedTableData(updatedExpandedTableData)
+    if (!onChangeCheckedFromChild) {
+      if (
+        selectedData.quality.length === 0 &&
+        selectedData.views.length === 0 &&
+        selectedData.flag.length === 0 &&
+        selectedData.density.length === 0 &&
+        selectedData.positioning_issues.length === 0
+      ) {
+        setTableData(ilTableRowDataByImages)
+        setExpandedTableData(ilTableRowDataByStudies)
+      } else {
+        console.log('selectedData useEffect')
+        const updatedTableData = ilTableRowDataByImages.filter(
+          (item) =>
+            selectedData.views.includes(item.view) ||
+            selectedData.positioning_issues.includes(item.positioning_issues)
+        )
+        const updatedExpandedTableData = ilTableRowDataByStudies.filter(
+          (item) =>
+            selectedData.quality.includes(item.quality) ||
+            selectedData.views.includes(item.view) ||
+            selectedData.density.includes(item.density) ||
+            selectedData.positioning_issues.includes(item.positioning_issues)
+        )
+        setTableData(updatedTableData)
+        setExpandedTableData(updatedExpandedTableData)
+      }
     }
   }, [selectedData])
 
   const handleDisplayFilters = (e) => {
     e.preventDefault()
     setDisplayFilter(true)
-    console.log(displayFilter)
-    console.log('handleDisplayFilters')
   }
 
   const handleModalClose = () => {
-    console.log('modal close triggered')
     setDisplayFilter(false)
   }
 
   const handleSelectedData = (data) => {
     console.log('selected data received on parent')
     console.log(data)
+    if (data.onChangeChecked) {
+      setOnChangeCheckedFromChild(true)
+    } else {
+      setOnChangeCheckedFromChild(false)
+    }
     if (data.positioning_issues.length > 0) {
       setCheckedData(data.positioning_issues)
     } else {
       setCheckedData([])
     }
-    console.log('chips data updated')
-    console.log('checked data')
     setSelectedData(data)
   }
 
   const handleChips = (data) => {
     console.log('chips data received on parent')
-    console.log(data)
+    // console.log(data)
     if (data.length === 0) {
       setCheckedData([])
       setSelectedData({
@@ -152,8 +151,10 @@ function ILContainer() {
         density: [],
         positioning_issues: [],
       })
+      setOnChangeCheckedFromChild(false)
     } else {
       setCheckedData(data)
+      setOnChangeCheckedFromChild(false)
     }
   }
 
@@ -372,7 +373,9 @@ function ILContainer() {
           </Grid>
 
           <Grid item xs={12}>
-            <Chips chips={checkedData} setChips={handleChips} />
+            {!onChangeCheckedFromChild && (
+              <Chips chips={checkedData} setChips={handleChips} />
+            )}
           </Grid>
 
           <Grid item xs={12}>
@@ -390,8 +393,6 @@ function ILContainer() {
               />
             )}
           </Grid>
-
-          <Grid item xs={12}></Grid>
         </Grid>
 
         <div

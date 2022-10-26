@@ -23,7 +23,9 @@ const FilterExpanded = ({ data, selectedData, setData, selectedPosData, setDispl
   useEffect(() => {
     console.log('selectedData updated')
     setSelected(selectedData)
+    // might need to change the dependency
   }, [selectedData])
+
 
   const [showModal, setShowModal] = useState(false);
   const [qualityData, setQualityData] = useState(data.quality);
@@ -33,7 +35,6 @@ const FilterExpanded = ({ data, selectedData, setData, selectedPosData, setDispl
   const [positionData, setPositionData] = useState(data.positioning_issues);
   const [timeRange, setTimeRange] = useState("year");
   const [selected, setSelected] = useState(selectedData);
-
   const positionDataWithAll = [...positionData, 'Select All'];
 
   const handleClose = () => {
@@ -55,41 +56,31 @@ const FilterExpanded = ({ data, selectedData, setData, selectedPosData, setDispl
   }
 
   const handleTimeRange = (event) => {
-    console.log(timeRange)
     setTimeRange(event.target.value);
   };
 
   const handleOnChange = (event) => {
     console.log("Form::onChange");
-    console.log(event.target.value)
-    if (event.target.value) {
-      setData({
-        quality: selected.quality,
-        views: selected.views,
-        flag: selected.flag,
-        density: selected.density,
-        positioning_issues: selected.positioning_issues
-      })
-    }
+    // update setSelected state
 
     if (event.target.value === 'Select All') {
       if (event.target.checked) {
-        console.log("Select All checked");
         setData({
           quality: selected.quality,
           views: selected.views,
           flag: selected.flag,
           density: selected.density,
-          positioning_issues: positionData
+          positioning_issues: positionData,
+          onChangeChecked: true
         })
       } else {
-        console.log("Select All unchecked");
         setData({
           quality: selected.quality,
           views: selected.views,
           flag: selected.flag,
           density: selected.density,
-          positioning_issues: []
+          positioning_issues: [],
+          onChangeChecked: true
         })
       }
     }
@@ -189,16 +180,19 @@ const FilterExpanded = ({ data, selectedData, setData, selectedPosData, setDispl
               //   density: values?.density?.length ?? undefined,
               //   positioning_issues: values?.positioning_issues?.length ?? undefined,
               // };
-              console.log('submitted values')
-              console.log(values)
+
               // if 'All' found in values.positioning_issues array then select all
               values.positioning_issues.forEach((pos, i) => {
                 if (pos === 'Select All') {
-                  console.log(selectedPosData)
-                  console.log('Select All detected')
+                  // console.log('Select All detected')
                   values.positioning_issues = positionData
                 }
               });
+
+              // add values.onChangeChecked: true
+              values.onChangeChecked = false
+              console.log('submitted values from child')
+              // console.log(values)
 
               setSubmitting(false);
               setSelected(values)
@@ -667,6 +661,7 @@ const FilterExpanded = ({ data, selectedData, setData, selectedPosData, setDispl
                                       width: "14px",
                                       height: "14px",
                                     }}
+                                    // checked={values.positioning_issues.includes(positioning_issues)}
                                   />
                                   <span
                                     style={{
