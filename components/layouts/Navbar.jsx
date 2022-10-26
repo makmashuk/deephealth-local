@@ -6,7 +6,7 @@ import Avatar from '@mui/material/Avatar'
 import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
-import BreadCrumb from '@components/common/BreadCrumb/BreadCrumb'
+import Breadcrumb from '@components/common/Breadcrumb/Breadcrumb'
 import Badge from '@mui/material/Badge'
 import { Star, ChevronDownMedium, Home, Logout } from '@icons/index'
 
@@ -28,7 +28,7 @@ const Navbar = () => {
   return (
     <AppBar position="sticky">
       <Box sx={{ flexGrow: 1 }}>
-        <BreadCrumb />
+        <Breadcrumb />
       </Box>
       <Box>
         <IconButton aria-label="favourites" sx={{ marginRight: '45px' }}>
