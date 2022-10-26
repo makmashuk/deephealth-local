@@ -1,12 +1,12 @@
-import { useState } from 'react';
 import GroupButton from "@components/common/GroupButton/GroupButton";
+import { useState } from 'react';
 
-import { Grid, Card, CardContent, Radio, Button, FormGroup, FormControl, FormControlLabel, MenuItem } from '@mui/material';
+import { Button, Card, CardContent, Grid } from '@mui/material';
 
-import { Formik, Form, Field } from "formik";
 import { CloseWindow, Trash } from '@icons/index';
+import { Field, Form, Formik } from "formik";
 
-const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisplayFilter, setClearAll } ) => {
+const FilterExpanded = ({ data, selectedData, setData, selectedPosData, setDisplayFilter, setClearAll }) => {
 
   const [showModal, setShowModal] = useState(false);
   const [positionData, setPositionData] = useState(data.positioning_issues);
@@ -78,7 +78,7 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
       <div style={{ borderTop: "1px solid #EDEFF5" }}></div>
 
       <CardContent>
-      <Grid container spacing={0}>
+        <Grid container spacing={0}>
           <Grid
             item xs={12} sm={12} md={12}
             sx={{
@@ -138,136 +138,136 @@ const FilterExpanded = ( { data, selectedData, setData, selectedPosData, setDisp
                     height: "100%",
                   }}
                 >
-                <div>
-                  {/* Positioning Issues */}
-                  <Grid
-                    item xs={12} sm={12} md={12}
-                    mt={1}
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "flex-start",
-                      alignItems: "flex-start",
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontStyle: 'normal',
-                        fontWeight: 700,
-                        fontSize: '16px',
-                        color: '#44495B',
-                      }}
-                    >
-                      Positioning Issues
-                    </span>
-                  </Grid>
-                  <Grid
-                    item xs={12} sm={12} md={12}
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "flex-start",
-                      alignItems: "flex-start",
-                    }}
-                  >
-                    <div
-                      role="group"
-                      aria-labelledby="checkbox-group"
-                      style={{
+                  <div>
+                    {/* Positioning Issues */}
+                    <Grid
+                      item xs={12} sm={12} md={12}
+                      mt={1}
+                      sx={{
                         display: "flex",
-                        flexDirection: "column"
+                        flexDirection: "row",
+                        justifyContent: "flex-start",
+                        alignItems: "flex-start",
                       }}
                     >
-                      {positionData.map((positioning_issues, index) => (
-                        <label
-                          key={index}
-                          style={{ display: "flex", alignItems: "center", lineHeight: "1.6" }}
-                        >
-                          <Field
-                            type="checkbox"
-                            name="positioning_issues"
-                            value={positioning_issues}
-                            style={{
-                              marginRight: "10px",
-                              width: "14px",
-                              height: "14px",
-                            }}
-                          />
-                          <span
-                            style={{
-                              fontStyle: 'normal',
-                              fontWeight: 700,
-                              fontSize: '14px',
-                              color: '#44495B',
-                            }}
+                      <span
+                        style={{
+                          fontStyle: 'normal',
+                          fontWeight: 700,
+                          fontSize: '16px',
+                          color: '#44495B',
+                        }}
+                      >
+                        Positioning Issues
+                      </span>
+                    </Grid>
+                    <Grid
+                      item xs={12} sm={12} md={12}
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-start",
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <div
+                        role="group"
+                        aria-labelledby="checkbox-group"
+                        style={{
+                          display: "flex",
+                          flexDirection: "column"
+                        }}
+                      >
+                        {positionData.map((positioning_issues, index) => (
+                          <label
+                            key={index}
+                            style={{ display: "flex", alignItems: "center", lineHeight: "1.6" }}
                           >
-                            {positioning_issues}
-                          </span>
-                        </label>
-                      ))}
+                            <Field
+                              type="checkbox"
+                              name="positioning_issues"
+                              value={positioning_issues}
+                              style={{
+                                marginRight: "10px",
+                                width: "14px",
+                                height: "14px",
+                              }}
+                            />
+                            <span
+                              style={{
+                                fontStyle: 'normal',
+                                fontWeight: 700,
+                                fontSize: '14px',
+                                color: '#44495B',
+                              }}
+                            >
+                              {positioning_issues}
+                            </span>
+                          </label>
+                        ))}
+                      </div>
+                    </Grid>
+                  </div>
+
+
+                  {/* clear all */}
+                  <div>
+                    <div
+                      style={{
+                        cursor: 'pointer',
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "flex-end",
+                        alignItems: "center"
+                      }}
+                      onClick={handleClearAll}
+                    >
+                      <span
+                        style={{
+                          fontStyle: 'normal',
+                          fontWeight: 700,
+                          fontSize: '14px',
+                          color: '#6992FC',
+                        }}
+                      >
+                        Clear All
+                      </span>
+                      &nbsp;<Trash size={14} color={"#6992FC"} />
                     </div>
-                  </Grid>
-                </div>
+                  </div>
 
 
-                {/* clear all */}
-                <div>
+
+                  {/* submit button  */}
                   <div
                     style={{
-                      cursor: 'pointer',
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "flex-end",
-                      alignItems: "center"
+                      marginTop: '1rem',
                     }}
-                    onClick={handleClearAll}
                   >
-                    <span
+                    <Button
                       style={{
-                        fontStyle: 'normal',
-                        fontWeight: 700,
-                        fontSize: '14px',
-                        color: '#6992FC',
-                      }}
-                    >
-                      Clear All
-                    </span>
-                    &nbsp;<Trash size={14} color={"#6992FC"} />
-                  </div>
-                </div>
-
-
-
-                {/* submit button  */}
-                <div
-                  style={{
-                    marginTop: '1rem',
-                  }}
-                >
-                  <Button
-                    style={{
-                      padding: '4px 8px',
-                      background: '#6992FC',
-                      borderRadius: '12px',
-                      color: 'white',
-                      textTransform: 'none',
-                      width: '100%',
-                    }}
-                    type="submit"
-                  >
-                    <span
-                      style={{
-                        fontStyle: 'normal',
-                        fontWeight: 700,
-                        fontSize: '14px',
+                        padding: '4px 8px',
+                        background: '#6992FC',
+                        borderRadius: '12px',
                         color: 'white',
-                        lineHeight: "24px"
+                        textTransform: 'none',
+                        width: '100%',
                       }}
+                      type="submit"
                     >
-                      Apply filters
-                    </span>
-                  </Button>
-                </div>
+                      <span
+                        style={{
+                          fontStyle: 'normal',
+                          fontWeight: 700,
+                          fontSize: '14px',
+                          color: 'white',
+                          lineHeight: "24px"
+                        }}
+                      >
+                        Apply filters
+                      </span>
+                    </Button>
+                  </div>
 
                 </div>
               </Form>

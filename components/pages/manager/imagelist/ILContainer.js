@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import { Grid, Menu, MenuItem, Typography } from '@mui/material'
-import InputAdornment from '@mui/material/InputAdornment'
-import TextField from '@mui/material/TextField'
-import * as Icon from 'react-feather'
-import ILSiteHeader from './ILSiteHeader'
-import IList from './IList' // for -> by studies table
-import IListExpanded from './IListExpanded' // for -> by studies table
-import FilterExpanded from './FilterExpanded'
-import Chips from './Chips'
 import GroupButton from '@components/common/GroupButton/GroupButton'
 import { TLBackButton } from '@icons/index'
+import { Grid } from '@mui/material'
+import InputAdornment from '@mui/material/InputAdornment'
+import TextField from '@mui/material/TextField'
+import { useEffect, useState } from 'react'
+import * as Icon from 'react-feather'
+import Chips from './Chips'
+import FilterExpanded from './FilterExpanded'
+import IList from './IList' // for -> by studies table
+import IListExpanded from './IListExpanded' // for -> by studies table
+import ILSiteHeader from './ILSiteHeader'
 
 import {
   ilTableColumnsByImages,
