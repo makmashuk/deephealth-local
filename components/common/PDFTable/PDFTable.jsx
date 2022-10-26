@@ -1,11 +1,15 @@
+import { useEffect, useState } from 'react'
 import PDFTableBody from './PDFTableBody'
 import PDFTableHeader from './PDFTableHeader'
-import styles from './styles/table.module.css'
+import styles from './styles/pdfTable.module.css'
 
 const PDFTable = ({ columns, rows, settings }) => {
+
   return (
     <>
-      <table className={styles.table}>
+      <table
+        className={styles.table}
+      >
         <thead>
           <PDFTableHeader
             columns={columns}

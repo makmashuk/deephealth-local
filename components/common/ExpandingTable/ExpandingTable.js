@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Grid } from '@mui/material'
 import jsPDF from 'jspdf'
-import html2canvas from 'html2canvas'
 import styles from './styles/table.module.css'
 import ExpandingTableBody from './ExpandingTableBody'
 import ExpandingTableHeader from './ExpandingTableHeader'
-import PDFTable from './PDFTable'
+import PDFTable from '../PDFTable/PDFTable'
+import { renderToString } from 'react-dom/server'
 
 export default function ExpandingTable({ columns, rows, settings }) {
   const [selected, setSelected] = useState([])
@@ -151,7 +151,7 @@ export default function ExpandingTable({ columns, rows, settings }) {
               }}
               onClick={(e) => {
                 e.preventDefault()
-                generatePDF(selectedIds)
+                generatePDF()
               }}
             >
               Export list
@@ -162,24 +162,24 @@ export default function ExpandingTable({ columns, rows, settings }) {
     )
   }
 
-  const generatePDF = (selectedIds) => {
-    console.log('selected ids')
-    console.log(selectedIds)
+  const generatePDF = () => {
+    const htmlString = renderToString(
+      <PDFTable columns={columns} rows={selectedRows} settings={settings} />
+    )
+    // console.log(string)
+    let timeStamps = new Date().getTime()
 
-    const pdfTable = document.getElementById('pdfTable')
-    pdfTable.style.display = 'block'
-    pdfTable.style.maxWidth = '780px'
-    console.log(pdfTable)
+    const pdf = new jsPDF('p', 'pt', 'a4', true)
 
-    html2canvas(pdfTable).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png')
-      const pdf = new jsPDF('p', 'pt', 'a4')
-      pdf.addImage(imgData, 'PNG', 0, 0)
-      let timeStamps = new Date().getTime()
-      pdf.save(`test_${timeStamps}.pdf`)
+    pdf.html(htmlString, {
+      async callback(pdf) {
+        pdf.save(`test_${timeStamps}.pdf`)
+      },
+      margin: 40,
+      filename: `test_${timeStamps}.pdf`,
+      width: 500,
+      windowWidth: 700,
     })
-    pdfTable.style.maxWidth = 'none'
-    pdfTable.style.display = 'none'
   }
 
   return (
@@ -215,16 +215,6 @@ export default function ExpandingTable({ columns, rows, settings }) {
           selectedIds={selected}
         />
       )}
-
-      <div
-        id="pdfTable"
-        className="card"
-        style={{
-          display: 'none',
-        }}
-      >
-        <PDFTable columns={columns} rows={selectedRows} settings={settings} />
-      </div>
     </div>
   )
 }

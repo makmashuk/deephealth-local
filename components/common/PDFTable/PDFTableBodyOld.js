@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styles from './styles/table.module.css'
+import styles from '../ExpandingTable/styles/table.module.css'
 
 export default function PDFTableBody({ columns, rows, settings }) {
   const [expanding, setExpanding] = useState([])
