@@ -1,5 +1,5 @@
 import GroupButton from '@components/common/GroupButton/GroupButton'
-import { TLBackButton } from '@icons/index'
+import { FilterFunnel, TLBackButton } from '@icons/index'
 import { Grid } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
@@ -10,6 +10,7 @@ import FilterExpanded from './FilterExpanded'
 import IList from './IList'
 import IListExpanded from './IListExpanded'
 import ILSiteHeader from './ILSiteHeader'
+import { useRouter } from 'next/router'
 
 import {
   ilTableColumnsByImages,
@@ -46,6 +47,8 @@ const selected = {
 }
 
 function ILContainer() {
+  const router = useRouter()
+
   const [onChangeCheckedFromChild, setOnChangeCheckedFromChild] =
     useState(false)
   const [expandedTable, setExpandedTable] = useState(false)
@@ -232,15 +235,22 @@ function ILContainer() {
             <Grid container>
               <Grid
                 item
-                md={5}
-                xs={5}
+                md={4}
+                xs={12}
                 sx={{
                   display: 'flex',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
                 }}
               >
-                <TLBackButton />
+                <span
+                  style={{
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => router.back()}
+                >
+                  <TLBackButton />
+                </span>
                 &nbsp;&nbsp;&nbsp;
                 <span
                   style={{
@@ -257,8 +267,8 @@ function ILContainer() {
 
               <Grid
                 item
-                md={2}
-                xs={2}
+                md={4}
+                xs={12}
                 sx={{
                   display: 'flex',
                   justifyContent: 'center',
@@ -273,60 +283,54 @@ function ILContainer() {
                 </div>
               </Grid>
 
-              <Grid item md={1} xs={1}></Grid>
-
               <Grid
                 item
-                xs={3}
+                xs={12}
+                md={4}
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-                px={2}
-              >
-                <TextField
-                  id="input-with-icon-textfield"
-                  label=""
-                  variant="outlined"
-                  fullWidth
-                  style={{
-                    background: 'white',
-                    width: '100%',
-                    height: '36px',
-                    borderRadius: '8px',
-                  }}
-                  placeholder="Type to search..."
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Icon.Search size={20} color={'#A8B1CE'} />
-                      </InputAdornment>
-                    ),
-                    sx: {
-                      height: 36,
-                      fontSize: 12,
-                      color: '#000',
-                      borderRadius: '8px',
-                      border: '1px solid #EDEFF5',
-                    },
-                  }}
-                  onKeyUp={handleSearch}
-                />
-              </Grid>
-
-              {/* filterButton */}
-              <Grid
-                style={{
                   display: 'flex',
                   justifyContent: 'flex-end',
                   alignItems: 'center',
-                  cursor: 'pointer',
                 }}
-                onClick={handleDisplayFilters}
-                item
-                xs={1}
               >
+                <div
+                  style={{
+                    paddingRight: '10px',
+                  }}
+                >
+                  <TextField
+                    id="input-with-icon-textfield"
+                    label=""
+                    variant="outlined"
+                    fullWidth
+                    style={{
+                      background: 'white',
+                      width: '100%',
+                      height: '36px',
+                      borderRadius: '8px',
+                      width: '300px',
+                      minWidth: '230px',
+                    }}
+                    placeholder="Type to search..."
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Icon.Search size={20} color={'#A8B1CE'} />
+                        </InputAdornment>
+                      ),
+                      sx: {
+                        height: 36,
+                        fontSize: 12,
+                        color: '#000',
+                        borderRadius: '8px',
+                        border: '1px solid #EDEFF5',
+                      },
+                    }}
+                    onKeyUp={handleSearch}
+                  />
+                </div>
+
+                {/* filterButton */}
                 <div
                   style={{
                     display: 'flex',
@@ -337,15 +341,22 @@ function ILContainer() {
                     borderRadius: '12px',
                     color: '#ffffff',
                     textTransform: 'none',
-                    width: '100%',
                     height: '36px',
+                    width: '110px',
+                    minWidth: '110px',
+                    cursor: 'pointer',
                   }}
+                  onClick={handleDisplayFilters}
                 >
-                  <Icon.Filter size={16} />
+                  <FilterFunnel />
                   &nbsp;&nbsp;
                   <span
                     style={{
                       color: '#ffffff',
+                      fontStyle: 'normal',
+                      fontWeight: 700,
+                      fontSize: '14px',
+                      lineHeight: '16px',
                     }}
                   >
                     Filters

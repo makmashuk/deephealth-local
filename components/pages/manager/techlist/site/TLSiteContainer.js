@@ -4,7 +4,7 @@ import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import * as Icon from 'react-feather'
 import TLSiteHeader from './TLSiteHeader'
-import { TLBackButton } from '@icons/index'
+import { TLBackButton, FilterFunnel } from '@icons/index'
 import FilterExpanded from './FilterExpanded'
 import TListSite from './TListSite'
 import Chips from './Chips'
@@ -125,8 +125,8 @@ function TLSiteContainer() {
             <Grid container>
               <Grid
                 item
-                md={5}
-                xs={5}
+                md={4}
+                xs={12}
                 sx={{
                   display: 'flex',
                   justifyContent: 'flex-start',
@@ -155,60 +155,56 @@ function TLSiteContainer() {
                 </span>
               </Grid>
 
-              <Grid item md={3} xs={3}></Grid>
+              <Grid item md={4} xs={12}></Grid>
 
               <Grid
                 item
-                xs={3}
+                xs={12}
+                md={4}
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-                px={2}
-              >
-                <TextField
-                  id="input-with-icon-textfield"
-                  label=""
-                  variant="outlined"
-                  fullWidth
-                  style={{
-                    background: 'white',
-                    width: '100%',
-                    height: '36px',
-                    borderRadius: '8px',
-                  }}
-                  placeholder="Type to search..."
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Icon.Search size={20} color={'#A8B1CE'} />
-                      </InputAdornment>
-                    ),
-                    sx: {
-                      height: 36,
-                      fontSize: 12,
-                      color: '#000',
-                      borderRadius: '8px',
-                      border: '1px solid #EDEFF5',
-                    },
-                  }}
-                  onKeyUp={handleSearch}
-                />
-              </Grid>
-
-              {/* filterButton */}
-              <Grid
-                style={{
                   display: 'flex',
                   justifyContent: 'flex-end',
                   alignItems: 'center',
-                  cursor: 'pointer',
                 }}
-                onClick={handleDisplayFilters}
-                item
-                xs={1}
               >
+                <div
+                  style={{
+                    paddingRight: '10px',
+                  }}
+                >
+                  <TextField
+                    id="input-with-icon-textfield"
+                    label=""
+                    variant="outlined"
+                    fullWidth
+                    style={{
+                      background: 'white',
+                      width: '100%',
+                      height: '36px',
+                      borderRadius: '8px',
+                      width: '300px',
+                      minWidth: '230px',
+                    }}
+                    placeholder="Type to search..."
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Icon.Search size={20} color={'#A8B1CE'} />
+                        </InputAdornment>
+                      ),
+                      sx: {
+                        height: 36,
+                        fontSize: 12,
+                        color: '#000',
+                        borderRadius: '8px',
+                        border: '1px solid #EDEFF5',
+                      },
+                    }}
+                    onKeyUp={handleSearch}
+                  />
+                </div>
+
+                {/* filterButton */}
                 <div
                   style={{
                     display: 'flex',
@@ -219,15 +215,22 @@ function TLSiteContainer() {
                     borderRadius: '12px',
                     color: '#ffffff',
                     textTransform: 'none',
-                    width: '100%',
                     height: '36px',
+                    width: '110px',
+                    minWidth: '110px',
+                    cursor: 'pointer',
                   }}
+                  onClick={handleDisplayFilters}
                 >
-                  <Icon.Filter size={16} />
+                  <FilterFunnel />
                   &nbsp;&nbsp;
                   <span
                     style={{
                       color: '#ffffff',
+                      fontStyle: 'normal',
+                      fontWeight: 700,
+                      fontSize: '14px',
+                      lineHeight: '16px',
                     }}
                   >
                     Filters
