@@ -2,7 +2,7 @@ import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 
-import { PieChart } from '@components/common/charts/PieChart'
+import { PieChart } from '@components/common/Charts/PieChart'
 import { Grid } from '@mui/material'
 
 export default function TCViews() {

@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import { Grid, Menu, MenuItem, Typography } from '@mui/material'
+import GroupButton from '@components/common/GroupButton/GroupButton'
+import { FilterFunnel, TLBackButton } from '@icons/index'
+import { Grid } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
+import { useEffect, useState } from 'react'
 import * as Icon from 'react-feather'
-import ILSiteHeader from './ILSiteHeader'
-import IList from './IList' // for -> by studies table
-import IListExpanded from './IListExpanded' // for -> by studies table
-import FilterExpanded from './FilterExpanded'
 import Chips from './Chips'
-import GroupButton from '@components/common/GroupButton/GroupButton'
-import { TLBackButton } from '@icons/index'
+import FilterExpanded from './FilterExpanded'
+import IList from './IList'
+import IListExpanded from './IListExpanded'
+import ILSiteHeader from './ILSiteHeader'
+import { useRouter } from 'next/router'
 
 import {
   ilTableColumnsByImages,
@@ -46,6 +47,10 @@ const selected = {
 }
 
 function ILContainer() {
+  const router = useRouter()
+
+  const [onChangeCheckedFromChild, setOnChangeCheckedFromChild] =
+    useState(false)
   const [expandedTable, setExpandedTable] = useState(false)
   const [filterData, setFilterData] = useState(filter)
 
@@ -58,75 +63,101 @@ function ILContainer() {
     ilTableRowDataByStudies
   )
 
-  // useEffect to update when chips -> positioning_issues is changed (by images)
   useEffect(() => {
-    if (checkedData.length === 0) {
-      setTableData(ilTableRowDataByImages)
-    } else {
-      const updatedTableData = ilTableRowDataByImages.filter((item) =>
-        checkedData.includes(item.positioning_issues)
-      )
-      console.log('updatedTableData')
-      setTableData(updatedTableData)
-      console.log(updatedTableData)
+    if (!onChangeCheckedFromChild) {
+      if (checkedData.length === 0) {
+        setTableData(ilTableRowDataByImages)
+        setExpandedTableData(ilTableRowDataByStudies)
+      } else {
+        const updatedTableData = ilTableRowDataByImages.filter((item) =>
+          checkedData.includes(item.positioning_issues)
+        )
+        console.log('updatedTableData by images')
+        setTableData(updatedTableData)
+        console.log(updatedTableData)
+
+        const updatedExpTableData = ilTableRowDataByStudies.filter((item) =>
+          checkedData.includes(item.positioning_issues)
+        )
+        console.log('updatedTableData by studies')
+        setExpandedTableData(updatedExpTableData)
+        console.log(updatedTableData)
+      }
     }
   }, [checkedData])
 
-  // by studies (expanded table)
   useEffect(() => {
-    if (checkedData.length === 0) {
-      setExpandedTableData(ilTableRowDataByStudies)
-    } else {
-      const updatedTableData = ilTableRowDataByStudies.filter((item) =>
-        checkedData.includes(item.positioning_issues)
-      )
-      console.log('updatedTableData')
-      setExpandedTableData(updatedTableData)
-      console.log(updatedTableData)
+    if (!onChangeCheckedFromChild) {
+      if (
+        selectedData.quality.length === 0 &&
+        selectedData.views.length === 0 &&
+        selectedData.flag.length === 0 &&
+        selectedData.density.length === 0 &&
+        selectedData.positioning_issues.length === 0
+      ) {
+        setTableData(ilTableRowDataByImages)
+        setExpandedTableData(ilTableRowDataByStudies)
+      } else {
+        console.log('selectedData useEffect')
+        const updatedTableData = ilTableRowDataByImages.filter(
+          (item) =>
+            selectedData.views.includes(item.view) ||
+            selectedData.positioning_issues.includes(item.positioning_issues)
+        )
+        const updatedExpandedTableData = ilTableRowDataByStudies.filter(
+          (item) =>
+            selectedData.quality.includes(item.quality) ||
+            selectedData.views.includes(item.view) ||
+            selectedData.density.includes(item.density) ||
+            selectedData.positioning_issues.includes(item.positioning_issues)
+        )
+        setTableData(updatedTableData)
+        setExpandedTableData(updatedExpandedTableData)
+      }
     }
-  }, [checkedData])
+  }, [selectedData])
 
   const handleDisplayFilters = (e) => {
     e.preventDefault()
     setDisplayFilter(true)
-    console.log(displayFilter)
-    console.log('handleDisplayFilters')
   }
 
   const handleModalClose = () => {
-    console.log('modal close triggered')
     setDisplayFilter(false)
   }
 
   const handleSelectedData = (data) => {
     console.log('selected data received on parent')
     console.log(data)
+    if (data.onChangeChecked) {
+      setOnChangeCheckedFromChild(true)
+    } else {
+      setOnChangeCheckedFromChild(false)
+    }
     if (data.positioning_issues.length > 0) {
-      data.positioning_issues.forEach((pos, i) => {
-        if (pos === 'Select All') {
-          console.log('Select All detected')
-          data.positioning_issues = data.positioning_issues.filter(
-            (item) => item !== 'Select All'
-          )
-        }
-      })
       setCheckedData(data.positioning_issues)
     } else {
       setCheckedData([])
     }
-    console.log('chips data updated')
-    console.log('checked data')
     setSelectedData(data)
-    // pass selectedData to tables
   }
 
   const handleChips = (data) => {
     console.log('chips data received on parent')
-    console.log(data)
+    // console.log(data)
     if (data.length === 0) {
       setCheckedData([])
+      setSelectedData({
+        quality: [],
+        views: [],
+        flag: [],
+        density: [],
+        positioning_issues: [],
+      })
+      setOnChangeCheckedFromChild(false)
     } else {
       setCheckedData(data)
+      setOnChangeCheckedFromChild(false)
     }
   }
 
@@ -144,11 +175,9 @@ function ILContainer() {
 
   const handleOptions = (e) => {
     e.preventDefault()
-    console.log('handleOptions')
     e.target.value === 'by images'
       ? setExpandedTable(false)
       : setExpandedTable(true)
-    // clear the handleSearch input name search
   }
 
   const handleSearch = (e) => {
@@ -206,15 +235,22 @@ function ILContainer() {
             <Grid container>
               <Grid
                 item
-                md={5}
-                xs={5}
+                md={4}
+                xs={12}
                 sx={{
                   display: 'flex',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
                 }}
               >
-                <TLBackButton />
+                <span
+                  style={{
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => router.back()}
+                >
+                  <TLBackButton />
+                </span>
                 &nbsp;&nbsp;&nbsp;
                 <span
                   style={{
@@ -231,8 +267,8 @@ function ILContainer() {
 
               <Grid
                 item
-                md={2}
-                xs={2}
+                md={4}
+                xs={12}
                 sx={{
                   display: 'flex',
                   justifyContent: 'center',
@@ -247,60 +283,54 @@ function ILContainer() {
                 </div>
               </Grid>
 
-              <Grid item md={1} xs={1}></Grid>
-
               <Grid
                 item
-                xs={3}
+                xs={12}
+                md={4}
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-                px={2}
-              >
-                <TextField
-                  id="input-with-icon-textfield"
-                  label=""
-                  variant="outlined"
-                  fullWidth
-                  style={{
-                    background: 'white',
-                    width: '100%',
-                    height: '36px',
-                    borderRadius: '8px',
-                  }}
-                  placeholder="Type to search..."
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <Icon.Search size={20} color={'#A8B1CE'} />
-                      </InputAdornment>
-                    ),
-                    sx: {
-                      height: 36,
-                      fontSize: 12,
-                      color: '#000',
-                      borderRadius: '8px',
-                      border: '1px solid #EDEFF5',
-                    },
-                  }}
-                  onKeyUp={handleSearch}
-                />
-              </Grid>
-
-              {/* filterButton */}
-              <Grid
-                style={{
                   display: 'flex',
                   justifyContent: 'flex-end',
                   alignItems: 'center',
-                  cursor: 'pointer',
                 }}
-                onClick={handleDisplayFilters}
-                item
-                xs={1}
               >
+                <div
+                  style={{
+                    paddingRight: '10px',
+                  }}
+                >
+                  <TextField
+                    id="input-with-icon-textfield"
+                    label=""
+                    variant="outlined"
+                    fullWidth
+                    style={{
+                      background: 'white',
+                      width: '100%',
+                      height: '36px',
+                      borderRadius: '8px',
+                      width: '300px',
+                      minWidth: '230px',
+                    }}
+                    placeholder="Type to search..."
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Icon.Search size={20} color={'#A8B1CE'} />
+                        </InputAdornment>
+                      ),
+                      sx: {
+                        height: 36,
+                        fontSize: 12,
+                        color: '#000',
+                        borderRadius: '8px',
+                        border: '1px solid #EDEFF5',
+                      },
+                    }}
+                    onKeyUp={handleSearch}
+                  />
+                </div>
+
+                {/* filterButton */}
                 <div
                   style={{
                     display: 'flex',
@@ -311,15 +341,22 @@ function ILContainer() {
                     borderRadius: '12px',
                     color: '#ffffff',
                     textTransform: 'none',
-                    width: '100%',
                     height: '36px',
+                    width: '110px',
+                    minWidth: '110px',
+                    cursor: 'pointer',
                   }}
+                  onClick={handleDisplayFilters}
                 >
-                  <Icon.Filter size={16} />
+                  <FilterFunnel />
                   &nbsp;&nbsp;
                   <span
                     style={{
                       color: '#ffffff',
+                      fontStyle: 'normal',
+                      fontWeight: 700,
+                      fontSize: '14px',
+                      lineHeight: '16px',
                     }}
                   >
                     Filters
@@ -347,7 +384,9 @@ function ILContainer() {
           </Grid>
 
           <Grid item xs={12}>
-            <Chips chips={checkedData} setChips={handleChips} />
+            {!onChangeCheckedFromChild && (
+              <Chips chips={checkedData} setChips={handleChips} />
+            )}
           </Grid>
 
           <Grid item xs={12}>
@@ -365,8 +404,6 @@ function ILContainer() {
               />
             )}
           </Grid>
-
-          <Grid item xs={12}></Grid>
         </Grid>
 
         <div

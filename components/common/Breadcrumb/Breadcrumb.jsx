@@ -4,7 +4,7 @@ import Breadcrumbs from '@mui/material/Breadcrumbs'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import { ChevronRight } from '@icons/index'
-import styles from './BreadCrumb.module.css'
+import styles from './breadcrumb.module.css'
 
 const BreadCrumb = () => {
   const router = useRouter()

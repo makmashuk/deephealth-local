@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { Grid, debounce } from '@mui/material'
+import React, { useState } from 'react'
+import { Grid } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 import TextField from '@mui/material/TextField'
 import * as Icon from 'react-feather'
-import { TLBackButton } from '@icons/index'
+import { TLBackButton, FilterFunnel } from '@icons/index'
 import TLPracticeHeader from './TLPracticeHeader'
 import TLPracticeList from './TLPracticeList'
 import { useRouter } from 'next/router'
@@ -48,8 +48,8 @@ function TLPracticeContainer() {
           <Grid container>
             <Grid
               item
-              md={5}
-              xs={5}
+              md={4}
+              xs={12}
               sx={{
                 display: 'flex',
                 justifyContent: 'flex-start',
@@ -78,59 +78,56 @@ function TLPracticeContainer() {
               </span>
             </Grid>
 
-            <Grid item md={3} xs={3}></Grid>
+            <Grid item md={4} xs={12}></Grid>
 
             <Grid
               item
-              xs={3}
+              xs={12}
+              md={4}
               sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}
-              px={2}
-            >
-              <TextField
-                id="input-with-icon-textfield"
-                label=""
-                variant="outlined"
-                fullWidth
-                style={{
-                  background: 'white',
-                  width: '100%',
-                  height: '36px',
-                  borderRadius: '8px',
-                }}
-                placeholder="Type to search..."
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <Icon.Search size={20} color={'#A8B1CE'} />
-                    </InputAdornment>
-                  ),
-                  sx: {
-                    height: 36,
-                    fontSize: 12,
-                    color: '#000',
-                    borderRadius: '8px',
-                    border: '1px solid #EDEFF5',
-                  },
-                }}
-                onKeyUp={handleSearch}
-              />
-            </Grid>
-
-            {/* filterButton */}
-            <Grid
-              style={{
                 display: 'flex',
                 justifyContent: 'flex-end',
                 alignItems: 'center',
-                cursor: 'pointer',
               }}
-              item
-              xs={1}
             >
+              <div
+                style={{
+                  paddingRight: '10px',
+                }}
+              >
+                <TextField
+                  id="input-with-icon-textfield"
+                  label=""
+                  variant="outlined"
+                  fullWidth
+                  style={{
+                    background: 'white',
+                    width: '100%',
+                    height: '36px',
+                    borderRadius: '8px',
+                    width: '300px',
+                    minWidth: '230px',
+                  }}
+                  placeholder="Type to search..."
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Icon.Search size={20} color={'#A8B1CE'} />
+                      </InputAdornment>
+                    ),
+                    sx: {
+                      height: 36,
+                      fontSize: 12,
+                      color: '#000',
+                      borderRadius: '8px',
+                      border: '1px solid #EDEFF5',
+                    },
+                  }}
+                  onKeyUp={handleSearch}
+                />
+              </div>
+
+              {/* filterButton */}
               <div
                 style={{
                   display: 'flex',
@@ -141,15 +138,22 @@ function TLPracticeContainer() {
                   borderRadius: '12px',
                   color: '#ffffff',
                   textTransform: 'none',
-                  width: '100%',
                   height: '36px',
+                  width: '110px',
+                  minWidth: '110px',
+                  cursor: 'pointer',
                 }}
+                // onClick={handleDisplayFilters}
               >
-                <Icon.Filter size={16} />
+                <FilterFunnel />
                 &nbsp;&nbsp;
                 <span
                   style={{
                     color: '#ffffff',
+                    fontStyle: 'normal',
+                    fontWeight: 700,
+                    fontSize: '14px',
+                    lineHeight: '16px',
                   }}
                 >
                   Filters
